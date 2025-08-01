@@ -1,0 +1,310 @@
+@import url('https://fonts.googleapis.com/css2?family=Intel+One+Mono:ital,wght@0,300..700;1,300..700&display=swap');
+
+:root {
+    --black-color: #161515;
+    --purple-color: #4819ac;
+    --white-color: #e8e0e0;
+    --grey-color: #8f8d8d;    
+    --secondary-grey-color: #5d5959;
+    --red-color: #fd2b0f;
+    --secondary-red-color: #a10c0c;
+    --green-color: #13ba10;
+    --secondary-green-color: #198617;
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Intel One Mono", monospace;
+}
+
+html, body {
+    min-height: 100%;
+    padding: 1rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--black-color);
+}
+
+main {
+    padding: 2rem;
+    border-radius: 2rem;
+    background-color: var(--purple-color);
+    color: var(--white-color);
+    width: 60%;
+}
+
+#task-inputs-area {
+    display: flex;
+    flex-direction: column;
+}
+
+#title-area {
+    display: flex;
+    justify-content: center;
+}
+
+h1 {
+    text-align: center;
+    font-size: 3em;
+    position: relative;
+    width: 80%;
+}
+
+h1::after {
+    top: 100%;
+    right: 20%;
+    content: "";
+    position: absolute;
+    width: 50px;
+    height: 6px;
+    background-color: var(--red-color);
+    animation: flicker 1s ease-in-out infinite;
+}
+
+@keyframes flicker {
+    0% {
+        opacity: 0.1;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.1;
+    }
+}
+
+.task-inputs {
+    flex: 1;
+    display: flex;
+    gap: 1rem;
+}
+
+.task-input {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.task-input input, .task-input select {
+    padding: .5rem;
+    outline: none;
+    border: none;
+    background-color: transparent;
+    flex: 1;
+    word-break: break-all;
+}
+
+option {
+   word-break: break-all;
+}
+
+.task-input input {
+    padding: 0rem 1rem;
+    overflow: hidden;
+    width: 80%;
+}
+
+.input {
+    display: flex;
+    background-color: var(--white-color);
+    align-items: center;
+    border-radius: 1rem;
+    padding: 0.5rem 1rem;
+    margin-top: .5rem;
+    overflow: hidden;
+}
+
+i {
+    color: var(--black-color);
+    font-size: 1.5em;
+}
+
+#add-task-area {
+    display: flex;
+    gap: 1rem;
+}
+
+#add-task-area .input {
+    flex: 1;
+}
+
+button {
+    cursor: pointer;
+    outline: none;
+    border: none;
+    margin-top: .5rem;
+    padding: 1em;
+    background-color: var(--red-color);
+    color: var(--white-color);
+    transition: .5s;
+    border-radius: .2rem;
+    font-size: 1em;
+}
+
+button:hover {
+    background-color: var(--secondary-red-color);
+}
+
+label {
+    display: block;
+    margin-top: 1rem;
+    flex: 1;
+}
+
+#task-list-area {
+    margin-top: 2rem;
+}
+
+#edit-task-btn {
+    display: none;
+}
+
+h2 {
+    font-size: 2em;
+    border-bottom: 1px solid var(--white-color);
+}
+
+#task-list {
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 0rem 1rem;
+}
+
+#task-list::-webkit-scrollbar-track {
+    background-color: transparent;
+    margin-top: 1rem;
+}
+
+#task-list::-webkit-scrollbar {
+    width: 2px; 
+}
+
+#task-list::-webkit-scrollbar-thumb {
+    background-color: var(--white-color); 
+}
+
+.task {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    overflow: hidden;
+}
+
+.task-name {
+    width: 50%;
+    word-wrap: break-word;
+}
+
+.task-name p{
+    font-size: 1.5em;
+}
+
+.task-buttons {
+    width: 50%;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+.task-buttons i {
+    cursor: pointer;
+    padding: .8rem;
+    border-radius: 30%;
+    color: var(--white-color);
+    transition: .5s;
+}
+
+.delete-task-button {
+    background-color: var(--red-color);
+}
+
+.delete-task-button:hover {
+    background-color: var(--secondary-red-color);
+}
+
+.edit-task-button {
+    background-color: var(--grey-color);
+}
+
+.edit-task-button:hover {
+    background-color: var(--secondary-grey-color);
+}
+
+.toggle-done-task-button {
+    background-color: var(--green-color);
+}
+
+.toggle-done-task-button:hover {
+    background-color: var(--secondary-green-color);
+}
+
+#empty-list-text {
+    margin-top: 1rem;
+}
+
+@media screen and (max-width: 920px) {
+    .task-inputs {
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width: 850px) {
+    #add-task-area .input, #add-task-area button {
+        flex: 1;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    #add-task-area  {
+        flex-direction: column;
+    }
+
+    .task {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .task-name {
+        width: 100%;
+    }
+
+    .task-buttons {
+        width: 100%;
+        margin-top: .5rem;
+    }
+
+    .task-buttons i {
+        border-radius: 10px;
+        text-align: center;
+        flex: 1;
+    }
+}
+
+
+@media screen and (max-width: 550px) {
+    main {
+        width: 80%;
+    }
+
+    h1 {
+        font-size: 2.3em;
+    }
+
+    i {
+        font-size: 1em;
+    }
+
+}
+
+@media screen and (max-width: 450px) {
+    main {
+        width: 100%;
+    }
+
+}

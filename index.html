@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="css/styles.css">
+    <script type="module" src="js/main.js" defer></script>
+    <title>Quadro de tarefas</title>
+</head>
+<body>
+    <main>
+        <section id="task-inputs-area">
+            <div id="title-area">
+                <h1>Quadro de tarefas:</h1>
+            </div>
+            <div class="task-inputs">
+                <div class="task-input">
+                    <label for="add-task-input"><span id="add-edit-word-toggle">Adicione</span> a sua tarefa:</label>
+                    <div id="add-task-area">
+                        <div class="input">
+                            <i class="bi bi-person-lines-fill"></i>
+                            <input type="text" placeholder="O que você vai fazer?" id="add-task-input" autocomplete="off"> 
+                        </div>
+                        <button id="add-task-btn">Adicionar</button>
+                        <button id="edit-task-btn">Editar</button>                        
+                    </div>
+                </div>
+            </div>
+            <div class="task-inputs">
+                <div class="task-input">
+                    <label for="search-task-input">Pesquisar:</label>
+                    <div class="input">
+                        <i class="bi bi-search"></i>
+                        <input type="text" placeholder="Pesquise pela sua tarefa" id="search-task-input" autocomplete="off">
+                    </div>
+                </div>
+                <div class="task-input">
+                    <label for="filter-task-input">Filtrar:</label>
+                    <div class="input">
+                        <i class="bi bi-clipboard-check-fill"></i>
+                        <select id="filter-task-select">
+                            <option value="filter-all">Todas</option>
+                            <option value="filter-done">Concluídas</option>
+                            <option value="filter-not-done">Não concluídas</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="task-list-area">
+            <h2>Tarefas:</h2>
+            <div id="task-list"></div>
+    </main>
+</body>
+</html>

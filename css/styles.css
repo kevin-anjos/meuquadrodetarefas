@@ -25,6 +25,7 @@ html, body {
     padding: 1rem;
     width: 100%;
     display: flex;
+    flex-direction: column;    
     justify-content: center;
     align-items: center;
     background-color: var(--black-color);
@@ -36,6 +37,7 @@ main {
     background-color: var(--purple-color);
     color: var(--white-color);
     width: 60%;
+    margin-top: 1rem;
 }
 
 #task-inputs-area {
@@ -43,16 +45,11 @@ main {
     flex-direction: column;
 }
 
-#title-area {
-    display: flex;
-    justify-content: center;
-}
-
 h1 {
     text-align: center;
-    font-size: 3em;
+    font-size: 4em;
     position: relative;
-    width: 80%;
+    color: var(--white-color);
 }
 
 h1::after {
@@ -60,7 +57,7 @@ h1::after {
     right: 20%;
     content: "";
     position: absolute;
-    width: 50px;
+    width: 90px;
     height: 6px;
     background-color: var(--red-color);
     animation: flicker 1s ease-in-out infinite;
@@ -292,10 +289,6 @@ h2 {
         width: 80%;
     }
 
-    h1 {
-        font-size: 2.3em;
-    }
-
     i {
         font-size: 1em;
     }
@@ -303,8 +296,31 @@ h2 {
 }
 
 @media screen and (max-width: 450px) {
+    h1 {
+        font-size: 3.5em;
+    }
+
     main {
         width: 100%;
     }
-
 }
+
+@media screen and (max-width: 375px) {
+    h1 {
+        font-size: 3.1em;
+    }
+}
+
+
+@media screen and (max-width: 340px) {
+    h1 {
+        font-size: 2.8em;
+    }
+}
+
+@media screen and (max-width: 315px) {
+    h1 {
+        font-size: 2.5em;
+    }
+}
+

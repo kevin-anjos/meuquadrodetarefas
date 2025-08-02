@@ -1,9 +1,7 @@
 //Importar handler de impressão de Lista de Tasks
-
-import { handleTasksList } from "./handle-tasks-print.js";
+import { handleTasksList } from "./handleTasksPrint.js";
 
 //Importar funções utilitárias do utils.js
-
 import { addTask, tasksList, filterNotDoneTasks, filterDoneTasks, deleteTask, setTaskToBeEdited, toggleDoneTask, editTask } from "./utils.js";
 
 //Importar elementos do arquivo de elementos DOM
@@ -29,6 +27,7 @@ addTaskInput.addEventListener('keydown', event => {
     }
 });
 
+//Eventos de mudança no elemento
 filterTaskSelect.addEventListener("change", () => {
     if (filterTaskSelect.value === "filter-not-done") {
         return filterNotDoneTasks();

@@ -17,7 +17,6 @@ const showEmptyListMessage = () => {
     taskListArea.appendChild(emptyListMessage);
 }
 
-
 //Imprimir Lista de tarefas
 const printTasksList = list => {
     if (list.length === 0) {
@@ -66,4 +65,5 @@ const printTasksList = list => {
     })
 };
 
+//Apagar os dados impressos da lista de tarefas
 const resetTasksList = () => taskListArea.replaceChildren();

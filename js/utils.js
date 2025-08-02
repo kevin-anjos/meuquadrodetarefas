@@ -1,5 +1,5 @@
 //Importar elementos do arquivo de elementos DOM
-import { addEditWordToggle, addTaskInput, addTaskBtn, editTaskBtn } from './domElements.js';
+import { addEditWordToggle, addTaskInput, addTaskBtn, editTaskBtn, filterTaskSelect } from './domElements.js';
 
 //Importar handler de impressão de Lista de Tasks
 import { handleTasksList } from "./handleTasksPrint.js";
@@ -51,6 +51,21 @@ const taskCanBeAdded = () => {
 //Colocar a lista de Tasks no Local Storage
 const setTaskListInLocalStorage = () => {
     localStorage.setItem('tasks-list', JSON.stringify(tasksList));
+}
+
+//Filtrar tarefas por categoria 
+export const filterTasks = () => {
+    if (filterTaskSelect.value === "filter-not-done") {
+        return filterNotDoneTasks();
+    }
+
+    if (filterTaskSelect.value === "filter-done") {
+        return filterDoneTasks();
+    }
+
+    if (filterTaskSelect.value === "filter-all") {
+        return handleTasksList(tasksList);
+    }
 }
 
 //Filtrar por tarefas não feitas
@@ -116,6 +131,7 @@ export const toggleDoneTask = task => {
     });
     handleTasksList(tasksList);
     setTaskListInLocalStorage();
+    filterTasks();
 }
 
 //Editar tarefa

@@ -1,11 +1,11 @@
 //Importar handler de impressão de Lista de Tasks
-import { handleTasksList } from "./handleTasksPrint.js";
+import { handleTasksListPrint } from "./handleTasksPrint.js";
 
 //Importar funções utilitárias do utils.js
-import { addTask, tasksList, filterTasks, deleteTask, setTaskToBeEdited, toggleDoneTask, editTask } from "./utils.js";
+import { addTask, tasksList, filterTasks, deleteTask, setTaskToBeEdited, toggleDoneTask, editTask, cancelEditTask } from "./utils.js";
 
 //Importar elementos do arquivo de elementos DOM
-import { searchTaskInput, filterTaskSelect, addTaskInput, addTaskBtn, editTaskBtn, taskListArea } from './domElements.js';
+import { searchTaskInput, filterTaskSelect, addTaskInput, addTaskBtn, editTaskBtn, taskListArea, cancelEditTaskBtn } from './domElements.js';
 
 //Eventos
 
@@ -13,7 +13,8 @@ import { searchTaskInput, filterTaskSelect, addTaskInput, addTaskBtn, editTaskBt
 searchTaskInput.addEventListener('input', () => {
     const searchedTaskList = tasksList.filter(task => task.name.toLowerCase().includes(searchTaskInput.value.toLowerCase()));
 
-    handleTasksList(searchedTaskList);
+    filterTaskSelect.value = "filter-all";
+    handleTasksListPrint(searchedTaskList);
 })
 
 addTaskInput.addEventListener('input', () => {
@@ -40,6 +41,10 @@ addTaskBtn.addEventListener('click', () => {
 editTaskBtn.addEventListener('click', () => {
     editTask();
 });
+
+cancelEditTaskBtn.addEventListener('click', () => {
+    cancelEditTask();
+})
 
 //Delegação de eventos (capturar elementos criados dinamicamente)
 taskListArea.addEventListener('click', event => {

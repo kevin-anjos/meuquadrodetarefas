@@ -1,8 +1,8 @@
 //Importar elementos do arquivo de elementos DOM
-import { addEditWordToggle, addTaskInput, addTaskBtn, editTaskBtn, filterTaskSelect } from './domElements.js';
+import { addEditWordToggle, addTaskInput, addTaskBtn, editTaskBtn, filterTaskSelect, cancelEditTaskBtn } from './domElements.js';
 
 //Importar handler de impressão de Lista de Tasks
-import { handleTasksList } from "./handleTasksPrint.js";
+import { handleTasksListPrint } from "./handleTasksPrint.js";
 
 //Importar classe das tarefas
 import { Task } from './Task.js';
@@ -19,7 +19,7 @@ window.addEventListener('load', () => {
         tasksList = JSON.parse(localStorage.getItem('tasks-list'));
     }
 
-    handleTasksList(tasksList);
+    handleTasksListPrint(tasksList);
 })
 
 //Funções
@@ -31,7 +31,7 @@ export const addTask = () => {
         tasksList.push(task);
         addTaskInput.value = "";
         setTaskListInLocalStorage();
-        handleTasksList(tasksList);
+        handleTasksListPrint(tasksList);
     } 
 }
 
@@ -53,7 +53,7 @@ const setTaskListInLocalStorage = () => {
     localStorage.setItem('tasks-list', JSON.stringify(tasksList));
 }
 
-//Filtrar tarefas por categoria 
+//Filtrar tarefas por categoria
 export const filterTasks = () => {
     if (filterTaskSelect.value === "filter-not-done") {
         return filterNotDoneTasks();
@@ -63,21 +63,20 @@ export const filterTasks = () => {
         return filterDoneTasks();
     }
 
-    if (filterTaskSelect.value === "filter-all") {
-        return handleTasksList(tasksList);
-    }
+    //Retorna a impressão da lista completa
+    return handleTasksListPrint(tasksList);
 }
 
 //Filtrar por tarefas não feitas
 export const filterNotDoneTasks = () => {
     const filteredNotDoneTasks = tasksList.filter(task => !task.isDone)
-    handleTasksList(filteredNotDoneTasks);
+    handleTasksListPrint(filteredNotDoneTasks);
 }
 
 //Filtrar por tarefas feitas
 export const filterDoneTasks = () => {
     const filteredDoneTasks = tasksList.filter(task => task.isDone)
-    handleTasksList(filteredDoneTasks);
+    handleTasksListPrint(filteredDoneTasks);
 }
 
 //Deletar tarefa
@@ -90,7 +89,7 @@ export const deleteTask = task => {
         newTaskId++;
     })
     tasksList = deletedItemTasksList;
-    handleTasksList(tasksList);
+    handleTasksListPrint(tasksList);
     setTaskListInLocalStorage();
 }
 
@@ -110,6 +109,7 @@ const showEditTaskArea = task => {
     addTaskInput.value = task.name;
     addTaskBtn.style.display = "none";
     editTaskBtn.style.display = "block";
+    cancelEditTaskBtn.style.display = "block";
     addEditWordToggle.innerHTML = "Edite";
 }
 
@@ -118,6 +118,7 @@ const hideEditTaskArea = () => {
     addTaskInput.value = "";
     addTaskBtn.style.display = "block";
     editTaskBtn.style.display = "none";
+    cancelEditTaskBtn.style.display = "none";
     addEditWordToggle.innerHTML = "Adicione";
 }
 
@@ -129,7 +130,7 @@ export const toggleDoneTask = task => {
             !task.isDone ? task.isDone = true : task.isDone = false;
         };
     });
-    handleTasksList(tasksList);
+    handleTasksListPrint(tasksList);
     setTaskListInLocalStorage();
     filterTasks();
 }
@@ -140,11 +141,17 @@ export const editTask = () => {
         tasksList.forEach(task => {
             if (task.id === toBeEditedID) {
                 task.name = addTaskInput.value;
+                task.isDone = false;
             };
         });
 
         setTaskListInLocalStorage();
-        handleTasksList(tasksList);
+        handleTasksListPrint(tasksList);
         hideEditTaskArea();
     };
+};
+
+//Cancelar edição de tarefa
+export const cancelEditTask = () => {
+    hideEditTaskArea();
 };

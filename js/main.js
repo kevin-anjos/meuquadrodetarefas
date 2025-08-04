@@ -60,3 +60,17 @@ taskListArea.addEventListener('click', event => {
         toggleDoneTask(event.target.id);
     }
 });
+
+taskListArea.addEventListener('mousemove', event => {
+    if (event.target.classList.contains('delete-task-button')) {
+        console.log(event.target.id);
+    }
+
+    if (event.target.classList.contains('edit-task-button')) {
+        console.log(event.target.id);
+    }
+
+    if (event.target.classList.contains('toggle-done-task-button')) {
+        console.log(event.target.id);
+    }}
+);

@@ -33,9 +33,11 @@ const createElementsToBePrinted = task => {
     if (task.isDone) {
         taskName.innerHTML = `<s>${task.id + 1}. ${task.name}</s>`;
         toggleDoneTaskBtn.classList.add("bi", "bi-arrow-counterclockwise", "toggle-done-task-button");
+        toggleDoneTaskBtn.setAttribute('title', `Pendente`);
     } else {
         taskName.innerHTML = `${task.id + 1}. ${task.name}`;
         toggleDoneTaskBtn.classList.add("bi", "bi-check-circle", "toggle-done-task-button");
+        toggleDoneTaskBtn.setAttribute('title', `Concluir`);
     }
 
     toggleDoneTaskBtn.setAttribute('id', `done-btn-${task.id}`);
@@ -43,10 +45,12 @@ const createElementsToBePrinted = task => {
     const editTaskBtn = document.createElement('i');
     editTaskBtn.classList.add("bi", "bi-pen", "edit-task-button");
     editTaskBtn.setAttribute('id', `edit-btn-${task.id}`);
+    editTaskBtn.setAttribute('title', `Editar`);
 
     const deleteTaskBtn = document.createElement('i');
     deleteTaskBtn.classList.add("bi", "bi-x-circle", "delete-task-button");
     deleteTaskBtn.setAttribute('id', `delete-btn-${task.id}`);
+    deleteTaskBtn.setAttribute('title', `Deletar`);
 
     return { toggleDoneTaskBtn, editTaskBtn, deleteTaskBtn, taskName, taskButtonsArea, taskArea };
 }

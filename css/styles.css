@@ -190,10 +190,10 @@ h2 {
     justify-content: space-between;
     align-items: center;
     margin-top: 1rem;
-    overflow: hidden;
-    animation: show 1s ease-in-out;
+/*    animation: show 500ms ease-in-out; */
 }
 
+/*
 @keyframes show {
     from {
         opacity: 0;
@@ -205,16 +205,7 @@ h2 {
         transform: translateX(0px);
     }
 }
-
-@keyframes delete-task {
-    from {
-        transform: translateX(0px);
-    } 
-    
-    to {
-        transform: translateX(-1000px);
-    }
-}
+*/
 
 .task-name {
     width: 50%;
@@ -229,6 +220,7 @@ h2 {
     display: flex;
     justify-content: flex-end;
     gap: 1rem;
+    overflow: visible;
 }
 
 .task-buttons i {

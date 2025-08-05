@@ -29,7 +29,7 @@ const removeHTMLTagsInTaskInfo = () => {
     const taskNameWithoutTAGS = addTaskInput.value.replace('>', "&gt;").replace('<', "&lt;");
     const taskDecriptionWithoutTAGS = taskDescriptionInput.value.replace('>', "&gt;").replace('<', "&lt;");
 
-    return {taskNameWithoutTAGS, taskDecriptionWithoutTAGS}
+    return {taskNameWithoutTAGS, taskDecriptionWithoutTAGS};
 }
 
 //Adicionar Task

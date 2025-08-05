@@ -19,15 +19,6 @@ const showEmptyListMessage = () => {
 
 //Criar os elementos a serem imprimidos
 const createElementsToBePrinted = task => {
-
-    //Remover transformação de texto em TAGS HTML
-    task.name = task.name.replace('>', "&gt;");
-    task.name = task.name.replace('<', "&lt;");
-
-    task.description = task.description.replace('>', "≥");
-    task.description = task.description.replace('<', "≤");
-
-
     const taskArea = document.createElement('div');
     taskArea.classList.add("task");
 

@@ -31,7 +31,7 @@ const createElementsToBePrinted = task => {
     const taskDescription = document.createElement('div');
     taskDescription.classList.add("task-description");
 
-    if (task.description != "") {
+    if (task.description != undefined && task.description != "") {
         taskDescription.innerHTML = `<strong>Descrição:</strong> ${task.description}`
     } 
 

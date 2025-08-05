@@ -38,6 +38,7 @@ export const setDarkModeTheme = () => {
     themeColorToggleArea.style.border = `2px solid ${whiteColor}`;
 
     tasksDashboardArea.style.backgroundColor = purpleColor;
+    tasksDashboardArea.style.color = whiteColor;
 }
 
 //Função para ativar modo claro
@@ -69,4 +70,5 @@ export const setLightModeTheme = () => {
     themeColorToggleArea.style.border = `2px solid ${blackColor}`;
 
     tasksDashboardArea.style.backgroundColor = blueColor;
+    tasksDashboardArea.style.color = blackColor;
 }

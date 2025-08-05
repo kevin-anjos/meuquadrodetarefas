@@ -8,7 +8,7 @@ import { addTask, tasksList, filterTasks, deleteTask, setTaskToBeEdited, toggleD
 import { setDarkModeTheme, setLightModeTheme } from "./themeColorHandler.js";
 
 //Importar elementos do arquivo de elementos DOM
-import { searchTaskInput, filterTaskSelect, addTaskInput, taskDescriptionInput, addTaskBtn, editTaskBtn, taskListArea, cancelEditTaskBtn, darkModeBtn, lightModeBtn } from './domElements.js';
+import { searchTaskInput, filterTaskSelect, addTaskInput, taskDescriptionInput, addTaskBtn, editTaskBtn, taskListArea, cancelEditTaskBtn, darkModeBtn, lightModeBtn, darkModeDot, lightModeDot } from './domElements.js';
 
 //Eventos
 
@@ -84,6 +84,15 @@ editTaskBtn.addEventListener('click', () => {
 cancelEditTaskBtn.addEventListener('click', () => {
     cancelEditTask();
 })
+
+darkModeDot.addEventListener('click', () => {
+    setLightModeTheme();
+})
+
+lightModeDot.addEventListener('click', () => {
+    setDarkModeTheme();
+})
+
 
 darkModeBtn.addEventListener('click', () => {
     setDarkModeTheme();

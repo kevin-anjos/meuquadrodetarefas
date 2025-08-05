@@ -14,6 +14,7 @@ export const addEditWordToggle = document.querySelector("#add-edit-word-toggle")
 
 
 export const themeColorToggleArea = document.querySelector('#theme-color-toggle-area');
+
 export const darkModeDot = document.querySelector('#dark-mode-dot');
 export const lightModeDot = document.querySelector('#light-mode-dot');
 

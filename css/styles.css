@@ -51,6 +51,10 @@ header p {
     cursor: pointer;
 }
 
+header i {
+    font-size: 1.5em;
+}
+
 #theme-color-toggle-area {
     padding: .5rem .5rem;
     border-radius: 15px;
@@ -61,12 +65,8 @@ header p {
     background-color: transparent;
 }
 
-
-#theme-color-toggle-area i{
-    cursor: pointer;
-}
-
 .dot {
+    cursor: pointer;
     padding: 1rem;
     border-radius: 50%;
 }
@@ -273,6 +273,10 @@ button:hover {
     background-color: var(--secondary-red-color);
 }
 
+select {
+    cursor: pointer;
+}
+
 label {
     display: block;
     margin-top: 1rem;
@@ -439,6 +443,10 @@ h2 {
 }
 
 @media screen and (max-width: 450px) {
+    header p {
+        display: none;
+    }
+
     h1 {
         font-size: 3.5em;
     }

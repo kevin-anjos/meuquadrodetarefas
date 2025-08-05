@@ -21,9 +21,13 @@
                             <i class="bi bi-person-lines-fill"></i>
                             <input type="text" placeholder="O que você vai fazer?" id="add-task-input" autocomplete="off"> 
                         </div>
+                        <div class="input" id="task-description-input-area">
+                            <i class="bi bi-list-task"></i>
+                            <input type="text" placeholder="Descrição da tarefa" id="task-description-input" autocomplete="off"> 
+                        </div>
                         <button id="add-task-btn">Adicionar</button>
                         <button id="edit-task-btn">Editar</button>
-                        <button id="cancel-edit-task-btn">Cancelar</button>                                              
+                        <button id="cancel-edit-task-btn">Cancelar</button>                             
                     </div>
                 </div>
             </div>
@@ -50,7 +54,19 @@
         </section>
         <section id="tasks-list-area">
             <h2>Tarefas:</h2>
-            <div id="tasks-list"></div> 
+            <div id="tasks-list">
+                <div class="task">
+                    <div class="task-info">
+                        <div class="task-name">1. Andar</div>
+                        <div class="task-description"><strong>Descrição:</strong> Andar</div>
+                    </div>
+                    <div class="task-buttons">
+                        <i class="bi bi-check-circle toggle-done-task-button"></i>
+                        <i class="bi bi-pen edit-task-button"></i>
+                        <i class="bi bi-x-circle delete-task-button"></i>
+                    </div>
+                </div>
+            </div> 
         </section>
     </main>
 </body>

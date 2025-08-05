@@ -7,6 +7,7 @@ export const cancelEditTaskBtn = document.querySelector('#cancel-edit-task-btn')
 
 export const searchTaskInput = document.querySelector('#search-task-input');
 export const addTaskInput = document.querySelector('#add-task-input');
+export const taskDescriptionInput = document.querySelector('#task-description-input');
 export const filterTaskSelect = document.querySelector('#filter-task-select');
 
 export const addEditWordToggle = document.querySelector("#add-edit-word-toggle");

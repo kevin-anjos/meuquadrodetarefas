@@ -1,5 +1,5 @@
 //Importar elementos do arquivo de elementos DOM
-import { addEditWordToggle, addTaskInput, addTaskBtn, editTaskBtn, filterTaskSelect, cancelEditTaskBtn } from './domElements.js';
+import { addEditWordToggle, addTaskInput, taskDescriptionInput, addTaskBtn, editTaskBtn, filterTaskSelect, cancelEditTaskBtn } from './domElements.js';
 
 //Importar handler de impressão de Lista de Tasks
 import { handleTasksListPrint } from "./handleTasksPrint.js";
@@ -24,12 +24,21 @@ window.addEventListener('load', () => {
 
 //Funções
 
+//Remover transformação de texto em TAGS HTML
+const removeHTMLTagsInTaskInfo = () => {
+    const taskNameWithoutTAGS = addTaskInput.value.replace('>', "&gt;").replace('<', "&lt;");
+    const taskDecriptionWithoutTAGS = taskDescriptionInput.value.replace('>', "&gt;").replace('<', "&lt;");
+
+    return {taskNameWithoutTAGS, taskDecriptionWithoutTAGS}
+}
+
 //Adicionar Task
 export const addTask = () => {
     if (taskCanBeAdded()) {
-        const task = new Task(addTaskInput.value);
+        const { taskNameWithoutTAGS, taskDecriptionWithoutTAGS } = removeHTMLTagsInTaskInfo();
+
+        const task = new Task(taskNameWithoutTAGS, taskDecriptionWithoutTAGS);
         tasksList.push(task);
-        addTaskInput.value = "";
         setTaskListInLocalStorage();
         handleTasksListPrint(tasksList);
     } 
@@ -37,10 +46,12 @@ export const addTask = () => {
 
 //Verificar se a Task pode ser adicionada
 const taskCanBeAdded = () => {
+    const { taskNameWithoutTAGS } = removeHTMLTagsInTaskInfo();
+
     let taskNameExists;
 
     tasksList.forEach(task => {
-        if (task.name.toLowerCase() === addTaskInput.value.toLowerCase()) {
+        if (task.name.toLowerCase() === taskNameWithoutTAGS.toLowerCase()) {
             taskNameExists = true;
         } 
     })
@@ -107,6 +118,7 @@ export const setTaskToBeEdited = task => {
 // Mostrar botão e span de editar tarefas e imprimir o nome da tarefa atual no input
 const showEditTaskArea = task => {
     addTaskInput.value = task.name;
+    taskDescriptionInput.value = task.description;
     addTaskBtn.style.display = "none";
     editTaskBtn.style.display = "block";
     cancelEditTaskBtn.style.display = "block";
@@ -116,6 +128,7 @@ const showEditTaskArea = task => {
 // Esconder botão e span de editar tarefas
 const hideEditTaskArea = () => {
     addTaskInput.value = "";
+    taskDescriptionInput.value = "";
     addTaskBtn.style.display = "block";
     editTaskBtn.style.display = "none";
     cancelEditTaskBtn.style.display = "none";
@@ -137,18 +150,17 @@ export const toggleDoneTask = task => {
 
 //Editar tarefa
 export const editTask = () => {
-    if (taskCanBeAdded()) {
-        tasksList.forEach(task => {
-            if (task.id === toBeEditedID) {
-                task.name = addTaskInput.value;
-                task.isDone = false;
-            };
-        });
+    tasksList.forEach(task => {
+        if (task.id === toBeEditedID) {
+            task.name = addTaskInput.value;
+            task.description = taskDescriptionInput.value;
+            task.isDone = false;
+        };
+    });
 
-        setTaskListInLocalStorage();
-        handleTasksListPrint(tasksList);
-        hideEditTaskArea();
-    };
+    setTaskListInLocalStorage();
+    handleTasksListPrint(tasksList);
+    hideEditTaskArea();
 };
 
 //Cancelar edição de tarefa

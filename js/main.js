@@ -5,7 +5,7 @@ import { handleTasksListPrint } from "./handleTasksPrint.js";
 import { addTask, tasksList, filterTasks, deleteTask, setTaskToBeEdited, toggleDoneTask, editTask, cancelEditTask } from "./utils.js";
 
 //Importar elementos do arquivo de elementos DOM
-import { searchTaskInput, filterTaskSelect, addTaskInput, addTaskBtn, editTaskBtn, taskListArea, cancelEditTaskBtn } from './domElements.js';
+import { searchTaskInput, filterTaskSelect, addTaskInput, taskDescriptionInput, addTaskBtn, editTaskBtn, taskListArea, cancelEditTaskBtn } from './domElements.js';
 
 //Eventos
 
@@ -17,16 +17,28 @@ searchTaskInput.addEventListener('input', () => {
     handleTasksListPrint(searchedTaskList);
 })
 
+// Limitar caracteres e ativar ação com Enter para addTaskInput
 addTaskInput.addEventListener('input', () => {
-    //Limitar caracteres até 100
-    addTaskInput.value = addTaskInput.value.slice(0, 100)
-})
+    addTaskInput.value = addTaskInput.value.slice(0, 100);
+});
 
 addTaskInput.addEventListener('keydown', event => {
     if (event.key === "Enter") {
         getComputedStyle(editTaskBtn).display === "none" ? addTask() : editTask();
     }
 });
+
+// Limitar caracteres e ativar ação com Enter para taskDescriptionInput
+taskDescriptionInput.addEventListener('input', () => {
+    taskDescriptionInput.value = taskDescriptionInput.value.slice(0, 100);
+});
+
+taskDescriptionInput.addEventListener('keydown', event => {
+    if (event.key === "Enter") {
+        getComputedStyle(editTaskBtn).display === "none" ? addTask() : editTask();
+    }
+});
+
 
 //Eventos de mudança no elemento
 filterTaskSelect.addEventListener("change", () => {
@@ -60,17 +72,3 @@ taskListArea.addEventListener('click', event => {
         toggleDoneTask(event.target.id);
     }
 });
-
-taskListArea.addEventListener('mousemove', event => {
-    if (event.target.classList.contains('delete-task-button')) {
-        console.log(event.target.id);
-    }
-
-    if (event.target.classList.contains('edit-task-button')) {
-        console.log(event.target.id);
-    }
-
-    if (event.target.classList.contains('toggle-done-task-button')) {
-        console.log(event.target.id);
-    }}
-);

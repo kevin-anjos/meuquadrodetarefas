@@ -19,11 +19,30 @@ const showEmptyListMessage = () => {
 
 //Criar os elementos a serem imprimidos
 const createElementsToBePrinted = task => {
+
+    //Remover transformação de texto em TAGS HTML
+    task.name = task.name.replace('>', "&gt;");
+    task.name = task.name.replace('<', "&lt;");
+
+    task.description = task.description.replace('>', "≥");
+    task.description = task.description.replace('<', "≤");
+
+
     const taskArea = document.createElement('div');
     taskArea.classList.add("task");
 
+    const taskInfo = document.createElement('div');
+    taskInfo.classList.add("task-info");
+
     const taskName = document.createElement('div');
     taskName.classList.add("task-name");
+
+    const taskDescription = document.createElement('div');
+    taskDescription.classList.add("task-description");
+
+    if (task.description != "") {
+        taskDescription.innerHTML = `<strong>Descrição:</strong> ${task.description}`
+    } 
 
     const taskButtonsArea = document.createElement('div');
     taskButtonsArea.classList.add("task-buttons");
@@ -52,7 +71,7 @@ const createElementsToBePrinted = task => {
     deleteTaskBtn.setAttribute('id', `delete-btn-${task.id}`);
     deleteTaskBtn.setAttribute('title', `Deletar`);
 
-    return { toggleDoneTaskBtn, editTaskBtn, deleteTaskBtn, taskName, taskButtonsArea, taskArea };
+    return { toggleDoneTaskBtn, editTaskBtn, deleteTaskBtn, taskInfo, taskName, taskDescription, taskButtonsArea, taskArea };
 }
 
 //Imprimir Lista de tarefas
@@ -62,15 +81,18 @@ const printTasksList = list => {
     }
 
     list.forEach(task => {
-        const { toggleDoneTaskBtn, editTaskBtn, deleteTaskBtn, taskName, taskButtonsArea, taskArea } = createElementsToBePrinted(task);
+        const { toggleDoneTaskBtn, editTaskBtn, deleteTaskBtn, taskInfo, taskName, taskDescription, taskButtonsArea, taskArea } = createElementsToBePrinted(task);
         
         [toggleDoneTaskBtn, editTaskBtn, deleteTaskBtn].forEach(button => {
             taskButtonsArea.appendChild(button);
         });
 
-        [taskName, taskButtonsArea].forEach(area => {
-            taskArea.appendChild(area);
+        [taskName, taskDescription].forEach(info => {
+            taskInfo.appendChild(info);
         })
+
+        taskArea.appendChild(taskInfo);
+        taskArea.appendChild(taskButtonsArea);
 
         taskListArea.appendChild(taskArea);
     })

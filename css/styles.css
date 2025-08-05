@@ -116,6 +116,11 @@ option {
     overflow: hidden;
 }
 
+#add-task-area .input:nth-child(2) {
+    flex-basis: 100%;
+    order: 2;
+}
+
 i {
     color: var(--black-color);
     font-size: 1.5em;
@@ -123,6 +128,7 @@ i {
 
 #add-task-area {
     display: flex;
+    flex-wrap: wrap;
     gap: 1rem;
 }
 
@@ -207,13 +213,16 @@ h2 {
 }
 */
 
-.task-name {
+.task-info {
     width: 50%;
+}
+
+.task-name, .task-description {
     word-wrap: break-word;
 }
 
-.task-name p{
-    font-size: 1.5em;
+.task-description {
+    margin-top: .5rem;
 }
 
 .task-buttons {
@@ -265,15 +274,14 @@ h2 {
     }
 }
 
-@media screen and (max-width: 850px) {
-    #add-task-area .input, #add-task-area button {
-        flex: 1;
-    }
-}
 
 @media screen and (max-width: 800px) {
     #add-task-area  {
         flex-direction: column;
+    }
+
+    #add-task-area .input:nth-child(2) {
+        order: 0;
     }
 
     .task {
@@ -282,7 +290,7 @@ h2 {
         align-items: flex-start;
     }
 
-    .task-name {
+    .task-info, .task-name, .task-description {
         width: 100%;
     }
 

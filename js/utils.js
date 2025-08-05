@@ -2,7 +2,7 @@
 import { addEditWordToggle, addTaskInput, taskDescriptionInput, addTaskBtn, editTaskBtn, filterTaskSelect, cancelEditTaskBtn } from './domElements.js';
 
 //Importar handler de impressão de Lista de Tasks
-import { handleTasksListPrint } from "./handleTasksPrint.js";
+import { handleTasksListPrint } from "./tasksPrintHandler.js";
 
 //Importar classe das tarefas
 import { Task } from './Task.js';
@@ -26,9 +26,9 @@ window.addEventListener('load', () => {
 
 //Remover transformação de texto em TAGS HTML
 const removeHTMLTagsInTaskInfo = () => {
-    const taskNameWithoutTAGS = addTaskInput.value.replace('>', "&gt;").replace('<', "&lt;");
-    const taskDecriptionWithoutTAGS = taskDescriptionInput.value.replace('>', "&gt;").replace('<', "&lt;");
-
+    const taskNameWithoutTAGS = addTaskInput.value.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    const taskDecriptionWithoutTAGS = taskDescriptionInput.value.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    
     return {taskNameWithoutTAGS, taskDecriptionWithoutTAGS};
 }
 

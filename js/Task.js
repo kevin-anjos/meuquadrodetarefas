@@ -1,4 +1,4 @@
-import { tasksList } from "./utils.js";
+import { tasksList } from "./tasksManager.js";
 
 //Criar a classe Task
 export class Task {

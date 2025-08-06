@@ -1,25 +1,26 @@
-//Importar handler de impressão de Lista de Tasks
-import { handleTasksListPrint } from "./tasksPrintHandler.js";
+//Importar função de filtrar tasks do filter.js
+import { filterTasks, searchTasks } from "./filterAndSearch.js";
 
-//Importar funções utilitárias do utils.js
-import { addTask, tasksList, filterTasks, deleteTask, setTaskToBeEdited, toggleDoneTask, editTask, cancelEditTask } from "./utils.js";
+//Importar funções da lista de tarefas do tasksManager.js
+import { addTask, deleteTask, setTaskToBeEdited, toggleDoneTask, editTask } from "./tasksManager.js";
 
-//Importar fnções de handler de modo de cor
-import { setDarkModeTheme, setLightModeTheme } from "./themeColorHandler.js";
+//Importar funções de handler de modo de cor
+import { toggleTheme } from "./themeColorHandler.js";
+
+//Importar função de esconder área de edição de tarefas
+import { hideEditTaskArea } from './taskEditUI.js';
 
 //Importar elementos do arquivo de elementos DOM
 import { searchTaskInput, filterTaskSelect, addTaskInput, taskDescriptionInput, addTaskBtn, editTaskBtn, taskListArea, cancelEditTaskBtn, darkModeBtn, lightModeBtn, darkModeDot, lightModeDot } from './domElements.js';
+
 
 //Eventos
 
 //Eventos de Input
 searchTaskInput.addEventListener('input', () => {
-    const searchedTaskList = tasksList.filter(task => task.name.toLowerCase().includes(searchTaskInput.value.toLowerCase()));
+    searchTasks();
 
-    filterTaskSelect.value = "filter-all";
-    handleTasksListPrint(searchedTaskList);
 })
-
 
 // Limitar caracteres e ativar ação com Enter para addTaskInput
 addTaskInput.addEventListener('input', () => {
@@ -82,27 +83,24 @@ editTaskBtn.addEventListener('click', () => {
 });
 
 cancelEditTaskBtn.addEventListener('click', () => {
-    cancelEditTask();
+    hideEditTaskArea();
 })
 
 darkModeDot.addEventListener('click', () => {
-    setLightModeTheme();
+    toggleTheme();
 })
 
 lightModeDot.addEventListener('click', () => {
-    setDarkModeTheme();
+    toggleTheme();
 })
 
-
 darkModeBtn.addEventListener('click', () => {
-    setDarkModeTheme();
+    toggleTheme();
 })
 
 lightModeBtn.addEventListener('click', () => {
-    setLightModeTheme();
+    toggleTheme();
 })
-
-
 
 //Delegação de eventos (capturar elementos criados dinamicamente)
 taskListArea.addEventListener('click', event => {

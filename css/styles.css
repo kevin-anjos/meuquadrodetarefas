@@ -3,7 +3,8 @@
 :root {
     --black-color: #161515;
     --purple-color: #4819ac;
-    --blue-color: #0062ff;
+    --secondary-blue-color: #044dc3;
+    --blue-color: #376dc4;
     --orange-color: #e8a410ff;
     --white-color: #f3f3f3;
     --grey-color: #8f8d8d;    
@@ -80,12 +81,13 @@ header i {
     background-color: var(--black-color);
 }
 
-#light-mode-btn {
+#light-mode-ico {
     display: none;
+    color: var(--orange-color);
 }
 
-#dark-mode-btn {
-    color: var(--blue-color);
+#dark-mode-ico {
+    color: var(--secondary-blue-color);
 }
 
 .dark-mode-animation-active {
@@ -139,7 +141,7 @@ header i {
     }
 }
 
-#dark-mode-text {
+#dark-mode-btn {
     border-bottom: 1px solid var(--white-color);
 }
 
@@ -390,6 +392,41 @@ h2 {
 
 #empty-list-text {
     margin-top: 1rem;
+}
+
+/*Light Mode*/
+
+body.light-mode-active {
+    background-color: var(--white-color);
+}
+
+body.light-mode-active header{
+    color: var(--black-color);
+}
+
+body.light-mode-active #light-mode-btn{
+    border-bottom: 1px solid var(--black-color);
+}
+
+body.light-mode-active #theme-color-toggle-area {
+    border: 2px solid var(--black-color);
+}
+
+body.light-mode-active #light-mode-dot, body.light-mode-active #light-mode-ico {
+    display: block;
+}
+
+body.light-mode-active #dark-mode-dot, body.light-mode-active #dark-mode-ico {
+    display: none;
+}
+
+body.light-mode-active h1 {
+    color: var(--black-color);
+}
+
+body.light-mode-active #tasks-dashboard {
+    background-color: var(--blue-color);
+    color: var(--black-color);
 }
 
 @media screen and (max-width: 920px) {

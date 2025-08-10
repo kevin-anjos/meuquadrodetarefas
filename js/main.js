@@ -11,16 +11,16 @@ import { toggleTheme } from "./themeColorHandler.js";
 import { hideEditTaskArea } from './taskEditUI.js';
 
 //Importar objeto de elementos do arquivo de elementos DOM
-import * as domElement from './domElements.js';
+import * as domElements from './domElements.js';
 
 //Arrays de elementos 
-const themeToggleElements = [domElement.darkModeDot, domElement.lightModeDot];
-const tasksInputs = [domElement.addTaskInput, domElement.taskDescriptionInput];
+const themeToggleElements = [domElements.darkModeDot, domElements.lightModeDot];
+const tasksInputs = [domElements.addTaskInput, domElements.taskDescriptionInput];
 
 //Eventos
 
 //Eventos de Input
-domElement.searchTaskInput.addEventListener('input', () => {
+domElements.searchTaskInput.addEventListener('input', () => {
     searchTasks();
 });
 
@@ -31,26 +31,26 @@ tasksInputs.forEach(input => {
 
     input.addEventListener('keydown', event => {
         if (event.key === "Enter") {
-            getComputedStyle(domElement.editTaskBtn).display === "none" ? addTask() : editTask();
+            getComputedStyle(domElements.editTaskBtn).display === "none" ? addTask() : editTask();
         };
     });
 });
 
 //Eventos de mudança no elemento
-domElement.filterTaskSelect.addEventListener("change", () => {
+domElements.filterTaskSelect.addEventListener("change", () => {
     filterTasks();
 });
 
 //Eventos de botão
-domElement.addTaskBtn.addEventListener('click', () => {
+domElements.addTaskBtn.addEventListener('click', () => {
     addTask();
 });
 
-domElement.editTaskBtn.addEventListener('click', () => {
+domElements.editTaskBtn.addEventListener('click', () => {
     editTask();
 });
 
-domElement.cancelEditTaskBtn.addEventListener('click', () => {
+domElements.cancelEditTaskBtn.addEventListener('click', () => {
     hideEditTaskArea();
 });
 
@@ -62,7 +62,7 @@ themeToggleElements.forEach(themeToggleElement => {
 
 
 //Delegação de eventos (capturar elementos criados dinamicamente)
-domElement.taskListArea.addEventListener('click', event => {
+domElements.taskListArea.addEventListener('click', event => {
     if (event.target.classList.contains('delete-task-button')) {
         deleteTask(event.target.id);
     };

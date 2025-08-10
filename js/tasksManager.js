@@ -8,14 +8,13 @@ import { handleTasksListPrint } from "./tasksPrintHandler.js";
 import { Task } from './Task.js';
 
 //Importar arquivo de UI dos campos durante a edição de uma tarefa
-import { showEditTaskArea, hideEditTaskArea } from './taskEditUI.js'
+import { showEditTaskArea, hideEditTaskArea } from './taskEditUI.js';
 
 //Importar arquivo do storage 
-
-import { setTaskListInLocalStorage, getTasksList } from './storage.js'
+import { setTaskListInLocalStorage, getTasksListFromLocalStorage } from './storage.js';
 
 //Array das Tarefas
-export let tasksList = getTasksList();
+export let tasksList = getTasksListFromLocalStorage();
 handleTasksListPrint(tasksList);
 
 //Variável da posição da tarefa a ser mudada ao editar
@@ -53,8 +52,8 @@ export const addTask = () => {
         tasksList.push(task);
         setTaskListInLocalStorage(tasksList);
         handleTasksListPrint(tasksList);
-    } 
-}
+    } ;
+};
 
 //Deletar tarefa
 export const deleteTask = task => {
@@ -64,11 +63,11 @@ export const deleteTask = task => {
     deletedItemTasksList.forEach(task => {
         task.id = newTaskId;
         newTaskId++;
-    })
+    });
     tasksList = deletedItemTasksList;
     handleTasksListPrint(tasksList);
     setTaskListInLocalStorage(tasksList);
-}
+};
 
 // Adicionar ou remover a propriedade de feita da tarefa
 export const toggleDoneTask = task => {
@@ -81,7 +80,7 @@ export const toggleDoneTask = task => {
     handleTasksListPrint(tasksList);
     setTaskListInLocalStorage(tasksList);
     filterTasks();
-}
+};
 
 //Setar a tarefa a ser editada
 export const setTaskToBeEdited = task => {
@@ -92,7 +91,7 @@ export const setTaskToBeEdited = task => {
             showEditTaskArea(task);
         };
     });
-}
+};
 
 //Editar tarefa
 export const editTask = () => {

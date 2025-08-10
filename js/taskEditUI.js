@@ -9,7 +9,7 @@ export const showEditTaskArea = task => {
     editTaskBtn.style.display = "block";
     cancelEditTaskBtn.style.display = "block";
     addEditWordToggle.innerHTML = "Edite";
-}
+};
 
 // Esconder botão e span de editar tarefas
 export const hideEditTaskArea = () => {
@@ -19,4 +19,4 @@ export const hideEditTaskArea = () => {
     editTaskBtn.style.display = "none";
     cancelEditTaskBtn.style.display = "none";
     addEditWordToggle.innerHTML = "Adicione";
-}
+};

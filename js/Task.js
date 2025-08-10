@@ -7,5 +7,5 @@ export class Task {
         this.description = description;
         this.id = tasksList.length;
         this.isDone = false;
-    }
-}
+    };
+};

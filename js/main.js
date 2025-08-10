@@ -10,109 +10,68 @@ import { toggleTheme } from "./themeColorHandler.js";
 //Importar função de esconder área de edição de tarefas
 import { hideEditTaskArea } from './taskEditUI.js';
 
-//Importar elementos do arquivo de elementos DOM
-import { searchTaskInput, filterTaskSelect, addTaskInput, taskDescriptionInput, addTaskBtn, editTaskBtn, taskListArea, cancelEditTaskBtn, darkModeBtn, lightModeBtn, darkModeDot, lightModeDot } from './domElements.js';
+//Importar objeto de elementos do arquivo de elementos DOM
+import * as domElement from './domElements.js';
 
+//Arrays de elementos 
+const themeToggleElements = [domElement.darkModeDot, domElement.lightModeDot];
+const tasksInputs = [domElement.addTaskInput, domElement.taskDescriptionInput];
 
 //Eventos
 
 //Eventos de Input
-searchTaskInput.addEventListener('input', () => {
+domElement.searchTaskInput.addEventListener('input', () => {
     searchTasks();
-
-})
-
-// Limitar caracteres e ativar ação com Enter para addTaskInput
-addTaskInput.addEventListener('input', () => {
-    addTaskInput.value = addTaskInput.value.slice(0, 100);
 });
 
-addTaskInput.addEventListener('keydown', event => {
-    if (event.key === "Enter") {
-        getComputedStyle(editTaskBtn).display === "none" ? addTask() : editTask();
-    }
+tasksInputs.forEach(input => {
+    input.addEventListener('input', () => {
+        input.value = input.value.slice(0, 100)
+    });
+
+    input.addEventListener('keydown', event => {
+        if (event.key === "Enter") {
+            getComputedStyle(domElement.editTaskBtn).display === "none" ? addTask() : editTask();
+        };
+    });
 });
-
-// Limitar caracteres e ativar ação com Enter 
-taskDescriptionInput.addEventListener('input', () => {
-    taskDescriptionInput.value = taskDescriptionInput.value.slice(0, 100);
-});
-
-taskDescriptionInput.addEventListener('keydown', event => {
-    if (event.key === "Enter") {
-        getComputedStyle(editTaskBtn).display === "none" ? addTask() : editTask();
-    }
-});
-
-//Limitar caracteres até 100 nos inputs
-addTaskInput.addEventListener('input', () => {
-    addTaskInput.value = addTaskInput.value.slice(0, 100);
-});
-
-taskDescriptionInput.addEventListener('input', () => {
-    taskDescriptionInput.value = taskDescriptionInput.value.slice(0, 100);
-});
-
-
-//Verificar se o Enter deve adicionar ou editar uma tarefa 
-addTaskInput.addEventListener('keydown', event => {
-    if (event.key === "Enter") {
-        getComputedStyle(editTaskBtn).display === "none" ? addTask() : editTask();
-    }
-});
-
-taskDescriptionInput.addEventListener('keydown', event => {
-    if (event.key === "Enter") {
-        getComputedStyle(editTaskBtn).display === "none" ? addTask() : editTask();
-    }
-});
-
 
 //Eventos de mudança no elemento
-filterTaskSelect.addEventListener("change", () => {
+domElement.filterTaskSelect.addEventListener("change", () => {
     filterTasks();
-})
+});
 
 //Eventos de botão
-addTaskBtn.addEventListener('click', () => {
+domElement.addTaskBtn.addEventListener('click', () => {
     addTask();
 });
 
-editTaskBtn.addEventListener('click', () => {
+domElement.editTaskBtn.addEventListener('click', () => {
     editTask();
 });
 
-cancelEditTaskBtn.addEventListener('click', () => {
+domElement.cancelEditTaskBtn.addEventListener('click', () => {
     hideEditTaskArea();
-})
+});
 
-darkModeDot.addEventListener('click', () => {
-    toggleTheme();
-})
+themeToggleElements.forEach(themeToggleElement => {
+    themeToggleElement.addEventListener('click', () => {
+        toggleTheme();
+    });
+});
 
-lightModeDot.addEventListener('click', () => {
-    toggleTheme();
-})
-
-darkModeBtn.addEventListener('click', () => {
-    toggleTheme();
-})
-
-lightModeBtn.addEventListener('click', () => {
-    toggleTheme();
-})
 
 //Delegação de eventos (capturar elementos criados dinamicamente)
-taskListArea.addEventListener('click', event => {
+domElement.taskListArea.addEventListener('click', event => {
     if (event.target.classList.contains('delete-task-button')) {
         deleteTask(event.target.id);
-    }
+    };
 
     if (event.target.classList.contains('edit-task-button')) {
         setTaskToBeEdited(event.target.id);
-    }
+    };
 
     if (event.target.classList.contains('toggle-done-task-button')) {
         toggleDoneTask(event.target.id);
-    }
+    };
 });

@@ -1,13 +1,13 @@
 //Importar área de Impressão da Lista de Tasks
 
-import { taskListArea } from './domElements.js'
+import { taskListArea } from './domElements.js';
 
 
 //Handler da Lista de Tasks
 export const handleTasksListPrint = list => {
     resetTasksList();
     printTasksList(list);
-}
+};
 
 //Mensagem de Lista de Tarefas vazia
 const showEmptyListMessage = () => {
@@ -15,7 +15,7 @@ const showEmptyListMessage = () => {
     emptyListMessage.setAttribute('id', 'empty-list-text');
     emptyListMessage.innerHTML = "A lista está vazia...";
     taskListArea.appendChild(emptyListMessage);
-}
+};
 
 //Criar os elementos a serem imprimidos
 const createElementsToBePrinted = task => {
@@ -35,7 +35,7 @@ const createElementsToBePrinted = task => {
 
     if (task.description != undefined && task.description != "") {
         taskDescription.innerHTML = `<strong>Descrição:</strong> ${task.description}`
-    } 
+    };
 
     const taskButtonsArea = document.createElement('div');
     taskButtonsArea.classList.add("task-buttons");
@@ -50,7 +50,7 @@ const createElementsToBePrinted = task => {
         taskName.innerHTML = `${task.id + 1}. ${task.name}`;
         toggleDoneTaskBtn.classList.add("bi", "bi-check-circle", "toggle-done-task-button");
         toggleDoneTaskBtn.setAttribute('title', `Concluir`);
-    }
+    };
 
     toggleDoneTaskBtn.setAttribute('id', `done-btn-${task.id}`);
 
@@ -65,13 +65,13 @@ const createElementsToBePrinted = task => {
     deleteTaskBtn.setAttribute('title', `Deletar`);
 
     return { toggleDoneTaskBtn, editTaskBtn, deleteTaskBtn, taskInfo, taskName, taskDescription, taskButtonsArea, taskArea };
-}
+};
 
 //Imprimir Lista de tarefas
 const printTasksList = list => {
     if (list.length === 0) {
         return showEmptyListMessage();
-    }
+    };
 
     list.forEach(task => {
         const { toggleDoneTaskBtn, editTaskBtn, deleteTaskBtn, taskInfo, taskName, taskDescription, taskButtonsArea, taskArea } = createElementsToBePrinted(task);
@@ -88,7 +88,7 @@ const printTasksList = list => {
         taskArea.appendChild(taskButtonsArea);
 
         taskListArea.appendChild(taskArea);
-    })
+    });
 };
 
 //Apagar os dados impressos da lista de tarefas

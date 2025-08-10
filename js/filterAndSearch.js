@@ -21,19 +21,19 @@ export const filterTasks = () => {
 
     //Retorna a impressão da lista completa
     return handleTasksListPrint(tasksList);
-}
+};
 
 //Filtrar por tarefas não feitas
 const filterNotDoneTasks = () => {
     const filteredNotDoneTasks = tasksList.filter(task => !task.isDone)
     handleTasksListPrint(filteredNotDoneTasks);
-}
+};
 
 //Filtrar por tarefas feitas
 const filterDoneTasks = () => {
     const filteredDoneTasks = tasksList.filter(task => task.isDone)
     handleTasksListPrint(filteredDoneTasks);
-}
+};
 
 //Procurar por tarefas
 export const searchTasks = () => {
@@ -41,4 +41,4 @@ export const searchTasks = () => {
 
     filterTaskSelect.value = "filter-all";
     handleTasksListPrint(searchedTaskList);
-}
+};

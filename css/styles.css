@@ -372,11 +372,17 @@ h2 {
     width: 50%;
 }
 
-.task-name, .task-description {
+.task-name, .task-creation-date, .task-finished-date .task-description {
     word-wrap: break-word;
 }
 
-.task-description {
+.task-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.task-description, .task-creation-date, .task-finished-date {
+    font-size: 0.9rem;
     margin-top: .5rem;
 }
 

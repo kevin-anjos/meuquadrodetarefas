@@ -13,6 +13,12 @@ import { showEditTaskArea, hideEditTaskArea } from '../ui/taskEditUI.js';
 //Importar arquivo do storage 
 import { setTaskListInLocalStorage, getTasksListFromLocalStorage } from './storage.js';
 
+//Importar arquivo de filtros
+import { filterTasks } from './filterAndSearch.js';
+
+//Importar arquivo de datas 
+import { getCurrentDate } from './date.js';
+
 //Array das Tarefas
 export let tasksList = getTasksListFromLocalStorage();
 handleTasksListPrint(tasksList);
@@ -74,7 +80,13 @@ export const toggleDoneTask = task => {
     const taskId = Number(task.replace('done-btn-', ""));
     tasksList.forEach(task => {
         if (task.id === taskId) {
-            !task.isDone ? task.isDone = true : task.isDone = false;
+            if (task.isDone) {
+                task.isDone = false;
+                task.finishedDate = undefined;
+            } else {
+                task.isDone = true;
+                task.finishedDate = getCurrentDate();
+            }
         };
     });
     handleTasksListPrint(tasksList);
@@ -100,6 +112,7 @@ export const editTask = () => {
             task.name = addTaskInput.value;
             task.description = descriptionTaskInput.value;
             task.isDone = false;
+            task.finishedDate = undefined;
         };
     });
 

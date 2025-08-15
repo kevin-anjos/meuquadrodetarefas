@@ -28,6 +28,18 @@ const createElementsToBePrinted = task => {
     const taskName = document.createElement('div');
     taskName.classList.add("task-name");
 
+    const taskCreationDate = document.createElement('div');
+    taskCreationDate.classList.add("task-creation-date");
+
+    taskCreationDate.innerHTML = `<strong>Criada em:</strong> ${task.creationDate}`;
+
+    const taskFinishedDate = document.createElement('div');
+    taskFinishedDate.classList.add("task-finished-date");
+
+    if (task.finishedDate !== undefined) {
+        taskFinishedDate.innerHTML = `<strong>Concluída em:</strong> ${task.finishedDate}`
+    }
+
     const taskDescription = document.createElement('div');
     taskDescription.classList.add("task-description");
 
@@ -64,7 +76,7 @@ const createElementsToBePrinted = task => {
     deleteTaskBtn.setAttribute('id', `delete-btn-${task.id}`);
     deleteTaskBtn.setAttribute('title', `Deletar`);
 
-    return { toggleDoneTaskBtn, editTaskBtn, deleteTaskBtn, taskInfo, taskName, taskDescription, taskButtonsArea, taskArea };
+    return { toggleDoneTaskBtn, editTaskBtn, deleteTaskBtn, taskInfo, taskName, taskCreationDate, taskFinishedDate, taskDescription, taskButtonsArea, taskArea };
 };
 
 //Imprimir Lista de tarefas
@@ -74,13 +86,13 @@ const printTasksList = list => {
     };
 
     list.forEach(task => {
-        const { toggleDoneTaskBtn, editTaskBtn, deleteTaskBtn, taskInfo, taskName, taskDescription, taskButtonsArea, taskArea } = createElementsToBePrinted(task);
+        const { toggleDoneTaskBtn, editTaskBtn, deleteTaskBtn, taskInfo, taskName, taskCreationDate, taskFinishedDate, taskDescription, taskButtonsArea, taskArea } = createElementsToBePrinted(task);
         
         [toggleDoneTaskBtn, editTaskBtn, deleteTaskBtn].forEach(button => {
             taskButtonsArea.appendChild(button);
         });
 
-        [taskName, taskDescription].forEach(info => {
+        [taskName, taskCreationDate, taskFinishedDate, taskDescription].forEach(info => {
             taskInfo.appendChild(info);
         })
 

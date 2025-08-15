@@ -12,37 +12,45 @@
 </head>
 <body>
     <header>
-        <p id="light-mode-btn">Modo claro</p>
-        <div id="theme-color-toggle-area">
-            <div id="light-mode-dot" class="dot light-mode-animation-active"></div>
-            <i class="bi bi-moon-fill dark-mode-animation-active" id="dark-mode-ico"></i>
-            <i class="bi bi-sun-fill" id="light-mode-ico"></i>
-            <div id="dark-mode-dot" class="dot dark-mode-animation-active"></div>
+        <div id="add-task-button-area">
+            <i class="bi bi-plus-circle-fill" id="show-add-task-area-btn"></i>
+            <p>Adicionar</p>
         </div>
-        <p class="line-under-dark-text-animation" id="dark-mode-btn">Modo escuro</p>
+        <div id="toggle-mode-area-wrapper">
+            <p id="light-mode-btn">Modo claro</p>
+            <div id="theme-color-toggle-area">
+                <div id="light-mode-dot" class="dot light-mode-animation-active"></div>
+                <i class="bi bi-moon-fill dark-mode-animation-active" id="dark-mode-ico"></i>
+                <i class="bi bi-sun-fill" id="light-mode-ico"></i>
+                <div id="dark-mode-dot" class="dot dark-mode-animation-active"></div>
+            </div>
+            <p class="line-under-dark-text-animation" id="dark-mode-btn">Modo escuro</p>
+        </div>
     </header>
+    <div class="task-inputs add-task-modal">
+        <div id="label-button-cancel-add-wrapper">
+            <label for="add-task-input"><span id="add-edit-word-toggle">Adicione</span> a sua tarefa:</label>
+            <i class="bi bi-x-circle-fill" id="cancel-add-task-btn"></i>
+        </div>
+        <div class="task-input">
+            <div id="add-task-area">
+                <div class="input">
+                    <i class="bi bi-person-lines-fill"></i>
+                    <input type="text" placeholder="O que você vai fazer?" id="add-task-input" autocomplete="off">
+                </div>
+                <div class="input" id="task-description-input-area">
+                    <i class="bi bi-list-task"></i>
+                    <input type="text" placeholder="Descrição da tarefa" id="task-description-input" autocomplete="off">
+                </div>
+                <button id="add-task-btn">Adicionar</button>
+                <button id="edit-task-btn">Editar</button>
+            </div>
+        </div>
+    </div>
     <main>
         <h1>Quadro de tarefas:</h1>
         <section id="tasks-dashboard">
             <section id="task-inputs-area">
-                <div class="task-inputs">
-                    <div class="task-input">
-                        <label for="add-task-input"><span id="add-edit-word-toggle">Adicione</span> a sua tarefa:</label>
-                        <div id="add-task-area">
-                            <div class="input">
-                                <i class="bi bi-person-lines-fill"></i>
-                                <input type="text" placeholder="O que você vai fazer?" id="add-task-input" autocomplete="off">
-                            </div>
-                            <div class="input" id="task-description-input-area">
-                                <i class="bi bi-list-task"></i>
-                                <input type="text" placeholder="Descrição da tarefa" id="task-description-input" autocomplete="off">
-                            </div>
-                            <button id="add-task-btn">Adicionar</button>
-                            <button id="edit-task-btn">Editar</button>
-                            <button id="cancel-edit-task-btn">Cancelar</button>
-                        </div>
-                    </div>
-                </div>
                 <div class="task-inputs">
                     <div class="task-input">
                         <label for="search-task-input">Pesquisar:</label>
@@ -70,5 +78,6 @@
             </section>
         </section>
     </main>
+    <div id="fade" class="hidden"></div>
 </body>
 </html>

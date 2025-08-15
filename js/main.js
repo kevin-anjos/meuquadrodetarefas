@@ -13,9 +13,13 @@ import { hideEditTaskArea } from './ui/taskEditUI.js';
 //Importar objeto de elementos do arquivo de elementos DOM
 import * as domElements from './domElements.js';
 
+//Importar arquivo de handler da área de adição de tasks
+import { hideAddTaskArea, showAddTaskArea } from "./ui/addTaskAreaHandler.js";
+
 //Arrays de elementos 
 const themeToggleElements = [domElements.darkModeDot, domElements.lightModeDot];
 const tasksInputs = [domElements.addTaskInput, domElements.descriptionTaskInput];
+const cancelTaskAddElements = [domElements.fade, domElements.cancelAddTaskBtn];
 
 //Eventos
 
@@ -42,16 +46,23 @@ domElements.filterTaskSelect.addEventListener("change", () => {
 });
 
 //Eventos de botão
+domElements.addTaskBtnArea.addEventListener('click', () => {
+    showAddTaskArea();
+})
+
+cancelTaskAddElements.forEach(element => {
+    element.addEventListener('click', () => {
+        hideAddTaskArea();
+        hideEditTaskArea();
+    })
+})
+
 domElements.addTaskBtn.addEventListener('click', () => {
     addTask();
 });
 
 domElements.editTaskBtn.addEventListener('click', () => {
     editTask();
-});
-
-domElements.cancelEditTaskBtn.addEventListener('click', () => {
-    hideEditTaskArea();
 });
 
 themeToggleElements.forEach(themeToggleElement => {

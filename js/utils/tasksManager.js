@@ -38,7 +38,7 @@ const removeHTMLTagsInTaskInfo = () => {
 const taskCanBeAdded = () => {
     const { taskNameWithoutTAGS } = removeHTMLTagsInTaskInfo();
 
-    let taskNameExists;
+    let taskNameExists = false;
 
     tasksList.forEach(task => {
         if (task.name.toLowerCase() === taskNameWithoutTAGS.toLowerCase()) {
@@ -58,6 +58,7 @@ export const addTask = () => {
         tasksList.push(task);
         setTaskListInLocalStorage(tasksList);
         handleTasksListPrint(tasksList);
+        addTaskInput.value = "";
     } ;
 };
 

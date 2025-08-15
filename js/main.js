@@ -1,21 +1,21 @@
 //Importar função de filtrar tasks do filter.js
-import { filterTasks, searchTasks } from "./filterAndSearch.js";
+import { filterTasks, searchTasks } from "./utils/filterAndSearch.js";
 
 //Importar funções da lista de tarefas do tasksManager.js
-import { addTask, deleteTask, setTaskToBeEdited, toggleDoneTask, editTask } from "./tasksManager.js";
+import { addTask, deleteTask, setTaskToBeEdited, toggleDoneTask, editTask } from "./utils/tasksManager.js";
 
 //Importar funções de handler de modo de cor
-import { toggleTheme } from "./themeColorHandler.js";
+import { toggleTheme } from "./ui/themeColorHandler.js";
 
 //Importar função de esconder área de edição de tarefas
-import { hideEditTaskArea } from './taskEditUI.js';
+import { hideEditTaskArea } from './ui/taskEditUI.js';
 
 //Importar objeto de elementos do arquivo de elementos DOM
 import * as domElements from './domElements.js';
 
 //Arrays de elementos 
 const themeToggleElements = [domElements.darkModeDot, domElements.lightModeDot];
-const tasksInputs = [domElements.addTaskInput, domElements.taskDescriptionInput];
+const tasksInputs = [domElements.addTaskInput, domElements.descriptionTaskInput];
 
 //Eventos
 

@@ -423,6 +423,16 @@ h2 {
     margin-top: 1rem;
 }
 
+/*Mostrar botões de edição de task*/
+
+body.show-edit-task-area #add-task-btn {
+    display: none;
+}
+
+body.show-edit-task-area #edit-task-btn, body.show-edit-task-area #cancel-edit-task-btn {
+    display: block;
+}
+
 /*Light Mode*/
 
 body.light-mode-active {

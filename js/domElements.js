@@ -1,22 +1,26 @@
 // Seleção de Elementos
-export const taskListArea = document.querySelector('#tasks-list');
+const taskListArea = document.querySelector('#tasks-list');
 
-export const addTaskBtn = document.querySelector('#add-task-btn');
-export const editTaskBtn = document.querySelector('#edit-task-btn');
-export const cancelEditTaskBtn = document.querySelector('#cancel-edit-task-btn');
+const addTaskBtn = document.querySelector('#add-task-btn');
+const editTaskBtn = document.querySelector('#edit-task-btn');
+const cancelEditTaskBtn = document.querySelector('#cancel-edit-task-btn');
 
-export const searchTaskInput = document.querySelector('#search-task-input');
-export const addTaskInput = document.querySelector('#add-task-input');
-export const taskDescriptionInput = document.querySelector('#task-description-input');
-export const filterTaskSelect = document.querySelector('#filter-task-select');
+const searchTaskInput = document.querySelector('#search-task-input');
+const addTaskInput = document.querySelector('#add-task-input');
+const descriptionTaskInput = document.querySelector('#task-description-input');
+const filterTaskSelect = document.querySelector('#filter-task-select');
 
-export const addEditWordToggle = document.querySelector("#add-edit-word-toggle");
+const addEditWordToggle = document.querySelector("#add-edit-word-toggle");
 
-export const darkModeDot = document.querySelector('#dark-mode-dot');
-export const lightModeDot = document.querySelector('#light-mode-dot');
+const darkModeDot = document.querySelector('#dark-mode-dot');
+const lightModeDot = document.querySelector('#light-mode-dot');
 
-export const darkModeBtn = document.querySelector('#dark-mode-btn');
-export const lightModeBtn = document.querySelector('#light-mode-btn');
+const darkModeBtn = document.querySelector('#dark-mode-btn');
+const lightModeBtn = document.querySelector('#light-mode-btn');
 
-export const darkModeIco = document.querySelector('#dark-mode-ico');
-export const lightModeIco = document.querySelector('#light-mode-ico');
+const darkModeIco = document.querySelector('#dark-mode-ico');
+const lightModeIco = document.querySelector('#light-mode-ico');
+
+export {
+    taskListArea, addTaskBtn, editTaskBtn, cancelEditTaskBtn, searchTaskInput, addTaskInput, descriptionTaskInput, filterTaskSelect, addEditWordToggle, darkModeDot, lightModeDot, darkModeBtn, lightModeBtn, darkModeIco, lightModeIco
+}

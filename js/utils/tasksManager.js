@@ -1,14 +1,14 @@
 //Importar elementos do arquivo de elementos DOM
-import { addTaskInput, taskDescriptionInput } from './domElements.js';
+import { addTaskInput,  descriptionTaskInput } from '../domElements.js';
 
 //Importar handler de impressão de Lista de Tasks
-import { handleTasksListPrint } from "./tasksPrintHandler.js";
+import { handleTasksListPrint } from "../ui/tasksPrintHandler.js";
 
 //Importar classe das tarefas
 import { Task } from './Task.js';
 
 //Importar arquivo de UI dos campos durante a edição de uma tarefa
-import { showEditTaskArea, hideEditTaskArea } from './taskEditUI.js';
+import { showEditTaskArea, hideEditTaskArea } from '../ui/taskEditUI.js';
 
 //Importar arquivo do storage 
 import { setTaskListInLocalStorage, getTasksListFromLocalStorage } from './storage.js';
@@ -23,7 +23,7 @@ let toBeEditedID;
 //Remover transformação de texto em TAGS HTML
 const removeHTMLTagsInTaskInfo = () => {
     const taskNameWithoutTAGS = addTaskInput.value.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-    const taskDecriptionWithoutTAGS = taskDescriptionInput.value.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    const taskDecriptionWithoutTAGS = descriptionTaskInput.value.replace(/</g, "&lt;").replace(/>/g, "&gt;");
     
     return {taskNameWithoutTAGS, taskDecriptionWithoutTAGS};
 }
@@ -98,7 +98,7 @@ export const editTask = () => {
     tasksList.forEach(task => {
         if (task.id === toBeEditedID) {
             task.name = addTaskInput.value;
-            task.description = taskDescriptionInput.value;
+            task.description = descriptionTaskInput.value;
             task.isDone = false;
         };
     });

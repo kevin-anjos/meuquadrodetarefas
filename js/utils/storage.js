@@ -1,6 +1,6 @@
 //Importar arquivo de handler de tema
 
-import { toggleTheme } from './themeColorHandler.js';
+import { toggleTheme } from '../ui/themeColorHandler.js';
 
 //Colocar a lista de Tasks no Local Storage
 export const setTaskListInLocalStorage = list => {

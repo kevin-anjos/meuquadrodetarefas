@@ -1,8 +1,8 @@
 //Importar modo do localStorage
-import { setThemeInLocalStorage } from './storage.js';
+import { setThemeInLocalStorage } from '../utils/storage.js';
 
 //Importar arquivo de storage
-import { darkModeIco, lightModeIco, darkModeDot, darkModeBtn, lightModeBtn } from './domElements.js';
+import { darkModeIco, lightModeIco, darkModeDot, darkModeBtn, lightModeBtn } from '../domElements.js';
 
 
 //Alternar tema

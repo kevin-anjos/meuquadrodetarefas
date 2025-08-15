@@ -1,38 +1,37 @@
 //Importar elementos do arquivo de elementos DOM
-import { filterTaskSelect, searchTaskInput } from './domElements.js';
+import { filterTaskSelect, searchTaskInput } from '../domElements.js';
 
 //Importar handler de impressão de Lista de Tasks
-import { handleTasksListPrint } from "./tasksPrintHandler.js";
+import { handleTasksListPrint } from "../ui/tasksPrintHandler.js";
 
-//ImportarLista de Tasks
+//Importar lista de tarefas
 import { tasksList } from "./tasksManager.js";
 
 //Funções
 
 //Filtrar tarefas por categoria
 export const filterTasks = () => {
-    if (filterTaskSelect.value === "filter-not-done") {
-        return filterNotDoneTasks();
-    }
-
-    if (filterTaskSelect.value === "filter-done") {
-        return filterDoneTasks();
-    }
-
-    //Retorna a impressão da lista completa
-    return handleTasksListPrint(tasksList);
+    const setfilter = filters[filterTaskSelect.value];
+    setfilter(tasksList);
 };
 
 //Filtrar por tarefas não feitas
 const filterNotDoneTasks = () => {
-    const filteredNotDoneTasks = tasksList.filter(task => !task.isDone)
+    const filteredNotDoneTasks = tasksList.filter(task => !task.isDone);
     handleTasksListPrint(filteredNotDoneTasks);
 };
 
 //Filtrar por tarefas feitas
 const filterDoneTasks = () => {
-    const filteredDoneTasks = tasksList.filter(task => task.isDone)
+    const filteredDoneTasks = tasksList.filter(task => task.isDone);
     handleTasksListPrint(filteredDoneTasks);
+};
+
+//Filtros
+const filters = {
+    'filter-not-done': filterNotDoneTasks,
+    'filter-done': filterDoneTasks,
+    'filter-all': handleTasksListPrint
 };
 
 //Procurar por tarefas

@@ -2,11 +2,13 @@
 
 :root {
     --black-color: #161515;
+    --secondary-black-color: #373232;
     --purple-color: #4819ac;
     --secondary-blue-color: #044dc3;
     --blue-color: #376dc4;
-    --orange-color: #e8a410ff;
+    --orange-color: #d69200;
     --white-color: #f3f3f3;
+    --secondary-white-color: #c8c7c7;
     --grey-color: #8f8d8d;    
     --secondary-grey-color: #5d5959;
     --red-color: #fd2b0f;
@@ -30,15 +32,17 @@ html, body {
 
 body {
     display: flex;
-    flex-direction: column;   
+    flex-direction: column;
     align-items: center;
     background-color: var(--black-color);
     overflow-y: auto;
     padding: 0rem 1rem;
     gap: 4rem;
+    position: relative;
 }
 
 header {
+    position: fixed;
     padding: 1rem 0rem;    
     width: 100%;
     display: flex;
@@ -47,6 +51,8 @@ header {
     gap: 1rem;
     margin-bottom: 1rem;
     color: var(--white-color);
+    background-color: var(--secondary-black-color);
+    z-index: 2;
 }
 
 header i {
@@ -207,14 +213,14 @@ header i {
 }
 
 .add-task-modal {
-    position: absolute;
+    position: fixed;
     top: -50%;
-    left: -50%;
-    transform: translate(-50%, -50%);
+    left: 50%;
     background-color: var(--grey-color);
-    padding: 2rem 1rem;
+    transform: translate(-50%, -50%);
+    padding: 1rem;
     border-radius: 10px;
-    width: 70%;
+    width: 50%;
     flex-direction: column;
     transition: 2s;
     z-index: 10;
@@ -223,7 +229,10 @@ header i {
 .add-task-modal.show-add-modal {
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+}
+
+.add-task-modal label {
+    font-size: 1.8rem;
 }
 
 #label-button-cancel-add-wrapper {
@@ -251,6 +260,7 @@ main {
     justify-content: center;
     align-items: center;
     width: 100%;
+    margin-top: 10rem;
 }
 
 #tasks-dashboard {
@@ -516,6 +526,7 @@ body.light-mode-active {
 }
 
 body.light-mode-active header{
+    background-color: var(--secondary-white-color);
     color: var(--black-color);
 }
 
@@ -548,13 +559,11 @@ body.light-mode-active h2 {
     border-bottom: 1px solid var(--black-color);
 }
 
-
 @media screen and (max-width: 920px) {
     .task-inputs {
         flex-direction: column;
     }
 }
-
 
 @media screen and (max-width: 800px) {
     #add-task-area  {
@@ -587,8 +596,17 @@ body.light-mode-active h2 {
     }
 }
 
+@media screen and (max-width: 700px) {
+    .add-task-modal {
+        width: 70%;
+    }
+}
 
 @media screen and (max-width: 550px) {
+    .add-task-modal {
+        width: 80%;
+    }
+
     #tasks-dashboard {
         width: 80%;
     }
@@ -608,6 +626,10 @@ body.light-mode-active h2 {
         display: none;
     }
 
+    .add-task-modal {
+        width: 90%;
+    }
+
     h1 {
         font-size: 3.5em;
     }
@@ -621,10 +643,7 @@ body.light-mode-active h2 {
     h1 {
         font-size: 3.1em;
     }
-
-    
 }
-
 
 @media screen and (max-width: 340px) {
     h1 {

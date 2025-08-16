@@ -7,8 +7,8 @@ import { handleTasksListPrint } from "../ui/tasksPrintHandler.js";
 //Importar classe das tarefas
 import { Task } from './Task.js';
 
-//Importar arquivo de UI dos campos durante a edição de uma tarefa
-import { showEditTaskArea, hideEditTaskArea } from '../ui/taskEditUI.js';
+//Importar arquivo de UI dos campos 
+import { showEditTaskArea, hideEditTaskArea, hideAddTaskArea } from '../ui/taskModalAreaHandler.js';
 
 //Importar arquivo do storage 
 import { setTaskListInLocalStorage, getTasksListFromLocalStorage } from './storage.js';
@@ -109,7 +109,7 @@ export const setTaskToBeEdited = task => {
 //Editar tarefa
 export const editTask = () => {
     tasksList.forEach(task => {
-        if (task.id === toBeEditedID) {
+        if (task.id === toBeEditedID && addTaskInput.value !== "") {
             task.name = addTaskInput.value;
             task.description = descriptionTaskInput.value;
             task.isDone = false;
@@ -120,4 +120,5 @@ export const editTask = () => {
     setTaskListInLocalStorage(tasksList);
     handleTasksListPrint(tasksList);
     hideEditTaskArea();
+    hideAddTaskArea();
 };

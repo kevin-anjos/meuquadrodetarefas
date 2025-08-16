@@ -7,14 +7,11 @@ import { addTask, deleteTask, setTaskToBeEdited, toggleDoneTask, editTask } from
 //Importar funções de handler de modo de cor
 import { toggleTheme } from "./ui/themeColorHandler.js";
 
-//Importar função de esconder área de edição de tarefas
-import { hideEditTaskArea } from './ui/taskEditUI.js';
-
 //Importar objeto de elementos do arquivo de elementos DOM
 import * as domElements from './domElements.js';
 
-//Importar arquivo de handler da área de adição de tasks
-import { hideAddTaskArea, showAddTaskArea } from "./ui/addTaskAreaHandler.js";
+//Importar arquivo de handler da área do modal de tasks
+import { hideAddTaskArea, showAddTaskArea, hideEditTaskArea } from "./ui/taskModalAreaHandler.js";
 
 //Arrays de elementos 
 const themeToggleElements = [domElements.darkModeDot, domElements.lightModeDot];

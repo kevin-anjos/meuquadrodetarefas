@@ -1,7 +1,14 @@
-//Importar elementos do arquivo de elementos DOM
-import { addEditWordToggle, addTaskInput, descriptionTaskInput } from '../domElements.js';
+import {addEditWordToggle, addTaskInput, descriptionTaskInput, fade, addTaskModal } from "../domElements.js";
 
-import { showAddTaskArea } from './addTaskAreaHandler.js';
+export const hideAddTaskArea = () => {
+    addTaskModal.classList.remove('show-add-modal');
+    fade.classList.add('hidden');
+};
+
+export const showAddTaskArea = () => {
+    addTaskModal.classList.add('show-add-modal');
+    fade.classList.remove('hidden');
+};
 
 // Mostrar botão e span de editar tarefas e imprimir o nome da tarefa atual no input
 export const showEditTaskArea = task => {

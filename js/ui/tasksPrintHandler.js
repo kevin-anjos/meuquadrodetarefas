@@ -92,7 +92,7 @@ const printTasksList = list => {
             taskButtonsArea.appendChild(button);
         });
 
-        [taskName, taskCreationDate, taskFinishedDate, taskDescription].forEach(info => {
+        [taskName, taskDescription, taskCreationDate, taskFinishedDate].forEach(info => {
             taskInfo.appendChild(info);
         })
 

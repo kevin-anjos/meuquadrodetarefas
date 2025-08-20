@@ -1,4 +1,6 @@
-import {addEditWordToggle, addTaskInput, descriptionTaskInput, fade, addTaskModal } from "../domElements.js";
+import {addEditWordToggle, addTaskInput, descriptionTaskInput, fade, addTaskModal, deleteAllListBtn } from "../domElements.js";
+
+import { tasksList } from "../utils/tasksManager.js";
 
 export const hideAddTaskArea = () => {
     addTaskModal.classList.remove('show-add-modal');
@@ -26,3 +28,12 @@ export const hideEditTaskArea = () => {
     document.body.classList.remove('show-edit-task-area');
     addEditWordToggle.innerHTML = "Adicione";
 };
+
+//Lidar com o botão de deletar todas da tarefas
+export const handleDeleteAllBtnVisibility = () => {
+    if (tasksList.length === 0) {
+        deleteAllListBtn.classList.add('hide');
+    } else {
+        deleteAllListBtn.classList.remove('hide');
+    }
+}

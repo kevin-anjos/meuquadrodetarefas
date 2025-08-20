@@ -8,7 +8,7 @@ import { handleTasksListPrint } from "../ui/tasksPrintHandler.js";
 import { Task } from './Task.js';
 
 //Importar arquivo de UI dos campos 
-import { showEditTaskArea, hideEditTaskArea, hideAddTaskArea } from '../ui/taskModalAreaHandler.js';
+import { showEditTaskArea, hideEditTaskArea, hideAddTaskArea, handleDeleteAllBtnVisibility } from '../ui/taskModalAreaHandler.js';
 
 //Importar arquivo do storage 
 import { setTaskListInLocalStorage, getTasksListFromLocalStorage } from './storage.js';
@@ -21,10 +21,9 @@ import { getCurrentDate } from './date.js';
 
 //Array das Tarefas
 export let tasksList = getTasksListFromLocalStorage();
-handleTasksListPrint(tasksList);
 
 //Variável da posição da tarefa a ser mudada ao editar
-let toBeEditedID;
+let toBeEditedTaskID;
 
 //Remover transformação de texto em TAGS HTML
 const removeHTMLTagsInTaskInfo = () => {
@@ -38,15 +37,9 @@ const removeHTMLTagsInTaskInfo = () => {
 const taskCanBeAdded = () => {
     const { taskNameWithoutTAGS } = removeHTMLTagsInTaskInfo();
 
-    let taskNameExists = false;
+    const taskNameExists = tasksList.some(task => task.name.toLowerCase() === taskNameWithoutTAGS.toLowerCase());
 
-    tasksList.forEach(task => {
-        if (task.name.toLowerCase() === taskNameWithoutTAGS.toLowerCase()) {
-            taskNameExists = true;
-        } 
-    })
-
-    return addTaskInput.value != "" && !taskNameExists;
+    return addTaskInput.value !== "" && !taskNameExists;
 }
 
 //Adicionar Task
@@ -56,9 +49,9 @@ export const addTask = () => {
 
         const task = new Task(taskNameWithoutTAGS, taskDecriptionWithoutTAGS);
         tasksList.push(task);
-        setTaskListInLocalStorage(tasksList);
-        handleTasksListPrint(tasksList);
         addTaskInput.value = "";
+
+        updateApp();
     } ;
 };
 
@@ -66,59 +59,68 @@ export const addTask = () => {
 export const deleteTask = task => {
     const taskId = Number(task.replace('delete-btn-', ""));
     let newTaskId = 0;
-    const deletedItemTasksList = tasksList.filter(task => task.id != taskId);
-    deletedItemTasksList.forEach(task => {
+    tasksList = tasksList.filter(task => task.id != taskId);
+
+    tasksList.forEach(task => {
         task.id = newTaskId;
         newTaskId++;
     });
-    tasksList = deletedItemTasksList;
-    handleTasksListPrint(tasksList);
-    setTaskListInLocalStorage(tasksList);
+
+    updateApp();
 };
+
+//Deletar toda a lista 
+export const deleteAllList = () => {
+    tasksList = [];
+    updateApp();
+}
 
 // Adicionar ou remover a propriedade de feita da tarefa
 export const toggleDoneTask = task => {
     const taskId = Number(task.replace('done-btn-', ""));
-    tasksList.forEach(task => {
-        if (task.id === taskId) {
-            if (task.isDone) {
-                task.isDone = false;
-                task.finishedDate = undefined;
-            } else {
-                task.isDone = true;
-                task.finishedDate = getCurrentDate();
-            }
-        };
-    });
-    handleTasksListPrint(tasksList);
-    setTaskListInLocalStorage(tasksList);
+    const taskToBeToggled = tasksList.find(task => task.id === taskId);
+
+    if (taskToBeToggled.isDone) {
+        taskToBeToggled.isDone = false;
+        taskToBeToggled.finishedDate = undefined;
+    } else {
+        taskToBeToggled.isDone = true;
+        taskToBeToggled.finishedDate = getCurrentDate();
+    }
+
+    updateApp();
     filterTasks();
 };
 
 //Setar a tarefa a ser editada
 export const setTaskToBeEdited = task => {
     const taskId = Number(task.replace('edit-btn-', ""));
-    toBeEditedID = taskId;
-    tasksList.forEach(task => {
-        if (task.id === taskId) {
-            showEditTaskArea(task);
-        };
-    });
+    toBeEditedTaskID = taskId;
+    const toBeEditedTask = tasksList.find((task => task.id === taskId));
+    showEditTaskArea(toBeEditedTask);
 };
 
 //Editar tarefa
 export const editTask = () => {
-    tasksList.forEach(task => {
-        if (task.id === toBeEditedID && addTaskInput.value !== "") {
-            task.name = addTaskInput.value;
-            task.description = descriptionTaskInput.value;
-            task.isDone = false;
-            task.finishedDate = undefined;
-        };
-    });
+    const editedTask = tasksList.find(task => task.id === toBeEditedTaskID);
 
-    setTaskListInLocalStorage(tasksList);
-    handleTasksListPrint(tasksList);
+    if (addTaskInput.value !== "") {
+        editedTask.name = addTaskInput.value;
+        editedTask.description = descriptionTaskInput.value;
+        editedTask.isDone = false;
+        editedTask.finishedDate = undefined;
+    }
+
+    updateApp();
     hideEditTaskArea();
     hideAddTaskArea();
 };
+
+const updateApp = () => {
+    handleTasksListPrint(tasksList);
+    setTaskListInLocalStorage(tasksList);
+    handleDeleteAllBtnVisibility();
+}
+
+//Executar funções de renderização de tarefas e de botão de apagar todas as tarefas
+updateApp();

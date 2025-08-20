@@ -3,7 +3,7 @@
 :root {
     --black-color: #161515;
     --secondary-black-color: #373232;
-    --purple-color: #4819ac;
+    --purple-color: #48229b;
     --secondary-blue-color: #044dc3;
     --blue-color: #376dc4;
     --orange-color: #d69200;
@@ -43,7 +43,7 @@ body {
 
 header {
     position: fixed;
-    padding: 1rem 0rem;    
+    padding: 1rem;    
     width: 100%;
     display: flex;
     justify-content: space-around;
@@ -495,6 +495,58 @@ h2 {
     margin-top: 1rem;
 }
 
+#delete-all-list-btn-area {
+    display: flex;
+    justify-content: flex-end;
+    width: 60%;
+}
+
+#delete-all-list-btn {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    cursor: pointer;
+    border-radius: 10px;
+    padding: 1rem;
+    margin-top: 1rem;
+    background-color: var(--red-color);
+    transition: .5s;
+    color: var(--white-color);
+}
+
+#delete-all-list-btn i{
+    color: var(--white-color);
+}
+
+#delete-all-list-btn:hover {
+    background-color: var(--secondary-red-color);
+}
+
+#delete-all-list-btn.hide {
+    display: none;
+}
+
+/*Animação de carregamento*/
+
+#loading-list-animation {
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    margin-top: 1rem;
+    padding: 1rem;
+    border: 4px solid var(--white-color);
+    border-top: 3px solid var(--purple-color);
+    animation: loading-animation 1s infinite linear;
+}
+
+@keyframes loading-animation {
+    from {
+        transform: rotate(0deg);
+    } to {
+        transform: rotate(360deg);
+    }
+}
+
 /*Fade*/
 #fade {
     position: fixed;
@@ -557,6 +609,10 @@ body.light-mode-active #tasks-dashboard {
 
 body.light-mode-active h2 {
     border-bottom: 1px solid var(--black-color);
+}
+
+body.light-mode-active #delete-all-list-btn,  body.light-mode-active #delete-all-list-btn i{
+    color: var(--black-color);
 }
 
 @media screen and (max-width: 920px) {

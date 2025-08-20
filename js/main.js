@@ -2,7 +2,7 @@
 import { filterTasks, searchTasks } from "./utils/filterAndSearch.js";
 
 //Importar funções da lista de tarefas do tasksManager.js
-import { addTask, deleteTask, setTaskToBeEdited, toggleDoneTask, editTask } from "./utils/tasksManager.js";
+import { addTask, deleteTask, setTaskToBeEdited, toggleDoneTask, editTask, deleteAllList } from "./utils/tasksManager.js";
 
 //Importar funções de handler de modo de cor
 import { toggleTheme } from "./ui/themeColorHandler.js";
@@ -61,6 +61,10 @@ domElements.addTaskBtn.addEventListener('click', () => {
 domElements.editTaskBtn.addEventListener('click', () => {
     editTask();
 });
+
+domElements.deleteAllListBtn.addEventListener('click', () => {
+    deleteAllList();
+})
 
 themeToggleElements.forEach(themeToggleElement => {
     themeToggleElement.addEventListener('click', () => {

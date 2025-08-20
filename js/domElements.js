@@ -26,6 +26,8 @@ const lightModeBtn = document.querySelector('#light-mode-btn');
 const darkModeIco = document.querySelector('#dark-mode-ico');
 const lightModeIco = document.querySelector('#light-mode-ico');
 
+const deleteAllListBtn = document.querySelector("#delete-all-list-btn");
+
 export {
-    taskListArea, addTaskModal, fade, addTaskBtn, addTaskBtnArea, editTaskBtn, searchTaskInput, cancelAddTaskBtn, addTaskInput, descriptionTaskInput, filterTaskSelect, addEditWordToggle, darkModeDot, lightModeDot, darkModeBtn, lightModeBtn, darkModeIco, lightModeIco
+    taskListArea, addTaskModal, fade, addTaskBtn, addTaskBtnArea, editTaskBtn, searchTaskInput, cancelAddTaskBtn, addTaskInput, descriptionTaskInput, filterTaskSelect, addEditWordToggle, darkModeDot, lightModeDot, darkModeBtn, lightModeBtn, darkModeIco, lightModeIco, deleteAllListBtn
 }

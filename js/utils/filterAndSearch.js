@@ -36,7 +36,7 @@ const filters = {
 
 //Procurar por tarefas
 export const searchTasks = () => {
-    const searchedTaskList = tasksList.filter(task => task.name.toLowerCase().includes(searchTaskInput.value.toLowerCase()));
+    const searchedTaskList = tasksList.filter(task => task.name.toLowerCase().includes(searchTaskInput.value.toLowerCase()) || task.description.toLowerCase().includes(searchTaskInput.value.toLowerCase()));
 
     filterTaskSelect.value = "filter-all";
     handleTasksListPrint(searchedTaskList);

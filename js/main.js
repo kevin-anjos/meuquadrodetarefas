@@ -11,12 +11,14 @@ import { toggleTheme } from "./ui/themeColorHandler.js";
 import * as domElements from './domElements.js';
 
 //Importar arquivo de handler da área do modal de tasks
-import { hideAddTaskArea, showAddTaskArea, hideEditTaskArea } from "./ui/taskModalAreaHandler.js";
+import { hideAddTaskArea, showAddTaskArea, hideEditTaskArea, confirmTaskDeletion } from "./ui/taskModalAreaHandler.js";
 
 //Arrays de elementos 
 const themeToggleElements = [domElements.darkModeDot, domElements.lightModeDot];
 const tasksInputs = [domElements.addTaskInput, domElements.descriptionTaskInput];
-const cancelTaskAddElements = [domElements.fade, domElements.cancelAddTaskBtn];
+
+//Variável do ID da task a ser deletada
+let toBeDeletedTaskID;
 
 //Eventos
 
@@ -47,8 +49,14 @@ domElements.addTaskBtnArea.addEventListener('click', () => {
     showAddTaskArea();
 })
 
-cancelTaskAddElements.forEach(element => {
-    element.addEventListener('click', () => {
+domElements.fade.addEventListener('click', () => {
+    hideAddTaskArea();
+    hideEditTaskArea();
+})
+
+
+domElements.cancelAddTaskBtn.forEach(button => {
+    button.addEventListener('click', () => {
         hideAddTaskArea();
         hideEditTaskArea();
     })
@@ -66,6 +74,12 @@ domElements.deleteAllListBtn.addEventListener('click', () => {
     deleteAllList();
 })
 
+domElements.deleteTaskBtn.addEventListener('click', () => {
+    deleteTask(toBeDeletedTaskID);
+    hideAddTaskArea();
+    hideEditTaskArea();
+})
+
 themeToggleElements.forEach(themeToggleElement => {
     themeToggleElement.addEventListener('click', () => {
         toggleTheme();
@@ -76,7 +90,9 @@ themeToggleElements.forEach(themeToggleElement => {
 //Delegação de eventos (capturar elementos criados dinamicamente)
 domElements.taskListArea.addEventListener('click', event => {
     if (event.target.classList.contains('delete-task-button')) {
-        deleteTask(event.target.id);
+        toBeDeletedTaskID = event.target.id;
+        confirmTaskDeletion();
+        //deleteTask(event.target.id);
     };
 
     if (event.target.classList.contains('edit-task-button')) {

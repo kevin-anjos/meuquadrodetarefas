@@ -27,24 +27,33 @@
             <p class="line-under-dark-text-animation" id="dark-mode-btn">Modo escuro</p>
         </div>
     </header>
-    <div class="task-inputs add-task-modal">
-        <div id="label-button-cancel-add-wrapper">
-            <label for="add-task-input"><span id="add-edit-word-toggle">Adicione</span> a sua tarefa:</label>
-            <i class="bi bi-x-circle-fill" id="cancel-add-task-btn"></i>
-        </div>
-        <div class="task-input">
-            <div id="add-task-area">
-                <div class="input">
-                    <i class="bi bi-person-lines-fill"></i>
-                    <input type="text" placeholder="O que você vai fazer?" id="add-task-input" autocomplete="off">
-                </div>
-                <div class="input" id="task-description-input-area">
-                    <i class="bi bi-list-task"></i>
-                    <input type="text" placeholder="Descrição da tarefa" id="task-description-input" autocomplete="off">
-                </div>
-                <button id="add-task-btn">Adicionar</button>
-                <button id="edit-task-btn">Editar</button>
+    <div class="modal">
+        <div id="add-task-modal-area">
+            <div id="label-button-cancel-add-wrapper">
+                <label for="add-task-input"><span id="add-edit-word-toggle">Adicione</span> a sua tarefa:</label>
+                <i class="bi bi-x-circle-fill cancel-add-task-btn"></i>
             </div>
+            <div class="task-input">
+                <div id="add-task-area">
+                    <div class="input">
+                        <i class="bi bi-person-lines-fill"></i>
+                        <input type="text" placeholder="O que você vai fazer?" id="add-task-input" autocomplete="off">
+                    </div>
+                    <div class="input" id="task-description-input-area">
+                        <i class="bi bi-list-task"></i>
+                        <input type="text" placeholder="Descrição da tarefa" id="task-description-input" autocomplete="off">
+                    </div>
+                    <button id="add-task-btn">Adicionar</button>
+                    <button id="edit-task-btn">Editar</button>
+                </div>
+            </div>
+        </div>
+        <div id="confirm-delete-task-modal-area" class="hide">
+            <div id="delete-task-info-wrapper">
+                <p>Deseja deletar a tarefa?</p>
+                <i class="bi bi-x-circle-fill cancel-add-task-btn"></i>
+            </div>
+            <button id="delete-task-btn">Deletar</button>
         </div>
     </div>
     <main>

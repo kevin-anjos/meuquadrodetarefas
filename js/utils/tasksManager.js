@@ -116,11 +116,12 @@ export const editTask = () => {
     hideAddTaskArea();
 };
 
+//Executar funções de renderização de tarefas e de botão de apagar todas as tarefas
 const updateApp = () => {
     handleTasksListPrint(tasksList);
     setTaskListInLocalStorage(tasksList);
     handleDeleteAllBtnVisibility();
 }
 
-//Executar funções de renderização de tarefas e de botão de apagar todas as tarefas
+//Inicializar o programa
 updateApp();

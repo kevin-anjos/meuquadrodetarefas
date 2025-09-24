@@ -9,7 +9,9 @@ const prisma = new PrismaClient();
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+    origin: "https://www.meuquadrodetarefas.onrender.com"
+}));
 
 app.use(express.json());
 

@@ -45,7 +45,7 @@ const areInputsValid = () => {
 
 const createUser = async() => {
     try {
-        const response = await fetch('https://www.meuquadrodetarefas.onrender.com/create-user', {
+        const response = await fetch('https://meuquadrodetarefas.onrender.com/create-user', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -79,7 +79,7 @@ const createUser = async() => {
 
 const enterAccount = async() => {
     try {
-        const response = await fetch('https://www.meuquadrodetarefas.onrender.com/enter-user-account', {
+        const response = await fetch('https://meuquadrodetarefas.onrender.com/enter-user-account', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'

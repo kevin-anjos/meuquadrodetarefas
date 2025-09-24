@@ -8,7 +8,7 @@ const userID = new URLSearchParams(window.location.search).get('i');
 //Colocar a lista de Tasks no Local Storage
 export const setTasksList = async list => {
     try {
-        await fetch(`https://www.meuquadrodetarefas.onrender.com/tasks/${userID}`, {
+        await fetch(`https://meuquadrodetarefas.onrender.com/tasks/${userID}`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -34,7 +34,7 @@ window.history.replaceState({}, "", String(urlObj));
 //Pegar a lista de tarefas
 export const getTasksList = async () => {
     try {
-        const response = await fetch(`https://www.meuquadrodetarefas.onrender.com/tasks/${userID}`);
+        const response = await fetch(`https://meuquadrodetarefas.onrender.com/tasks/${userID}`);
 
         const stringfiedTasksList = await response.json();
 
@@ -51,7 +51,7 @@ export const getTasksList = async () => {
 //Pegar nome do usuário
 export const getUsername = async () => {
     try {
-        const response = await fetch(`https://www.meuquadrodetarefas.onrender.com/users/${userID}`);
+        const response = await fetch(`https://meuquadrodetarefas.onrender.com/users/${userID}`);
 
         return await response.json();
     } catch (error) {

@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
 });
 
 app.use(cors({
-    origin: "https://www.meuquadrodetarefas.onrender.com"
+    origin: "https://meuquadrodetarefas.onrender.com"
 }));
 
 app.use(express.json());

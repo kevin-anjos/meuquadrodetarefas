@@ -4,6 +4,12 @@ import dotenv from 'dotenv';
 import nodemailer from 'nodemailer';
 import { PrismaClient } from '@prisma/client';
 import path from 'path';
+
+dotenv.config();
+const prisma = new PrismaClient();
+
+const app = express();
+
 const __dirname = path.resolve();
 
 // Servir arquivos estáticos
@@ -13,11 +19,6 @@ app.use(express.static(path.join(__dirname, 'frontend')));
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'frontend', 'index.html'));
 });
-
-dotenv.config();
-const prisma = new PrismaClient();
-
-const app = express();
 
 app.use(cors({
     origin: "https://www.meuquadrodetarefas.onrender.com"

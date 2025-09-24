@@ -17,7 +17,6 @@
     --secondary-green-color: #198617;
 }
 
-
 * {
     margin: 0;
     padding: 0;
@@ -193,14 +192,22 @@ header i {
     }
 }
 
-#add-task-button-area {
+#add-task-button-area, #user-profile-area {
     display: flex;
-    cursor: pointer;
     align-items: center;
     gap: 1rem;
     padding: .5rem 1rem;
     border-radius: 10px;
     transition: .5s;
+}
+
+#user-profile-area i {
+    font-size: 3rem;
+    color: var(--white-color);
+}
+
+#add-task-button-area {
+    cursor: pointer;
 }
 
 #add-task-button-area:hover {
@@ -227,7 +234,6 @@ header i {
 
 .modal.show-modal {
     top: 50%;
-    left: 50%;
 }
 
 .modal label {
@@ -277,7 +283,7 @@ main {
     margin-top: 10rem;
 }
 
-#tasks-dashboard {
+#tasks-dashboard, .log-in-sign-up-area {
     padding: 2rem;
     border-radius: 2rem;
     color: var(--white-color);
@@ -405,7 +411,6 @@ select {
 
 label {
     display: block;
-    margin-top: 1rem;
     flex: 1;
 }
 
@@ -633,6 +638,88 @@ body.light-mode-active #delete-all-list-btn,  body.light-mode-active #delete-all
     color: var(--black-color);
 }
 
+body.light-mode-active #user-profile-area i {
+    color: var(--black-color);
+}
+
+/*Página de login*/
+
+
+body#log-in-sign-up #title-area {
+    display: flex;
+    justify-content: flex-start;
+}
+
+body#log-in-sign-up h1 {
+    font-size: 3rem;
+}
+
+body#log-in-sign-up .task-inputs {
+    flex-direction: column;
+}
+
+body#log-in-sign-up button {
+    margin: 2rem 0rem;
+    width: 100%;
+}
+
+body#log-in-sign-up span {
+    cursor: pointer;
+    border-bottom: 1px solid var(--white-color);
+}
+
+body#log-in-sign-up span:hover {
+    border: none;
+}
+
+body#log-in-sign-up button.hidden, p.hidden {
+    display: none;
+}
+
+body#log-in-sign-up #toggle-password-visibility-btn {
+    cursor: pointer;
+}
+
+
+body#log-in-sign-up .task-input.hidden {
+    display: none;
+}
+
+body#log-in-sign-up .error-message {
+    margin-top: .5rem;
+    color: var(--red-color);
+}
+
+body#log-in-sign-up .modal {
+    flex-direction: row;
+    background-color: var(--red-color);
+    color: var(--white-color);
+}
+
+body#log-in-sign-up .show-modal {
+    top: 10%;
+}
+
+body#log-in-sign-up #modal-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+body#log-in-sign-up #modal-wrapper h3{
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+body#log-in-sign-up #modal-wrapper i{
+    cursor: pointer;
+    color: var(--white-color);
+    font-size: 2rem;
+}
+
+.is-not-filled {
+    box-shadow: 2px 2px 20px 5px rgba(225, 19, 19, 0.639) inset;
+}
+
 @media screen and (max-width: 920px) {
     .task-inputs {
         flex-direction: column;
@@ -674,6 +761,10 @@ body.light-mode-active #delete-all-list-btn,  body.light-mode-active #delete-all
     .modal {
         width: 70%;
     }
+
+    #user-profile-area {
+        display: none;
+    }
 }
 
 @media screen and (max-width: 550px) {
@@ -689,6 +780,10 @@ body.light-mode-active #delete-all-list-btn,  body.light-mode-active #delete-all
         font-size: 1em;
     }
 
+
+    body#log-in-sign-up .log-in-sign-up-area {
+        width: 100%;
+    }
 }
 
 @media screen and (max-width: 450px) {

@@ -13,12 +13,20 @@ import * as domElements from './domElements.js';
 //Importar arquivo de handler da área do modal de tasks
 import { hideAddTaskArea, showAddTaskArea, hideEditTaskArea, confirmTaskDeletion } from "./ui/taskModalAreaHandler.js";
 
+//Importar a função de pegar nome de usuário pelo storage
+import { getUsername } from "./utils/storage.js";
+
 //Arrays de elementos 
 const themeToggleElements = [domElements.darkModeDot, domElements.lightModeDot];
 const tasksInputs = [domElements.addTaskInput, domElements.descriptionTaskInput];
 
 //Variável do ID da task a ser deletada
 let toBeDeletedTaskID;
+
+//Nome do usuário:
+const username = await getUsername();
+domElements.usernameSpan.textContent = username + "!";
+
 
 //Eventos
 

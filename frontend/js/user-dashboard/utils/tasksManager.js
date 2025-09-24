@@ -11,7 +11,7 @@ import { Task } from './Task.js';
 import { showEditTaskArea, hideEditTaskArea, hideAddTaskArea, handleDeleteAllBtnVisibility } from '../ui/taskModalAreaHandler.js';
 
 //Importar arquivo do storage 
-import { setTaskListInLocalStorage, getTasksListFromLocalStorage } from './storage.js';
+import { setTasksList, getTasksList } from './storage.js';
 
 //Importar arquivo de filtros
 import { filterTasks } from './filterAndSearch.js';
@@ -20,7 +20,7 @@ import { filterTasks } from './filterAndSearch.js';
 import { getCurrentDate } from './date.js';
 
 //Array das Tarefas
-export let tasksList = getTasksListFromLocalStorage();
+export let tasksList = await getTasksList();
 
 //Variável da posição da tarefa a ser mudada ao editar
 let toBeEditedTaskID;
@@ -94,9 +94,8 @@ export const toggleDoneTask = task => {
 
 //Setar a tarefa a ser editada
 export const setTaskToBeEdited = task => {
-    const taskId = Number(task.replace('edit-btn-', ""));
-    toBeEditedTaskID = taskId;
-    const toBeEditedTask = tasksList.find((task => task.id === taskId));
+    toBeEditedTaskID = Number(task.replace('edit-btn-', ""));
+    const toBeEditedTask = tasksList.find((task => task.id === toBeEditedTaskID));
     showEditTaskArea(toBeEditedTask);
 };
 
@@ -119,7 +118,7 @@ export const editTask = () => {
 //Executar funções de renderização de tarefas e de botão de apagar todas as tarefas
 const updateApp = () => {
     handleTasksListPrint(tasksList);
-    setTaskListInLocalStorage(tasksList);
+    setTasksList(tasksList);
     handleDeleteAllBtnVisibility();
 }
 

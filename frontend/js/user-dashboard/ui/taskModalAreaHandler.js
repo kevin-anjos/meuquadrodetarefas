@@ -39,11 +39,11 @@ export const hideEditTaskArea = () => {
 
 //Lidar com o botão de deletar todas da tarefas
 export const handleDeleteAllBtnVisibility = () => {
-    if (tasksList.length > 1) {
+   if (tasksList.length > 1) {
         deleteAllListBtn.classList.remove('hide');
     } else {
         deleteAllListBtn.classList.add('hide');
-    }
+    } 
 }
 
 //Mostrar modal de confirmação de deletar a tarefa

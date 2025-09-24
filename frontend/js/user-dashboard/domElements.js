@@ -32,6 +32,8 @@ const deleteAllListBtn = document.querySelector("#delete-all-list-btn");
 const addTaskModalArea = document.querySelector('#add-task-modal-area');
 const confirmDeleteTaskModalArea = document.querySelector('#confirm-delete-task-modal-area');
 
+const usernameSpan = document.querySelector('#username-span');
+
 export {
-    taskListArea, modal, fade, addTaskBtn, addTaskBtnArea, editTaskBtn, searchTaskInput, cancelAddTaskBtn, addTaskInput, descriptionTaskInput, filterTaskSelect, addEditWordToggle, darkModeDot, lightModeDot, darkModeBtn, lightModeBtn, darkModeIco, lightModeIco, deleteAllListBtn, confirmDeleteTaskModalArea, addTaskModalArea, deleteTaskBtn
+    taskListArea, modal, fade, addTaskBtn, addTaskBtnArea, editTaskBtn, searchTaskInput, cancelAddTaskBtn, addTaskInput, descriptionTaskInput, filterTaskSelect, addEditWordToggle, darkModeDot, lightModeDot, darkModeBtn, lightModeBtn, darkModeIco, lightModeIco, deleteAllListBtn, confirmDeleteTaskModalArea, addTaskModalArea, deleteTaskBtn, usernameSpan
 }

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <script type="module" src="js/log-in-sign-up/main.js" defer></script>
+    <title>Quadro de Tarefas</title>
+</head>
+<body id="log-in-sign-up">
+    <main>
+        <div id="title-area">
+            <h1>Criar conta:</h1>
+        </div>
+        <div class="log-in-sign-up-area">
+            <div class="task-inputs">
+                <div class="task-input">
+                    <label for="username-input">Nome do usuário:</label>
+                    <div class="input">
+                        <i class="bi bi-person-circle"></i>
+                        <input type="text" placeholder="Insira o nome do usuário" id="username-input" autocomplete="off">
+                    </div>
+                    <p class="error-message hidden">Digite um nome</p>
+                </div>
+                <div class="task-input">
+                    <label for="email-input">Gmail:</label>
+                    <div class="input">
+                        <i class="bi bi-envelope-fill"></i>
+                        <input type="email" placeholder="Insira o seu gmail" id="email-input" autocomplete="email"> 
+                    </div>
+                    <p class="error-message hidden">Digite um email válido</p>
+                </div>
+                <div class="task-input">
+                    <label for="password-input">Senha:</label>
+                    <div class="input">
+                        <i class="bi bi-lock"></i>
+                        <input type="password" placeholder="Insira a sua senha"  id="password-input">
+                        <div id="toggle-password-visibility-btn"><i class="bi bi-eye-fill"></i></div>
+                    </div>
+                    <p class="error-message hidden">A senha deve conter pelo menos 8 caracteres</p>
+                </div>
+            </div>
+            <button id="create-account-btn">Criar </button>
+            <button id="enter-account-btn" class="hidden">Entrar</button>
+            <p id="enter-account-p">Já possui uma conta? <span id="enter-account-span">Entrar</span></p>
+            <p  id="create-account-p" class="hidden">Não possui uma conta? <span id="create-account-span">Criar</span></p>
+        </div>
+    </main>
+
+    <div class="modal">
+        <div id="modal-wrapper">
+            <div id="modal-message"></div>
+            <div id="close-modal">
+                <i class="bi bi-x-circle" id="close-modal-btn"></i>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -3,8 +3,18 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import nodemailer from 'nodemailer';
 import { PrismaClient } from '@prisma/client';
-dotenv.config();
+import path from 'path';
+const __dirname = path.resolve();
 
+// Servir arquivos estáticos
+app.use(express.static(path.join(__dirname, 'frontend')));
+
+// Rota raiz
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend', 'index.html'));
+});
+
+dotenv.config();
 const prisma = new PrismaClient();
 
 const app = express();

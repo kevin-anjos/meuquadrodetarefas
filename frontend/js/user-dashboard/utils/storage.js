@@ -1,6 +1,9 @@
 //Importar arquivo de handler de tema
 import { toggleTheme } from '../ui/themeColorHandler.js';
 
+//Importar arquivo de esconder tela de loading
+import { hideLoadingScreen } from '../ui/hideLoadingAnimationHandler.js';
+
 //ID do usuário que vem nos parâmetros da URL
 const userID = new URLSearchParams(window.location.search).get('i');
 
@@ -8,7 +11,7 @@ const userID = new URLSearchParams(window.location.search).get('i');
 //Colocar a lista de Tasks no Local Storage
 export const setTasksList = async list => {
     try {
-        await fetch(`https://meuquadrodetarefas.onrender.com/tasks/${userID}`, {
+        await fetch(`http://127.0.0.1:8080/tasks/${userID}`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -22,7 +25,7 @@ export const setTasksList = async list => {
     } 
 };
 
-
+//https://meuquadrodetarefas.onrender.com/
 
 /*
 //Apagar os parâmetros da URL
@@ -34,7 +37,13 @@ window.history.replaceState({}, "", String(urlObj));
 //Pegar a lista de tarefas
 export const getTasksList = async () => {
     try {
-        const response = await fetch(`https://meuquadrodetarefas.onrender.com/tasks/${userID}`);
+        const response = await fetch(`http://127.0.0.1:8080/tasks/${userID}`);
+
+        if(!response.ok) {
+            window.location.replace('http://127.0.0.1:5500/frontend/index.html');
+        }
+
+        hideLoadingScreen();
 
         const stringfiedTasksList = await response.json();
 
@@ -44,20 +53,38 @@ export const getTasksList = async () => {
             return JSON.parse(stringfiedTasksList);
         }
     } catch (error) {
-        console.log(error);
+        console.error(error);
+        window.location.replace('http://127.0.0.1:5500/frontend/index.html');
     }
 };
 
 //Pegar nome do usuário
 export const getUsername = async () => {
     try {
-        const response = await fetch(`https://meuquadrodetarefas.onrender.com/users/${userID}`);
+        const response = await fetch(`http://127.0.0.1:8080/users/${userID}`);
 
         return await response.json();
     } catch (error) {
         console.log(error);
     }
 };
+
+//Deletar usuário
+export const deleteUser = async () => {
+    try {
+        const response = await fetch(`http://127.0.0.1:8080/users/${userID}`, {
+            method: "DELETE"
+        });
+
+        if (response.ok) {
+            window.location.replace('http://127.0.0.1:5500/frontend/index.html');   
+        } else {
+            alert('Não foi possível deletar o usuário');
+        }
+    } catch(error) {
+        console.error(error);
+    } 
+}
 
 window.addEventListener('load', () => {
     if (localStorage.getItem('theme-mode') != null) {

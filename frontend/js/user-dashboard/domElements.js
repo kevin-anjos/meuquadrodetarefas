@@ -34,6 +34,11 @@ const confirmDeleteTaskModalArea = document.querySelector('#confirm-delete-task-
 
 const usernameSpan = document.querySelector('#username-span');
 
+const loadingScreen = document.querySelector('#loading-screen');
+
+const userProfileArea = document.querySelector('#user-profile-area');
+const deleteAccountBtn = document.querySelector('#delete-account');
+
 export {
-    taskListArea, modal, fade, addTaskBtn, addTaskBtnArea, editTaskBtn, searchTaskInput, cancelAddTaskBtn, addTaskInput, descriptionTaskInput, filterTaskSelect, addEditWordToggle, darkModeDot, lightModeDot, darkModeBtn, lightModeBtn, darkModeIco, lightModeIco, deleteAllListBtn, confirmDeleteTaskModalArea, addTaskModalArea, deleteTaskBtn, usernameSpan
-}
+    taskListArea, modal, fade, addTaskBtn, addTaskBtnArea, editTaskBtn, searchTaskInput, cancelAddTaskBtn, addTaskInput, descriptionTaskInput, filterTaskSelect, addEditWordToggle, darkModeDot, lightModeDot, darkModeBtn, lightModeBtn, darkModeIco, lightModeIco, deleteAllListBtn, confirmDeleteTaskModalArea, addTaskModalArea, deleteTaskBtn, usernameSpan, loadingScreen, deleteAccountBtn, userProfileArea
+};

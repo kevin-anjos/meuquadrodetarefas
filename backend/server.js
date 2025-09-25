@@ -20,10 +20,13 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'frontend', 'index.html'));
 });
 
+/*
 app.use(cors({
     origin: "https://meuquadrodetarefas.onrender.com"
-}));
+}));*/
 
+
+app.use(cors())
 app.use(express.json());
 
 
@@ -54,13 +57,13 @@ app.get('/tasks/:userID', async(req, res) => {
 });
 
 //Pegar o nome de usuário atual no banco de dados
-app.get('/users/:userID', async(req, res) => {
+app.get('/users/:i', async(req, res) => {
 
-    const { userID } = req.params;
+    const { i } = req.params;
 
     const user = await prisma.usuario.findUnique({
             where: {
-                id: userID
+                id: i
             }
         }
     );
@@ -94,7 +97,7 @@ app.post('/create-user', async (req, res) => {
     const { name, email, password } = req.body;
     console.log('test')
 
-    let userIsCreated = false;
+    let userCreated = false;
 
     try {
         const newUser = await prisma.usuario.create({
@@ -106,9 +109,9 @@ app.post('/create-user', async (req, res) => {
             }
         });
 
-        userIsCreated = true;
+        userCreated = true;
 
-        res.status(201).json(newUser.id);
+        res.status(201).json({id: newUser.id});
 
     } catch(error) {
         console.error(error);
@@ -167,20 +170,40 @@ app.post('/enter-user-account', async (req, res) => {
         console.error(`Error: ${error}`);
     };
 
-    if (userExists) {
-        try {   
-            await transporter.sendMail({
-                from: `Quadro de tarefas <${process.env.EMAIL_USER}>`,
-                to: email,
-                subject: 'Novo login',
-                html: `<p> Um novo dispositivo entrou na sua conta.</p>`
-            });
-        } catch (error) {
-            console.error(`Error: ${error}`);
-        };
+    if (!userExists) return
+
+    try {   
+        await transporter.sendMail({
+            from: `Quadro de tarefas <${process.env.EMAIL_USER}>`,
+            to: email,
+            subject: 'Novo login',
+            html: `<p> Um novo dispositivo entrou na sua conta.</p>`
+        });
+    } catch (error) {
+        console.error(`Error: ${error}`);
     };
 }); 
 
+
+//Deletar usuário
+app.delete('/users/:i', async(req, res) => {
+    const { i } = req.params;
+
+    try {
+        await prisma.usuario.delete({
+            where: {
+                id: i
+            }
+        });
+
+        res.status(200).json({
+            message: "Usuário deletado"
+        });
+
+    } catch(error) {
+        console.log(error);
+    };
+});
 
 const PORT =  process.env.PORT || 8080;
 

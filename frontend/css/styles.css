@@ -40,6 +40,28 @@ body {
     position: relative;
 }
 
+#loading-screen {
+    width: 100%;
+    height: 100%;
+    background-color: var(--black-color);
+    position: fixed;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#loading-page-animation {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    margin-top: 1rem;
+    padding: 1rem;
+    border: 25px solid var(--purple-color);
+    border-top: 25px solid transparent;
+    animation: loading-animation 1s infinite linear;
+}
+
 header {
     position: fixed;
     padding: 1rem;    
@@ -193,6 +215,7 @@ header i {
 }
 
 #add-task-button-area, #user-profile-area {
+    position: relative;
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -201,16 +224,47 @@ header i {
     transition: .5s;
 }
 
+#delete-account {
+    cursor: pointer;
+    position: absolute;
+    left: 5%;
+    top: 12%;
+    background-color: var(--red-color);
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    transition: .5s;
+    padding: 0.5rem;
+    gap: 1rem;
+    z-index: 2;
+    color: var(--white-color);
+}
+
+#delete-account.hidden {
+    top: -10%;
+}
+
+#delete-account:hover {
+    background-color: var(--secondary-red-color);
+}
+
+
+#delete-account i{
+    color: var(--white-color);
+    font-size: 1.5rem;
+}
+
+
 #user-profile-area i {
     font-size: 3rem;
     color: var(--white-color);
 }
 
-#add-task-button-area {
+#add-task-button-area, #user-profile-area {
     cursor: pointer;
 }
 
-#add-task-button-area:hover {
+#add-task-button-area:hover, #user-profile-area:hover {
     background-color: var(--grey-color);
 }
 
@@ -558,7 +612,7 @@ h2 {
     margin-top: 1rem;
     padding: 1rem;
     border: 4px solid var(--white-color);
-    border-top: 3px solid var(--purple-color);
+    border-top: 3px solid transparent;
     animation: loading-animation 1s infinite linear;
 }
 
@@ -642,6 +696,10 @@ body.light-mode-active #user-profile-area i {
     color: var(--black-color);
 }
 
+body.light-mode-active #delete-account i, body.light-mode-active #delete-account {
+    color: var(--black-color);
+}
+
 /*Página de login*/
 
 
@@ -685,6 +743,7 @@ body#log-in-sign-up .task-input.hidden {
     display: none;
 }
 
+
 body#log-in-sign-up .error-message {
     margin-top: .5rem;
     color: var(--red-color);
@@ -708,6 +767,14 @@ body#log-in-sign-up #modal-wrapper {
 body#log-in-sign-up #modal-wrapper h3{
     font-size: 1.5rem;
     margin-bottom: 1rem;
+}
+
+body#log-in-sign-up #delete-account {
+    color: var(--black-color);
+}
+
+body#log-in-sign-up #delete-account i{
+    color: var(--black-color);
 }
 
 body#log-in-sign-up #modal-wrapper i{

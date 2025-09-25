@@ -14,7 +14,7 @@ import * as domElements from './domElements.js';
 import { hideAddTaskArea, showAddTaskArea, hideEditTaskArea, confirmTaskDeletion } from "./ui/taskModalAreaHandler.js";
 
 //Importar a função de pegar nome de usuário pelo storage
-import { getUsername } from "./utils/storage.js";
+import { getUsername, deleteUser } from "./utils/storage.js";
 
 //Arrays de elementos 
 const themeToggleElements = [domElements.darkModeDot, domElements.lightModeDot];
@@ -53,22 +53,31 @@ domElements.filterTaskSelect.addEventListener("change", () => {
 });
 
 //Eventos de botão
+
+domElements.userProfileArea.addEventListener('click', () => {
+    domElements.deleteAccountBtn.classList.toggle('hidden');
+})
+
+domElements.deleteAccountBtn.addEventListener('click', () => {
+    deleteUser();
+});
+
 domElements.addTaskBtnArea.addEventListener('click', () => {
     showAddTaskArea();
-})
+});
 
 domElements.fade.addEventListener('click', () => {
     hideAddTaskArea();
     hideEditTaskArea();
-})
+});
 
 
 domElements.cancelAddTaskBtn.forEach(button => {
     button.addEventListener('click', () => {
         hideAddTaskArea();
         hideEditTaskArea();
-    })
-})
+    });
+});
 
 domElements.addTaskBtn.addEventListener('click', () => {
     addTask();
@@ -80,13 +89,13 @@ domElements.editTaskBtn.addEventListener('click', () => {
 
 domElements.deleteAllListBtn.addEventListener('click', () => {
     deleteAllList();
-})
+});
 
 domElements.deleteTaskBtn.addEventListener('click', () => {
     deleteTask(toBeDeletedTaskID);
     hideAddTaskArea();
     hideEditTaskArea();
-})
+});
 
 themeToggleElements.forEach(themeToggleElement => {
     themeToggleElement.addEventListener('click', () => {

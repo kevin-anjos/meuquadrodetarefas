@@ -45,7 +45,7 @@ const areInputsValid = () => {
 
 const createUser = async() => {
     try {
-        const response = await fetch('http://127.0.0.1:8080/create-user', {
+        const response = await fetch('https://meuquadrodetarefas.onrender.com/create-user', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -79,7 +79,7 @@ const createUser = async() => {
 
 const enterAccount = async() => {
     try {
-        const response = await fetch('http://127.0.0.1:8080/enter-user-account', {
+        const response = await fetch('https://meuquadrodetarefas.onrender.com/enter-user-account', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -93,7 +93,7 @@ const enterAccount = async() => {
         const data = await response.json();
 
         if (response.ok) {
-            window.location.href = `./user-dashboard.html?i=${data.id}`;
+            window.location.replace(`./user-dashboard.html?i=${data.id}`);
         } else {
             const { title, info } = data;
             printErrorMessage(title, info);

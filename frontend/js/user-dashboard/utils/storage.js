@@ -37,10 +37,10 @@ window.history.replaceState({}, "", String(urlObj));
 //Pegar a lista de tarefas
 export const getTasksList = async () => {
     try {
-        const response = await fetch(`http://127.0.0.1:8080/tasks/${userID}`);
+        const response = await fetch(`https://meuquadrodetarefas.onrender.com/tasks/${userID}`);
 
         if(!response.ok) {
-            window.location.replace('http://127.0.0.1:5500/frontend/index.html');
+            window.location.replace('https://meuquadrodetarefas.onrender.com');
         }
 
         hideLoadingScreen();
@@ -54,14 +54,14 @@ export const getTasksList = async () => {
         }
     } catch (error) {
         console.error(error);
-        window.location.replace('http://127.0.0.1:5500/frontend/index.html');
+        window.location.replace('https://meuquadrodetarefas.onrender.com');
     }
 };
 
 //Pegar nome do usuário
 export const getUsername = async () => {
     try {
-        const response = await fetch(`http://127.0.0.1:8080/users/${userID}`);
+        const response = await fetch(`https://meuquadrodetarefas.onrender.com/users/${userID}`);
 
         return await response.json();
     } catch (error) {
@@ -72,12 +72,12 @@ export const getUsername = async () => {
 //Deletar usuário
 export const deleteUser = async () => {
     try {
-        const response = await fetch(`http://127.0.0.1:8080/users/${userID}`, {
+        const response = await fetch(`https://meuquadrodetarefas.onrender.com/users/${userID}`, {
             method: "DELETE"
         });
 
         if (response.ok) {
-            window.location.replace('http://127.0.0.1:5500/frontend/index.html');   
+            window.location.replace('https://meuquadrodetarefas.onrender.com');   
         } else {
             alert('Não foi possível deletar o usuário');
         }

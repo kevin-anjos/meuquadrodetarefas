@@ -11,10 +11,11 @@ import { toggleTheme } from "./ui/themeColorHandler.js";
 import * as domElements from './domElements.js';
 
 //Importar arquivo de handler da área do modal de tasks
-import { hideAddTaskArea, showAddTaskArea, hideEditTaskArea, confirmTaskDeletion } from "./ui/taskModalAreaHandler.js";
+import { hideAddTaskArea, showAddTaskArea, hideEditTaskArea, confirmTaskDeletion, hideModals, showUpdatePasswordModal, showUpdateUsernameModal } from "./ui/taskModalAreaHandler.js";
 
-//Importar a função de pegar nome de usuário pelo storage
-import { getUsername, deleteUser } from "./utils/storage.js";
+//Importar arquivo de requisições
+import { getUsername, deleteUser, updatePassword, updateUsername } from "./utils/appServices.js";
+
 import { hideLoadingScreen } from "./ui/hideLoadingAnimationHandler.js";
 
 //Arrays de elementos 
@@ -24,21 +25,37 @@ const tasksInputs = [domElements.addTaskInput, domElements.descriptionTaskInput]
 //Variável do ID da task a ser deletada
 let toBeDeletedTaskID;
 
-//Nome do usuário:
-const username = await getUsername();
-domElements.usernameSpan.textContent = username + "!";
-hideLoadingScreen();
+
+//Pegar nome do usuário
+(async () => {
+    const username = await getUsername();
+    domElements.usernameSpan.textContent = username + "!";
+    hideLoadingScreen();
+})();
 
 //Eventos:
+
+//Eventos de documento
+document.addEventListener('click', () => {
+    domElements.userActionsArea.classList.add('hidden');
+});
 
 //Eventos de Input
 domElements.searchTaskInput.addEventListener('input', () => {
     searchTasks();
 });
 
+domElements.editUsernameBtn.addEventListener('click', () => {
+    showUpdateUsernameModal();
+});
+
+domElements.editPasswordBtn.addEventListener('click', () => {
+    showUpdatePasswordModal();
+});
+
 tasksInputs.forEach(input => {
     input.addEventListener('input', () => {
-        input.value = input.value.slice(0, 100)
+        input.value = input.value.slice(0, 100);
     });
 
     input.addEventListener('keydown', event => {
@@ -56,7 +73,11 @@ domElements.filterTaskSelect.addEventListener("change", () => {
 //Eventos de botão
 
 domElements.userProfileArea.addEventListener('click', () => {
-    domElements.deleteAccountBtn.classList.toggle('hidden');
+    
+    setTimeout(() => {
+        domElements.userActionsArea.classList.toggle('hidden');
+    }, 1000)
+    
 })
 
 domElements.deleteAccountBtn.addEventListener('click', () => {
@@ -70,14 +91,6 @@ domElements.addTaskBtnArea.addEventListener('click', () => {
 domElements.fade.addEventListener('click', () => {
     hideAddTaskArea();
     hideEditTaskArea();
-});
-
-
-domElements.cancelAddTaskBtn.forEach(button => {
-    button.addEventListener('click', () => {
-        hideAddTaskArea();
-        hideEditTaskArea();
-    });
 });
 
 domElements.addTaskBtn.addEventListener('click', () => {
@@ -94,16 +107,35 @@ domElements.deleteAllListBtn.addEventListener('click', () => {
 
 domElements.deleteTaskBtn.addEventListener('click', () => {
     deleteTask(toBeDeletedTaskID);
-    hideAddTaskArea();
-    hideEditTaskArea();
+    hideModals();
 });
+
+domElements.closeModalBtn.forEach(button => {
+    button.addEventListener('click', () => {
+        hideModals();
+    });
+});
+
+
+domElements.updatePasswordBtn.addEventListener('click', () => {
+
+    if (domElements.newPasswordInput.value.length < 8) return;
+
+    updatePassword(domElements.newPasswordInput.value);
+});
+
+domElements.updateUsernameBtn.addEventListener('click', () => {
+
+    if (domElements.newUsernameInput.value === "") return;
+
+    updateUsername(domElements.newPasswordInput.value);
+})
 
 themeToggleElements.forEach(themeToggleElement => {
     themeToggleElement.addEventListener('click', () => {
         toggleTheme();
     });
 });
-
 
 //Delegação de eventos (capturar elementos criados dinamicamente)
 domElements.taskListArea.addEventListener('click', event => {

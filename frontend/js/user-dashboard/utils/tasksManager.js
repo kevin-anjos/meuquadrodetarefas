@@ -11,7 +11,7 @@ import { Task } from './Task.js';
 import { showEditTaskArea, hideEditTaskArea, hideAddTaskArea, handleDeleteAllBtnVisibility } from '../ui/taskModalAreaHandler.js';
 
 //Importar arquivo do storage 
-import { setTasksList, getTasksList } from './storage.js';
+import { setTasksList, getTasksList } from './appServices.js';
 
 //Importar arquivo de filtros
 import { filterTasks } from './filterAndSearch.js';

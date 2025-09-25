@@ -4,9 +4,10 @@ const taskListArea = document.querySelector('#tasks-list');
 const addTaskBtn = document.querySelector('#add-task-btn');
 const addTaskBtnArea = document.querySelector('#add-task-button-area');
 const editTaskBtn = document.querySelector('#edit-task-btn');
-const cancelAddTaskBtn = document.querySelectorAll('.cancel-add-task-btn');
 
-const modal = document.querySelector('.modal');
+const closeModalBtn = document.querySelectorAll('.close-modal-btn');
+
+const modals = document.querySelectorAll('.modal');
 
 const fade = document.querySelector('#fade');
 
@@ -37,8 +38,22 @@ const usernameSpan = document.querySelector('#username-span');
 const loadingScreen = document.querySelector('#loading-screen');
 
 const userProfileArea = document.querySelector('#user-profile-area');
+
+const newUsernameInput = document.querySelector('#new-username-input');
+const newPasswordInput = document.querySelector('#new-password-input');
+
+const updateUsernameBtn = document.querySelector('#update-username-btn');
+const updatePasswordBtn = document.querySelector('#update-password-btn');
+
+const updateUsernameModalArea = document.querySelector('#update-username-modal-area');
+const updatePasswordModalArea = document.querySelector('#update-password-modal-area');
+
+const userActionsArea = document.querySelector('#user-actions');
+
+const editUsernameBtn = document.querySelector('#edit-username');
+const editPasswordBtn = document.querySelector('#edit-password');
 const deleteAccountBtn = document.querySelector('#delete-account');
 
 export {
-    taskListArea, modal, fade, addTaskBtn, addTaskBtnArea, editTaskBtn, searchTaskInput, cancelAddTaskBtn, addTaskInput, descriptionTaskInput, filterTaskSelect, addEditWordToggle, darkModeDot, lightModeDot, darkModeBtn, lightModeBtn, darkModeIco, lightModeIco, deleteAllListBtn, confirmDeleteTaskModalArea, addTaskModalArea, deleteTaskBtn, usernameSpan, loadingScreen, deleteAccountBtn, userProfileArea
+    taskListArea, modals, fade, addTaskBtn, addTaskBtnArea, editTaskBtn, searchTaskInput, closeModalBtn, addTaskInput, descriptionTaskInput, filterTaskSelect, addEditWordToggle, darkModeDot, lightModeDot, darkModeBtn, lightModeBtn, darkModeIco, lightModeIco, deleteAllListBtn, confirmDeleteTaskModalArea, addTaskModalArea, deleteTaskBtn, usernameSpan, loadingScreen, deleteAccountBtn, userProfileArea, userActionsArea, editPasswordBtn, editUsernameBtn, newUsernameInput, newPasswordInput, updatePasswordBtn, updateUsernameBtn, updateUsernameModalArea, updatePasswordModalArea
 };

@@ -102,9 +102,6 @@ const printTasksList = list => {
 
         taskListArea.appendChild(taskArea);
     });
-
-    alert('teste');
-    hideLoadingScreen();
 };
 
 //Apagar os dados impressos da lista de tarefas

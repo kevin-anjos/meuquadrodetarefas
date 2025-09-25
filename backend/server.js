@@ -20,20 +20,14 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'frontend', 'index.html'));
 });
 
-/*
 app.use(cors({
     origin: "https://meuquadrodetarefas.onrender.com"
-}));*/
-
+}))
 
 app.use(cors())
 app.use(express.json());
 
 let authorizedAcess = false;
-
-
-//Verificar autenticidade do usuário
-let isUserValid = false;
 
 //Criar transporter
 const transporter = nodemailer.createTransport({
@@ -83,6 +77,45 @@ app.get('/users/:i', async(req, res) => {
     res.status(200).json(user.name);
 });
 
+//Atualizar nome do usuário
+app.post('/users/update-username:i', async(req, res) => {
+
+    const { i } = req.params;
+
+    const { name } = req.body;
+
+    const user = await prisma.usuario.update({
+            where: {
+                id: i
+            },
+            data: {
+                name: name
+            }
+        }
+    );
+
+    res.status(200).json(user.name);
+});
+
+//Atualizar senha do usuário
+app.post('/users/update-password:i', async(req, res) => {
+
+    const { i } = req.params;
+
+    const { password } = req.body;
+
+    const user = await prisma.usuario.update({
+            where: {
+                id: i
+            },
+            data: {
+                password: password
+            }
+        }
+    );
+
+    res.status(200).json(user.name);
+});
 
 //Atualizar a lista de tarefas no banco de dados
 app.post('/tasks/:i', async(req, res) => {
@@ -116,14 +149,13 @@ app.post('/create-user', async (req, res) => {
                 name: name,
                 email: email,
                 password: password,
-                tasksList: 'empty'
+                tasksList: '[]'
             }
         });
 
         userCreated = true;
         authorizedAcess = true;
 
-        isUserValid = true;
 
         res.status(201).json({id: newUser.id});
 

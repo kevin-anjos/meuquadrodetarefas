@@ -232,36 +232,59 @@ header i {
     transition: .5s;
 }
 
-#delete-account {
+#user-actions {
     cursor: pointer;
     position: absolute;
     left: 5%;
     top: 12%;
     background-color: var(--red-color);
     display: flex;
+    flex-direction: column;
+    border-radius: 1rem;
     align-items: center;
-    border-radius: 10px;
     transition: .5s;
-    padding: 0.5rem;
-    gap: 1rem;
     z-index: 2;
     color: var(--white-color);
 }
 
-#delete-account.hidden {
-    top: -10%;
-}
-
-#delete-account:hover {
-    background-color: var(--secondary-red-color);
-}
-
-
-#delete-account i{
+#user-actions i{
     color: var(--white-color);
     font-size: 1.5rem;
 }
 
+.user-action {
+    width: 100%;
+    display: flex;
+    padding: 1rem;
+    align-items: center;
+    gap: 1rem;
+    justify-content: space-between;
+    border-top: 1px solid var(--white-color);
+    transition: .5s;
+}
+
+.user-action:hover {
+    background-color: var(--secondary-red-color);
+}
+
+.user-action p{
+    width: 90%;
+}
+
+#edit-username {
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    border-top: 1px solid transparent;
+}
+
+#delete-account {
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+}
+
+#user-actions.hidden {
+    top: -10%;
+}
 
 #user-profile-area i {
     font-size: 3rem;
@@ -307,7 +330,7 @@ header i {
     align-items: center;
 }
 
-.cancel-add-task-btn {
+.close-modal-btn {
     cursor: pointer;
     font-size: 2rem;
     transition: .5s;
@@ -704,9 +727,6 @@ body.light-mode-active #user-profile-area i {
     color: var(--black-color);
 }
 
-body.light-mode-active #delete-account i, body.light-mode-active #delete-account {
-    color: var(--black-color);
-}
 
 /*Página de login*/
 body#log-in-sign-up #title-area {
@@ -769,14 +789,6 @@ body#log-in-sign-up #modal-wrapper {
 body#log-in-sign-up #modal-wrapper h3{
     font-size: 1.5rem;
     margin-bottom: 1rem;
-}
-
-body#log-in-sign-up #delete-account {
-    color: var(--black-color);
-}
-
-body#log-in-sign-up #delete-account i{
-    color: var(--black-color);
 }
 
 body#log-in-sign-up #modal-wrapper i{

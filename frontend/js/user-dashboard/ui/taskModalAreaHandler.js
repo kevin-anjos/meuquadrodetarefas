@@ -1,22 +1,20 @@
-import {addEditWordToggle, addTaskInput, descriptionTaskInput, fade, modal, deleteAllListBtn, addTaskModalArea, confirmDeleteTaskModalArea } from "../domElements.js";
+import {addEditWordToggle, addTaskInput, descriptionTaskInput, fade, modals, deleteAllListBtn, addTaskModalArea, confirmDeleteTaskModalArea, } from "../domElements.js";
 
 import { tasksList } from "../utils/tasksManager.js";
 
 export const hideAddTaskArea = () => {
-    modal.classList.remove('show-modal');
-    setTimeout(() => {
-        fade.classList.add('hidden');
-    }, 1000);
+    modals[0].classList.remove('show-modal');
+    fade.classList.add('hidden');
 };
 
 export const showAddTaskArea = () => {
     addTaskModalArea.classList.remove('hide');
     confirmDeleteTaskModalArea.classList.add('hide');
-    showModal();
+    showModal(0);
 };
 
-export const showModal = () => {
-    modal.classList.add('show-modal');
+const showModal = (modal) => {
+    modals[modal].classList.add('show-modal');
     fade.classList.remove('hidden');
 }
 
@@ -48,7 +46,30 @@ export const handleDeleteAllBtnVisibility = () => {
 
 //Mostrar modal de confirmação de deletar a tarefa
 export const confirmTaskDeletion = () => {
-    addTaskModalArea.classList.add('hide');
-    confirmDeleteTaskModalArea.classList.remove('hide');
-    showModal();
+    hideModals();
+    showModal(1);
 }
+
+
+//Mostrar modal de renomear usuário
+export const showUpdateUsernameModal = () => {
+    hideModals();
+    showModal(2);
+}
+
+//Mostrar modal de mudar a senha do usuário
+export const showUpdatePasswordModal = () => {
+    hideModals();
+    showModal(3);
+}
+
+export const hideModals = () => {
+    modals.forEach(modal => {
+        modal.classList.remove("show-modal");
+    });
+    fade.classList.add('hidden');
+}
+
+fade.addEventListener('click', () => {
+    hideModals();
+})

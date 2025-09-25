@@ -23,13 +23,6 @@ export const setTasksList = async list => {
     } 
 };
 
-/*
-//Apagar os parâmetros da URL
-const urlObj = new URL(window.location.href);
-urlObj.search = '';
-window.history.replaceState({}, "", String(urlObj));
-*/ 
-
 //Pegar a lista de tarefas
 export const getTasksList = async () => {
     try {

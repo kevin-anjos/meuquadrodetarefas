@@ -10,7 +10,7 @@ import { toggleSignInSignUpAreas, handleUnfilledInput, resetInputsValues, printE
 
 const gmailRegex = /^(?!.*\.\.)[A-Za-z0-9](?:[A-Za-z0-9._%+-]{0,62}[A-Za-z0-9])?@(gmail\.com|googlemail\.com)$/i;
 
-const SERVER_URL = "https://meuquadrodetarefas.onrender.com";
+const SERVER_URL = "http://127.0.0.1:8080";
 
 domElements.passwordInput.addEventListener('keydown', event => {
     if (event.key !== "Enter") return;

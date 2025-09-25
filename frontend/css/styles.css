@@ -61,8 +61,8 @@ body {
     border-radius: 50%;
     margin-top: 1rem;
     padding: 1rem;
-    border: 10px solid var(--white-color);
-    border-top: 10px solid transparent;
+    border: 20px solid var(--purple-color);
+    border-top: 20px solid transparent;
     animation: loading-animation 1s infinite linear;
 }
 

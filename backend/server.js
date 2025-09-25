@@ -30,6 +30,10 @@ app.use(cors())
 app.use(express.json());
 
 
+
+//Verificar autenticidade do usuário
+let isUserValid = false;
+
 //Criar transporter
 const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
@@ -42,13 +46,20 @@ const transporter = nodemailer.createTransport({
 })
 
 //Pegar a lista de tarefas atual no banco de dados
-app.get('/tasks/:userID', async(req, res) => {
+app.get('/tasks/:i', async(req, res) => {
 
-    const { userID } = req.params;
+    if (!isUserValid) {
+        return res.status(400).json({
+            title: "Chamada não autêntica!",
+            info: "Chamada inválida."
+        });
+    };
+
+    const { i } = req.params;
 
     const user = await prisma.usuario.findUnique({
             where: {
-                id: userID
+                id: i
             }
         }
     );
@@ -111,13 +122,15 @@ app.post('/create-user', async (req, res) => {
 
         userCreated = true;
 
+        isUserValid = true;
+
         res.status(201).json({id: newUser.id});
 
     } catch(error) {
         console.error(error);
     }
 
-    if (userIsCreated) {
+    if (userCreated) {
         try {   
             await transporter.sendMail({
                 from: `Quadro de tarefas <${process.env.EMAIL_USER}>`,
@@ -164,6 +177,7 @@ app.post('/enter-user-account', async (req, res) => {
             });
         };
         userExists = true;
+        isUserValid = true;
         res.status(200).json({id: user.id});
 
     } catch (error) {

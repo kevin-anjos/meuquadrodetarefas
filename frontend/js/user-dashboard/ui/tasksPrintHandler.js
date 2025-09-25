@@ -1,7 +1,8 @@
+//Importar arquivo de esconder tela de loading
+import { hideLoadingScreen } from '../ui/hideLoadingAnimationHandler.js';
+
 //Importar área de Impressão da Lista de Tasks
-
 import { taskListArea } from '../domElements.js';
-
 
 //Handler da Lista de Tasks
 export const handleTasksListPrint = list => {
@@ -101,6 +102,9 @@ const printTasksList = list => {
 
         taskListArea.appendChild(taskArea);
     });
+
+    alert('teste');
+    hideLoadingScreen();
 };
 
 //Apagar os dados impressos da lista de tarefas

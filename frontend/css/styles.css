@@ -52,13 +52,13 @@ body {
 }
 
 #loading-page-animation {
-    height: 50px;
-    width: 50px;
+    height: 10px;
+    width: 10px;
     border-radius: 50%;
     margin-top: 1rem;
     padding: 1rem;
-    border: 25px solid var(--purple-color);
-    border-top: 25px solid transparent;
+    border: 10px solid var(--white-color);
+    border-top: 10px solid transparent;
     animation: loading-animation 1s infinite linear;
 }
 
@@ -701,8 +701,6 @@ body.light-mode-active #delete-account i, body.light-mode-active #delete-account
 }
 
 /*Página de login*/
-
-
 body#log-in-sign-up #title-area {
     display: flex;
     justify-content: flex-start;
@@ -710,6 +708,10 @@ body#log-in-sign-up #title-area {
 
 body#log-in-sign-up h1 {
     font-size: 3rem;
+}
+
+*.hidden {
+    display: none;
 }
 
 body#log-in-sign-up .task-inputs {
@@ -730,17 +732,9 @@ body#log-in-sign-up span:hover {
     border: none;
 }
 
-body#log-in-sign-up button.hidden, p.hidden {
-    display: none;
-}
 
 body#log-in-sign-up #toggle-password-visibility-btn {
     cursor: pointer;
-}
-
-
-body#log-in-sign-up .task-input.hidden {
-    display: none;
 }
 
 

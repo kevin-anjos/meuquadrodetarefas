@@ -1,12 +1,8 @@
 //Importar arquivo de handler de tema
 import { toggleTheme } from '../ui/themeColorHandler.js';
 
-//Importar arquivo de esconder tela de loading
-import { hideLoadingScreen } from '../ui/hideLoadingAnimationHandler.js';
-
 //ID do usuário que vem nos parâmetros da URL
 const userID = new URLSearchParams(window.location.search).get('i');
-
 
 //Colocar a lista de Tasks no Local Storage
 export const setTasksList = async list => {
@@ -25,8 +21,6 @@ export const setTasksList = async list => {
     } 
 };
 
-//https://meuquadrodetarefas.onrender.com/
-
 /*
 //Apagar os parâmetros da URL
 const urlObj = new URL(window.location.href);
@@ -39,11 +33,9 @@ export const getTasksList = async () => {
     try {
         const response = await fetch(`https://meuquadrodetarefas.onrender.com/tasks/${userID}`);
 
-        if(!response.ok) {
+        if (!response.ok) {
             window.location.replace('https://meuquadrodetarefas.onrender.com');
         }
-
-        hideLoadingScreen();
 
         const stringfiedTasksList = await response.json();
 

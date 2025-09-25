@@ -4,8 +4,11 @@ import { toggleTheme } from '../ui/themeColorHandler.js';
 //ID do usuário que vem nos parâmetros da URL
 const userID = new URLSearchParams(window.location.search).get('i');
 
+<<<<<<< HEAD
 const SERVER_URL = "https://meuquadrodetarefas.onrender.com";
 
+=======
+>>>>>>> fc2d18ff05b54186f1daaa35f814b685a463abb9
 //Colocar a lista de Tasks no Local Storage
 export const setTasksList = async list => {
     try {
@@ -23,8 +26,6 @@ export const setTasksList = async list => {
     } 
 };
 
-//https://meuquadrodetarefas.onrender.com/
-
 /*
 //Apagar os parâmetros da URL
 const urlObj = new URL(window.location.href);
@@ -37,7 +38,7 @@ export const getTasksList = async () => {
     try {
         const response = await fetch(`${SERVER_URL}/tasks/${userID}`);
 
-        if(!response.ok) {
+        if (!response.ok) {
             window.location.replace('https://meuquadrodetarefas.onrender.com');
         }
 

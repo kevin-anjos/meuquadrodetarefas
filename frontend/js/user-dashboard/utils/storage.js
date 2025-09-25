@@ -77,7 +77,7 @@ export const deleteUser = async () => {
         });
 
         if (response.ok) {
-            window.location.replace('https://meuquadrodetarefas.onrender.com');   
+            window.location.replace('https://meuquadrodetarefas.onrender.com/');   
         } else {
             alert('Não foi possível deletar o usuário');
         }

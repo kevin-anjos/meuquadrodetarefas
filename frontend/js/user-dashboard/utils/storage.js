@@ -11,7 +11,7 @@ const userID = new URLSearchParams(window.location.search).get('i');
 //Colocar a lista de Tasks no Local Storage
 export const setTasksList = async list => {
     try {
-        await fetch(`http://127.0.0.1:8080/tasks/${userID}`, {
+        await fetch(`https://meuquadrodetarefas.onrender.com/tasks/${userID}`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -77,7 +77,7 @@ export const deleteUser = async () => {
         });
 
         if (response.ok) {
-            window.location.replace('https://meuquadrodetarefas.onrender.com/');   
+            window.location.replace('https://meuquadrodetarefas.onrender.com');   
         } else {
             alert('Não foi possível deletar o usuário');
         }

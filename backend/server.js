@@ -49,19 +49,11 @@ const transporter = nodemailer.createTransport({
 //Pegar a lista de tarefas atual no banco de dados
 app.get('/tasks/:i', async(req, res) => {
 
-<<<<<<< HEAD
     if (!authorizedAcess) {
         return res.status(401).json({
             title: "Credenciais não aceitas",
             info: "Faça login na conta"
         })
-=======
-    if (!isUserValid) {
-        return res.status(400).json({
-            title: "Chamada não autêntica!",
-            info: "Chamada inválida."
-        });
->>>>>>> fc2d18ff05b54186f1daaa35f814b685a463abb9
     };
 
     const { i } = req.params;
@@ -139,24 +131,8 @@ app.post('/create-user', async (req, res) => {
         console.error(error);
     }
 
-<<<<<<< HEAD
     if (!userCreated) {
         return res.status(400).json({
-=======
-    if (userCreated) {
-        try {   
-            await transporter.sendMail({
-                from: `Quadro de tarefas <${process.env.EMAIL_USER}>`,
-                to: email,
-                subject: 'Usuário criado!',
-                html: `<p>Olá, ${name}! Sua conta foi criada com sucesso! Você já pode usar o Quadro de Tarefas.</p>`
-            });
-        } catch (error) {
-            throw new Error('Não foi possível enviar o e-mail');
-        };
-    } else {
-        res.status(400).json({
->>>>>>> fc2d18ff05b54186f1daaa35f814b685a463abb9
             title: "Não foi possível criar a conta!",
             info: "Já existe um usuário com esse e-mail."
         });
@@ -203,13 +179,9 @@ app.post('/enter-user-account', async (req, res) => {
         };
 
         userExists = true;
-<<<<<<< HEAD
 
         authorizedAcess = true;
 
-=======
-        isUserValid = true;
->>>>>>> fc2d18ff05b54186f1daaa35f814b685a463abb9
         res.status(200).json({id: user.id});
 
     } catch (error) {

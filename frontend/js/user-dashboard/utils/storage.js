@@ -4,11 +4,8 @@ import { toggleTheme } from '../ui/themeColorHandler.js';
 //ID do usuário que vem nos parâmetros da URL
 const userID = new URLSearchParams(window.location.search).get('i');
 
-<<<<<<< HEAD
 const SERVER_URL = "https://meuquadrodetarefas.onrender.com";
 
-=======
->>>>>>> fc2d18ff05b54186f1daaa35f814b685a463abb9
 //Colocar a lista de Tasks no Local Storage
 export const setTasksList = async list => {
     try {

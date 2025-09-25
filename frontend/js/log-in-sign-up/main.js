@@ -10,19 +10,21 @@ import { toggleSignInSignUpAreas, handleUnfilledInput, resetInputsValues, printE
 
 const gmailRegex = /^(?!.*\.\.)[A-Za-z0-9](?:[A-Za-z0-9._%+-]{0,62}[A-Za-z0-9])?@(gmail\.com|googlemail\.com)$/i;
 
+const SERVER_URL = "https://meuquadrodetarefas.onrender.com";
 
-domElements.createAccountBtn.addEventListener('click', async() => {
-    if (areInputsValid()) {
-        createUser();
-    };
-});
+domElements.passwordInput.addEventListener('keydown', event => {
+    if (event.key !== "Enter") return;
 
-domElements.enterAccountBtn.addEventListener('click', async() => {
-    domElements.usernameInput.value = "anyvalue";
-    if (areInputsValid()) {
-        enterAccount();
-    };
-});
+    if (getComputedStyle(domElements.createAccountBtn).display === "none") {
+        enterAccountHandler();
+    } else {
+        createUserHandler();
+    }
+})
+
+domElements.createAccountBtn.addEventListener('click', async() => createUserHandler());
+
+domElements.enterAccountBtn.addEventListener('click', async() => enterAccountHandler());
 
 const areInputsValid = () => {
     if (domElements.usernameInput.value.trim() === "") {
@@ -43,9 +45,20 @@ const areInputsValid = () => {
     return true;
 };
 
+const createUserHandler = () => {
+    if (!areInputsValid()) return;
+    createUser();
+}
+
+const enterAccountHandler = () => {
+    domElements.usernameInput.value = "anyvalue";
+    if (!areInputsValid()) return;
+    enterAccount();
+}
+
 const createUser = async() => {
     try {
-        const response = await fetch('https://meuquadrodetarefas.onrender.com/create-user', {
+        const response = await fetch(`${SERVER_URL}/create-user`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -79,7 +92,7 @@ const createUser = async() => {
 
 const enterAccount = async() => {
     try {
-        const response = await fetch('https://meuquadrodetarefas.onrender.com/enter-user-account', {
+        const response = await fetch(`${SERVER_URL}/enter-user-account`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'

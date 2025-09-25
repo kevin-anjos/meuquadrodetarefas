@@ -15,6 +15,7 @@ import { hideAddTaskArea, showAddTaskArea, hideEditTaskArea, confirmTaskDeletion
 
 //Importar a função de pegar nome de usuário pelo storage
 import { getUsername, deleteUser } from "./utils/storage.js";
+import { hideLoadingScreen } from "./ui/hideLoadingAnimationHandler.js";
 
 //Arrays de elementos 
 const themeToggleElements = [domElements.darkModeDot, domElements.lightModeDot];
@@ -26,9 +27,9 @@ let toBeDeletedTaskID;
 //Nome do usuário:
 const username = await getUsername();
 domElements.usernameSpan.textContent = username + "!";
+hideLoadingScreen();
 
-
-//Eventos
+//Eventos:
 
 //Eventos de Input
 domElements.searchTaskInput.addEventListener('input', () => {

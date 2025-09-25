@@ -1,7 +1,5 @@
 //Importar área de Impressão da Lista de Tasks
-
 import { taskListArea } from '../domElements.js';
-
 
 //Handler da Lista de Tasks
 export const handleTasksListPrint = list => {

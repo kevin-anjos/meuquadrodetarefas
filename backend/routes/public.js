@@ -72,7 +72,7 @@ router.post('/users/sign-up', async (req, res) => {
 
 //Entrar na conta do usuário
 router.post('/users/log-in', async (req, res) => {
-    const { email, password  } = req.body;
+    const { email, password } = req.body;
     
     let userExists = false;
 

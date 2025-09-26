@@ -4,6 +4,12 @@ import { toggleSignInSignUpAreas, handleUnfilledInput } from './uiHandler.js';
 
 import { signUp, logIn } from './appServices.js';
 
+const token = localStorage.getItem('authToken');
+
+if (token) {
+    window.location.href = './dashboard';
+};
+
 [domElements.enterAccountSpan, domElements.createAccountSpan].forEach(span => {
     span.addEventListener('click', () => {
         toggleSignInSignUpAreas();

@@ -23,7 +23,7 @@ export const signUp = async() => {
 
         if (response.ok) {
             localStorage.setItem("authToken", data.token);
-            window.location.replace(`./user-dashboard.html`);
+            window.location.replace(`./dashboard`);
         } else {
             const { title, info } = data;
             printErrorMessage(title, info);
@@ -54,7 +54,7 @@ export const logIn = async() => {
         if (response.ok) {
             //Colocar o token no localStorage
             localStorage.setItem("authToken", data.token);
-            window.location.replace(`./user-dashboard.html`);
+            window.location.replace(`./dashboard`);
         } else {
             const { title, info } = data;
             printErrorMessage(title, info);

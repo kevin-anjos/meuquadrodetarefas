@@ -11,7 +11,7 @@ import { Task } from './Task.js';
 import { showEditTaskArea, hideEditTaskArea, hideAddTaskArea, handleDeleteAllBtnVisibility } from '../ui/taskModalAreaHandler.js';
 
 //Importar arquivo do storage 
-import { setTasksList, getTasksList } from './appServices.js';
+import { updateTasksList, getTasksList } from './appServices.js';
 
 //Importar arquivo de filtros
 import { filterTasks } from './filterAndSearch.js';
@@ -118,7 +118,7 @@ export const editTask = () => {
 //Executar funções de renderização de tarefas e de botão de apagar todas as tarefas
 const updateApp = () => {
     handleTasksListPrint(tasksList);
-    setTasksList(tasksList);
+    updateTasksList(tasksList);
     handleDeleteAllBtnVisibility();
 }
 

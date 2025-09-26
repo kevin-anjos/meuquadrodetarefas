@@ -681,15 +681,18 @@ h2 {
     border-radius: 10px;
     left: 5%;
     bottom: 5%;
-    transition: .5s;
+    transition: 2s;
     display: flex;
     flex-direction: column;
     gap: .5rem;
 }
 
+.error-message {
+    color: var(--secondary-red-color);
+}
 
 #alert-messages-area.hidden {
-    left: -100%;
+    left: -500%;
 }
 
 /*Mostrar botões de edição de task*/

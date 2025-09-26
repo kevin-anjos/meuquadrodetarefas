@@ -79,8 +79,16 @@ domElements.userProfileArea.addEventListener('click', () => {
     }, 1000)
 })
 
-domElements.deleteAccountBtn.addEventListener('click', () => {
-    deleteUser();
+domElements.deleteAccountBtn.addEventListener('click', async() => {
+    const { title, info } = await deleteUser();
+
+    domElements.alertMessagesAreaTitle.textContent = title;
+    domElements.alertMessagesAreaInfo.textContent = info;
+
+    setTimeout(() => {
+        domElements.alertMessagesArea.classList.remove('hidden');
+    }, 1000)
+
 });
 
 domElements.addTaskBtnArea.addEventListener('click', () => {
@@ -117,23 +125,39 @@ domElements.closeModalBtn.forEach(button => {
 
 
 domElements.updatePasswordBtn.addEventListener('click', async() => {
-    if (domElements.newPasswordInput.value.length < 8) return;
+    if (domElements.newPasswordInput.value.length < 8) {
+        return domElements.errorMessages[1].classList.remove('hidden');
+    };
 
     await updatePassword(domElements.newPasswordInput.value);
 
     hideModals();
+
+    domElements.newPasswordInput.value = "";
+
+    domElements.alertMessagesAreaTitle.textContent = "Senha atualizada!";
+    domElements.alertMessagesAreaInfo.textContent = "A sua senha já foi atualizada no banco de dados.";
 
     setTimeout(() => {
         domElements.alertMessagesArea.classList.remove('hidden');
     }, 1000)
 });
 
-domElements.updateUsernameBtn.addEventListener('click', async() => {
-    if (domElements.newUsernameInput.value === "") return;
+[domElements.newPasswordInput, domElements.newUsernameInput].forEach(input => {
+    input.addEventListener('click', () => {
+        domElements.errorMessages[0].classList.add('hidden');
+        domElements.errorMessages[1].classList.add('hidden');
+    })
+})
 
+domElements.updateUsernameBtn.addEventListener('click', async() => {
+    if (domElements.newUsernameInput.value === "") {
+        return domElements.errorMessages[0].classList.remove('hidden');
+    }
     const newUsername = await updateUsername(domElements.newUsernameInput.value);
     domElements.usernameSpan.textContent = newUsername + "!";
     hideModals();
+    domElements.newUsernameInput.value = "";
 })
 
 themeToggleElements.forEach(themeToggleElement => {

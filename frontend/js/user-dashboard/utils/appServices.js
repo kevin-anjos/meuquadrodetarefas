@@ -1,18 +1,20 @@
-//ID do usuário que vem nos parâmetros da URL
-const userID = new URLSearchParams(window.location.search).get('i');
+//ID do usuário que vem do localStorage
+const token = localStorage.getItem('authToken');
 
-const SERVER_URL = "http://127.0.0.1:8080";
+if (!token) {
+    window.location.replace('https://meuquadrodetarefas.onrender.com');
+}
 
-//https://meuquadrodetarefas.onrender.com
-//http://127.0.0.1:8080
+const SERVER_URL = "https://meuquadrodetarefas.onrender.com";
 
-//Colocar a lista de Tasks no Local Storage
-export const setTasksList = async list => {
+//Atualizar a lista de tarefas
+export const updateTasksList = async list => {
     try {
-        await fetch(`${SERVER_URL}/tasks/${userID}`, {
-            method: "POST",
+        await fetch(`${SERVER_URL}/tasks`, {
+            method: "PUT",
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify({
                 tasksList: JSON.stringify(list)
@@ -26,9 +28,15 @@ export const setTasksList = async list => {
 //Pegar a lista de tarefas
 export const getTasksList = async () => {
     try {
-        const response = await fetch(`${SERVER_URL}/tasks/${userID}`);
+        const response = await fetch(`${SERVER_URL}/tasks`, {
+            method: "GET",
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
 
         if (!response.ok) {
+            localStorage.removeItem("authToken");
             window.location.replace('https://meuquadrodetarefas.onrender.com');
         }
 
@@ -44,7 +52,12 @@ export const getTasksList = async () => {
 //Pegar nome do usuário
 export const getUsername = async () => {
     try {
-        const response = await fetch(`${SERVER_URL}/users/${userID}`);
+        const response = await fetch(`${SERVER_URL}/users`, {
+            method: "GET",
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
 
         const username = response.json();
 
@@ -57,10 +70,11 @@ export const getUsername = async () => {
 //Editar senha do usuário
 export const updatePassword = async newPassword => {
     try {
-        const response = await fetch(`${SERVER_URL}/users/update-password/${userID}`, {
+        const response = await fetch(`${SERVER_URL}/users/update-password`, {
             method: "PUT",
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify({
                 password: newPassword
@@ -79,10 +93,11 @@ export const updatePassword = async newPassword => {
 //Editar nome do usuário
 export const updateUsername = async newUsername => {
     try {
-        const response = await fetch(`${SERVER_URL}/users/update-username/${userID}`, {
+        const response = await fetch(`${SERVER_URL}/users/update-username`, {
             method: "PUT",
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify({
                 name: newUsername
@@ -102,17 +117,23 @@ export const updateUsername = async newUsername => {
 //Deletar usuário
 export const deleteUser = async () => {
     try {
-        const response = await fetch(`${SERVER_URL}/users/${userID}`, {
-            method: "DELETE"
+        const response = await fetch(`${SERVER_URL}/users`, {
+            method: "DELETE",
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
         });
 
         if (response.ok) {
+            localStorage.removeItem('authToken');
             window.location.replace('https://meuquadrodetarefas.onrender.com');   
         } else {
-            alert('Não foi possível deletar o usuário');
+            return {
+                title: "Não foi possível deletar a conta.",
+                info: "Tente novamente mais tarde."
+            }
         }
     } catch(error) {
         console.error(error);
-    } 
-}
-
+    };
+};

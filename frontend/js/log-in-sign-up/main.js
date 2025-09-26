@@ -1,6 +1,8 @@
 import * as domElements from './domElements.js';
 
-import { toggleSignInSignUpAreas, handleUnfilledInput, resetInputsValues, printErrorMessage } from './uiHandler.js';
+import { toggleSignInSignUpAreas, handleUnfilledInput } from './uiHandler.js';
+
+import { signUp, logIn } from './appServices.js';
 
 [domElements.enterAccountSpan, domElements.createAccountSpan].forEach(span => {
     span.addEventListener('click', () => {
@@ -9,8 +11,6 @@ import { toggleSignInSignUpAreas, handleUnfilledInput, resetInputsValues, printE
 });
 
 const gmailRegex = /^(?!.*\.\.)[A-Za-z0-9](?:[A-Za-z0-9._%+-]{0,62}[A-Za-z0-9])?@(gmail\.com|googlemail\.com)$/i;
-
-const SERVER_URL = "http://127.0.0.1:8080";
 
 domElements.passwordInput.addEventListener('keydown', event => {
     if (event.key !== "Enter") return;
@@ -55,63 +55,3 @@ const enterAccountHandler = () => {
     if (!areInputsValid()) return;
     logIn();
 }
-
-const signUp = async() => {
-    try {
-        const response = await fetch(`${SERVER_URL}/users/sign-up`, {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                name: domElements.usernameInput.value,
-                email: domElements.emailInput.value,
-                password: domElements.passwordInput.value
-            })
-        });
-
-        //Chamar o arquivo de dashboard a partir do ID
-        const data = await response.json();
-
-        if (response.ok) {
-            window.location.href = `./user-dashboard.html?i=${data.id}`;
-        } else {
-            const { title, info } = data;
-            printErrorMessage(title, info);
-        }
-    } catch(error) {
-        printErrorMessage("Erro desconhecido!", "Tente novamente.");
-        console.log(error);
-    } finally {
-        resetInputsValues();
-    };
-};
-
-const logIn = async() => {
-    try {
-        const response = await fetch(`${SERVER_URL}/users/log-in`, {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                email: domElements.emailInput.value,
-                password: domElements.passwordInput.value
-            })  
-        })
-
-        const data = await response.json();
-
-        if (response.ok) {
-            window.location.replace(`./user-dashboard.html?i=${data.id}`);
-        } else {
-            const { title, info } = data;
-            printErrorMessage(title, info);
-        }
-    } catch(error) {
-        printErrorMessage("Erro desconhecido!", "Tente novamente.");
-        console.log(error);
-    } finally {
-        resetInputsValues();
-    };
-};

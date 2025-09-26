@@ -56,6 +56,12 @@ const deleteAccountBtn = document.querySelector('#delete-account');
 
 const alertMessagesArea = document.querySelector('#alert-messages-area');
 
+const alertMessagesAreaTitle = document.querySelector('#alert-messages-area h3');
+const alertMessagesAreaInfo = document.querySelector('#alert-messages-area p');
+
+
+const errorMessages = document.querySelectorAll('.error-message');
+
 export {
-    taskListArea, modals, fade, addTaskBtn, addTaskBtnArea, editTaskBtn, searchTaskInput, closeModalBtn, addTaskInput, descriptionTaskInput, filterTaskSelect, addEditWordToggle, darkModeDot, lightModeDot, darkModeBtn, lightModeBtn, darkModeIco, lightModeIco, deleteAllListBtn, confirmDeleteTaskModalArea, addTaskModalArea, deleteTaskBtn, usernameSpan, loadingScreen, deleteAccountBtn, userProfileArea, userActionsArea, editPasswordBtn, editUsernameBtn, newUsernameInput, newPasswordInput, updatePasswordBtn, updateUsernameBtn, updateUsernameModalArea, updatePasswordModalArea, alertMessagesArea
+    taskListArea, modals, fade, addTaskBtn, addTaskBtnArea, editTaskBtn, searchTaskInput, closeModalBtn, addTaskInput, descriptionTaskInput, filterTaskSelect, addEditWordToggle, darkModeDot, lightModeDot, darkModeBtn, lightModeBtn, darkModeIco, lightModeIco, deleteAllListBtn, confirmDeleteTaskModalArea, addTaskModalArea, deleteTaskBtn, usernameSpan, loadingScreen, deleteAccountBtn, userProfileArea, userActionsArea, editPasswordBtn, editUsernameBtn, newUsernameInput, newPasswordInput, updatePasswordBtn, updateUsernameBtn, updateUsernameModalArea, updatePasswordModalArea, alertMessagesArea, alertMessagesAreaInfo, alertMessagesAreaTitle, errorMessages
 };

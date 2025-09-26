@@ -453,6 +453,10 @@ option {
     overflow: hidden;
 }
 
+.update-input {
+    margin: .5rem 0rem;
+}
+
 #add-task-area .input:nth-child(2) {
     flex-basis: 100%;
     order: 2;
@@ -667,6 +671,25 @@ h2 {
 #fade.hidden {
     opacity: 0;
     pointer-events: none;
+}
+
+#alert-messages-area {
+    background-color: var(--red-color);
+    color: var(--white-color);
+    padding: 2rem;
+    position: absolute;
+    border-radius: 10px;
+    left: 5%;
+    bottom: 5%;
+    transition: .5s;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+
+#alert-messages-area.hidden {
+    left: -100%;
 }
 
 /*Mostrar botões de edição de task*/

@@ -38,6 +38,7 @@ let toBeDeletedTaskID;
 //Eventos de documento
 document.addEventListener('click', () => {
     domElements.userActionsArea.classList.add('hidden');
+    domElements.alertMessagesArea.classList.add('hidden');
 });
 
 //Eventos de Input
@@ -73,11 +74,9 @@ domElements.filterTaskSelect.addEventListener("change", () => {
 //Eventos de botão
 
 domElements.userProfileArea.addEventListener('click', () => {
-    
     setTimeout(() => {
         domElements.userActionsArea.classList.toggle('hidden');
     }, 1000)
-    
 })
 
 domElements.deleteAccountBtn.addEventListener('click', () => {
@@ -117,18 +116,24 @@ domElements.closeModalBtn.forEach(button => {
 });
 
 
-domElements.updatePasswordBtn.addEventListener('click', () => {
-
+domElements.updatePasswordBtn.addEventListener('click', async() => {
     if (domElements.newPasswordInput.value.length < 8) return;
 
-    updatePassword(domElements.newPasswordInput.value);
+    await updatePassword(domElements.newPasswordInput.value);
+
+    hideModals();
+
+    setTimeout(() => {
+        domElements.alertMessagesArea.classList.remove('hidden');
+    }, 1000)
 });
 
-domElements.updateUsernameBtn.addEventListener('click', () => {
-
+domElements.updateUsernameBtn.addEventListener('click', async() => {
     if (domElements.newUsernameInput.value === "") return;
 
-    updateUsername(domElements.newPasswordInput.value);
+    const newUsername = await updateUsername(domElements.newUsernameInput.value);
+    domElements.usernameSpan.textContent = newUsername + "!";
+    hideModals();
 })
 
 themeToggleElements.forEach(themeToggleElement => {

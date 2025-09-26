@@ -20,9 +20,11 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'frontend', 'index.html'));
 });
 
+/*
 app.use(cors({
     origin: "https://meuquadrodetarefas.onrender.com"
 }))
+*/
 
 app.use(cors())
 app.use(express.json());
@@ -78,8 +80,7 @@ app.get('/users/:i', async(req, res) => {
 });
 
 //Atualizar nome do usuário
-app.post('/users/update-username:i', async(req, res) => {
-
+app.put('/users/update-username/:i', async(req, res) => {
     const { i } = req.params;
 
     const { name } = req.body;
@@ -90,26 +91,6 @@ app.post('/users/update-username:i', async(req, res) => {
             },
             data: {
                 name: name
-            }
-        }
-    );
-
-    res.status(200).json(user.name);
-});
-
-//Atualizar senha do usuário
-app.post('/users/update-password:i', async(req, res) => {
-
-    const { i } = req.params;
-
-    const { password } = req.body;
-
-    const user = await prisma.usuario.update({
-            where: {
-                id: i
-            },
-            data: {
-                password: password
             }
         }
     );
@@ -131,14 +112,40 @@ app.post('/tasks/:i', async(req, res) => {
                 tasksList: tasksList
             },
         });
+
+        res.status(200).json({
+            title: "A conta foi deletada!",
+            info: "Redirecionando para a página de login..."
+        });
+
     } catch(error) {
         console.log(error);
     }
 });
 
+//Atualizar senha do usuário
+app.put('/users/update-password/:i', async(req, res) => {
+
+    const { i } = req.params;
+
+    const { password } = req.body;
+
+    const user = await prisma.usuario.update({
+            where: {
+                id: i
+            },
+            data: {
+                password: password
+            }
+        }
+    );
+
+    res.status(200).json(user.name);
+});
+
 
 //Criar usuário
-app.post('/create-user', async (req, res) => {
+app.post('/users/sign-up', async (req, res) => {
     const { name, email, password } = req.body;
 
     let userCreated = false;
@@ -182,9 +189,8 @@ app.post('/create-user', async (req, res) => {
     };
 });
 
-
 //Entrar na conta do usuário
-app.post('/enter-user-account', async (req, res) => {
+app.post('/users/log-in', async (req, res) => {
     const { email, password } = req.body;
     
     let userExists = false;

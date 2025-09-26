@@ -10,7 +10,7 @@ import { toggleSignInSignUpAreas, handleUnfilledInput, resetInputsValues, printE
 
 const gmailRegex = /^(?!.*\.\.)[A-Za-z0-9](?:[A-Za-z0-9._%+-]{0,62}[A-Za-z0-9])?@(gmail\.com|googlemail\.com)$/i;
 
-const SERVER_URL = "https://meuquadrodetarefas.onrender.com";
+const SERVER_URL = "http://127.0.0.1:8080";
 
 domElements.passwordInput.addEventListener('keydown', event => {
     if (event.key !== "Enter") return;
@@ -47,18 +47,18 @@ const areInputsValid = () => {
 
 const createUserHandler = () => {
     if (!areInputsValid()) return;
-    createUser();
+    signUp();
 }
 
 const enterAccountHandler = () => {
     domElements.usernameInput.value = "anyvalue";
     if (!areInputsValid()) return;
-    enterAccount();
+    logIn();
 }
 
-const createUser = async() => {
+const signUp = async() => {
     try {
-        const response = await fetch(`${SERVER_URL}/create-user`, {
+        const response = await fetch(`${SERVER_URL}/users/sign-up`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -71,9 +71,6 @@ const createUser = async() => {
         });
 
         //Chamar o arquivo de dashboard a partir do ID
-
-
-
         const data = await response.json();
 
         if (response.ok) {
@@ -90,9 +87,9 @@ const createUser = async() => {
     };
 };
 
-const enterAccount = async() => {
+const logIn = async() => {
     try {
-        const response = await fetch(`${SERVER_URL}/enter-user-account`, {
+        const response = await fetch(`${SERVER_URL}/users/log-in`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'

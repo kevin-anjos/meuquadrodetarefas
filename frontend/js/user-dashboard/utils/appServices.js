@@ -1,9 +1,10 @@
-import { hideModals } from "../ui/taskModalAreaHandler.js";
-
 //ID do usuário que vem nos parâmetros da URL
 const userID = new URLSearchParams(window.location.search).get('i');
 
-const SERVER_URL = "https://meuquadrodetarefas.onrender.com";
+const SERVER_URL = "http://127.0.0.1:8080";
+
+//https://meuquadrodetarefas.onrender.com
+//http://127.0.0.1:8080
 
 //Colocar a lista de Tasks no Local Storage
 export const setTasksList = async list => {
@@ -57,7 +58,7 @@ export const getUsername = async () => {
 export const updatePassword = async newPassword => {
     try {
         const response = await fetch(`${SERVER_URL}/users/update-password/${userID}`, {
-            method: "POST",
+            method: "PUT",
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -67,8 +68,7 @@ export const updatePassword = async newPassword => {
         });
 
         if (response.ok) {
-            alert('Senha atualizada!');
-            hideModals();
+            return newPassword;
         }
 
     } catch (error) {
@@ -76,11 +76,11 @@ export const updatePassword = async newPassword => {
     };
 };
 
-//Editar senha do usuário
+//Editar nome do usuário
 export const updateUsername = async newUsername => {
     try {
         const response = await fetch(`${SERVER_URL}/users/update-username/${userID}`, {
-            method: "POST",
+            method: "PUT",
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -90,8 +90,7 @@ export const updateUsername = async newUsername => {
         });
 
         if (response.ok) {
-            alert('Nome atualizado!');
-            hideModals();
+            return newUsername;
         }
 
     } catch (error) {

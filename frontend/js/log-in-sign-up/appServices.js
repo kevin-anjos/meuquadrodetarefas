@@ -1,5 +1,7 @@
 import { resetInputsValues, printErrorMessage }  from './uiHandler.js'
 
+import * as domElements from './domElements.js';
+
 const SERVER_URL = "https://meuquadrodetarefas.onrender.com";
 
 export const signUp = async() => {

@@ -260,7 +260,7 @@ header i {
     gap: 1rem;
     justify-content: space-between;
     border-top: 1px solid var(--white-color);
-    transition: .5s;
+    transition: 1s;
 }
 
 .user-action:hover {
@@ -283,7 +283,7 @@ header i {
 }
 
 #user-actions.hidden {
-    top: -10%;
+    top: -30%;
 }
 
 #user-profile-area i {

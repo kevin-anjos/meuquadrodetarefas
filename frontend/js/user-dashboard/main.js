@@ -25,7 +25,6 @@ const tasksInputs = [domElements.addTaskInput, domElements.descriptionTaskInput]
 //Variável do ID da task a ser deletada
 let toBeDeletedTaskID;
 
-
 //Pegar nome do usuário
 (async () => {
     const username = await getUsername();
@@ -142,6 +141,11 @@ domElements.updatePasswordBtn.addEventListener('click', async() => {
         domElements.alertMessagesArea.classList.remove('hidden');
     }, 1000)
 });
+
+domElements.logOutBtn.addEventListener('click', () => {
+    localStorage.removeItem('authToken');
+    window.location.replace('/');
+})
 
 [domElements.newPasswordInput, domElements.newUsernameInput].forEach(input => {
     input.addEventListener('click', () => {

@@ -23,7 +23,7 @@ app.get("/dashboard", (req, res) => {
 
 app.use(cors({
     origin: "https://meuquadrodetarefas.onrender.com"
-}))
+}));
 
 app.use(express.static(path.join(__dirname, 'frontend')));
 

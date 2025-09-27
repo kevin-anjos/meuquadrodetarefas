@@ -3,6 +3,8 @@ import * as domElements from '../domElements.js';
 export const printAlertMessage = (title, info) => {
     if (!title || !info) return;
 
+    if (title === "Lista atualizada!") return;
+
     domElements.alertMessagesAreaTitle.textContent = title;
     domElements.alertMessagesAreaInfo.textContent = info;
 

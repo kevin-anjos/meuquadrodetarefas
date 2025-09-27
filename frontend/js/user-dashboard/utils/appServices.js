@@ -20,10 +20,14 @@ export const updateTasksList = async list => {
             })  
         })
 
-        const data = await response.json();
-
         if (!response.ok) {
+            const data = await response.json();
             return data;
+        };
+
+        return {
+            title: "Lista atualizada!",
+            info: "Suas tarefas foram salvas com sucesso."
         };
 
     } catch(error) {

@@ -2,7 +2,7 @@
 import { setThemeInLocalStorage } from '../utils/storage.js';
 
 //Importar arquivo de storage
-import { darkModeIco, lightModeIco, darkModeDot, darkModeBtn, lightModeBtn } from '../domElements.js';
+import { darkModeIco, lightModeIco, darkModeDot, darkModeBtn, lightModeBtn, toggleThemeIco, toggleThemeParagraph } from '../domElements.js';
 
 
 //Alternar tema
@@ -15,6 +15,17 @@ export const toggleTheme = () => {
 
     darkModeBtn.classList.toggle('line-under-dark-text-animation');
     lightModeBtn.classList.toggle('line-under-light-text-animation');
+    
+    if (document.body.classList.contains('light-mode-active')) {
+        setThemeInLocalStorage('light-mode');
+        toggleThemeParagraph.textContent = "Modo escuro";
+        toggleThemeIco.classList.remove('bi-sun-fill');
+        toggleThemeIco.classList.add('bi-moon-fill');
+    } else {
+        setThemeInLocalStorage('dark-mode');
+        toggleThemeParagraph.textContent = "Modo claro";
+        toggleThemeIco.classList.remove('bi-moon-fill');
+        toggleThemeIco.classList.add('bi-sun-fill');
+    }
 
-    document.body.classList.contains('light-mode-active') ? setThemeInLocalStorage('light-mode') : setThemeInLocalStorage('dark-mode');
 };

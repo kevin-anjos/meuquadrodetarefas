@@ -4,9 +4,11 @@
     --black-color: #161515;
     --secondary-black-color: #1d1818;
     --purple-color: #48229b;
-    --secondary-blue-color: #044dc3;
+    --secondary-purple-color: #2e1467;
     --blue-color: #376dc4;
+    --secondary-blue-color: #044dc3;
     --orange-color: #d69200;
+    --secondary-orange-color: #b57f09;
     --white-color: #f3f3f3;
     --secondary-white-color: #c8c7c7;
     --grey-color: #8f8d8d;    
@@ -237,7 +239,6 @@ header i {
     position: absolute;
     left: 5%;
     top: 12%;
-    background-color: var(--red-color);
     display: flex;
     flex-direction: column;
     border-radius: 1rem;
@@ -263,23 +264,52 @@ header i {
     transition: 1s;
 }
 
-.user-action:hover {
-    background-color: var(--secondary-red-color);
-}
-
 .user-action p{
     width: 90%;
 }
 
 #edit-username {
-    border-top-left-radius: 1rem;
-    border-top-right-radius: 1rem;
     border-top: 1px solid transparent;
+    background-color: var(--purple-color);
+}
+
+#edit-username:hover {
+    background-color: var(--secondary-purple-color);
+}
+
+#edit-password {
+    background-color: var(--blue-color);
+}
+
+#edit-password:hover {
+    background-color: var(--secondary-blue-color);
+}
+
+#toggle-theme {
+    background-color: var(--orange-color);
+    display: none;
+}
+
+#toggle-theme:hover {
+    background-color: var(--secondary-orange-color);
+}
+
+#log-out {
+    background-color: var(--grey-color);
+}
+
+#log-out:hover {
+    background-color: var(--secondary-grey-color);
 }
 
 #delete-account {
     border-bottom-left-radius: 1rem;
     border-bottom-right-radius: 1rem;
+    background-color: var(--red-color);
+}
+
+#delete-account:hover {
+    background-color: var(--secondary-red-color);
 }
 
 #user-actions.hidden {
@@ -711,6 +741,15 @@ body.light-mode-active {
     background-color: var(--white-color);
 }
 
+body.light-mode-active #toggle-theme {
+    background-color: var(--purple-color);
+}
+
+body.light-mode-active #toggle-theme:hover {
+    background-color: var(--secondary-purple-color);
+}
+
+
 body.light-mode-active header{
     background-color: var(--secondary-white-color);
     color: var(--black-color);
@@ -869,7 +908,11 @@ body#log-in-sign-up #modal-wrapper i{
         width: 70%;
     }
 
-    #user-profile-area {
+    #toggle-theme {
+        display: flex;
+    }
+
+    #toggle-mode-area-wrapper {
         display: none;
     }
 }

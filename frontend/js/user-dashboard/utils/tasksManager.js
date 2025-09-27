@@ -117,6 +117,7 @@ export const editTask = () => {
 
 //Executar funções de renderização de tarefas e de botão de apagar todas as tarefas
 const updateApp = () => {
+    return;
     handleTasksListPrint(tasksList);
     updateTasksList(tasksList);
     handleDeleteAllBtnVisibility();

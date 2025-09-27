@@ -19,7 +19,7 @@ import { getUsername, deleteUser, updatePassword, updateUsername } from "./utils
 import { hideLoadingScreen } from "./ui/hideLoadingAnimationHandler.js";
 
 //Arrays de elementos 
-const themeToggleElements = [domElements.darkModeDot, domElements.lightModeDot];
+const themeToggleElements = [domElements.darkModeDot, domElements.lightModeDot, domElements.toggleThemeBtn];
 const tasksInputs = [domElements.addTaskInput, domElements.descriptionTaskInput];
 const updateUserInputs = [domElements.newPasswordInput, domElements.newUsernameInput];
 
@@ -155,8 +155,12 @@ updateUserInputs.forEach(input => {
     })
 })
 
+domElements.newUsernameInput.addEventListener('input', () => {
+    document.querySelector('#new-username-input').value = document.querySelector('#new-username-input').value.slice(0, 20); 
+})
+
 domElements.updateUsernameBtn.addEventListener('click', async() => {
-    if (domElements.newUsernameInput.value === "") {
+    if (domElements.newUsernameInput.value.trim() === "") {
         return domElements.errorMessages[0].classList.remove('hidden');
     }
     const newUsername = await updateUsername(domElements.newUsernameInput.value);

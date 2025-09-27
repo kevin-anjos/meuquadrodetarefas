@@ -52,6 +52,11 @@ const userActionsArea = document.querySelector('#user-actions');
 
 const editUsernameBtn = document.querySelector('#edit-username');
 const editPasswordBtn = document.querySelector('#edit-password');
+
+const toggleThemeBtn = document.querySelector('#toggle-theme');
+const toggleThemeIco = document.querySelector('#toggle-theme i');
+const toggleThemeParagraph = document.querySelector('#toggle-theme p');
+
 const logOutBtn = document.querySelector('#log-out');
 const deleteAccountBtn = document.querySelector('#delete-account');
 
@@ -64,5 +69,5 @@ const alertMessagesAreaInfo = document.querySelector('#alert-messages-area p');
 const errorMessages = document.querySelectorAll('.error-message');
 
 export {
-    taskListArea, modals, fade, addTaskBtn, addTaskBtnArea, editTaskBtn, searchTaskInput, closeModalBtn, addTaskInput, descriptionTaskInput, filterTaskSelect, addEditWordToggle, darkModeDot, lightModeDot, darkModeBtn, lightModeBtn, darkModeIco, lightModeIco, deleteAllListBtn, confirmDeleteTaskModalArea, addTaskModalArea, deleteTaskBtn, usernameSpan, loadingScreen, deleteAccountBtn, userProfileArea, userActionsArea, editPasswordBtn, editUsernameBtn, newUsernameInput, newPasswordInput, updatePasswordBtn, updateUsernameBtn, updateUsernameModalArea, updatePasswordModalArea, alertMessagesArea, alertMessagesAreaInfo, alertMessagesAreaTitle, errorMessages, logOutBtn
+    taskListArea, modals, fade, addTaskBtn, addTaskBtnArea, editTaskBtn, searchTaskInput, closeModalBtn, addTaskInput, descriptionTaskInput, filterTaskSelect, addEditWordToggle, darkModeDot, lightModeDot, darkModeBtn, lightModeBtn, darkModeIco, lightModeIco, deleteAllListBtn, confirmDeleteTaskModalArea, addTaskModalArea, deleteTaskBtn, usernameSpan, loadingScreen, deleteAccountBtn, userProfileArea, userActionsArea, editPasswordBtn, editUsernameBtn, newUsernameInput, newPasswordInput, updatePasswordBtn, updateUsernameBtn, updateUsernameModalArea, updatePasswordModalArea, alertMessagesArea, alertMessagesAreaInfo, alertMessagesAreaTitle, errorMessages, logOutBtn, toggleThemeBtn, toggleThemeIco, toggleThemeParagraph
 };

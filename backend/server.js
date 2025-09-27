@@ -33,7 +33,7 @@ app.use(express.json());
 app.use('/', publicRoutes);
 
 //Usar arquivo de rotas privadas
-app.use('/', auth, privateRoutes);
+app.use('/users', auth, privateRoutes);
 
 const PORT =  process.env.PORT || 8080;
 

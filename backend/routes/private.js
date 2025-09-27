@@ -5,42 +5,57 @@ const router = express.Router();
 
 const prisma = new PrismaClient();
 
-//Pegar a lista de tarefas atual no banco de dados
-router.get('/tasks', async(req, res) => {
-    const userID = req.userID;
 
-    const user = await prisma.usuario.findUnique({
-        where: {
-            id: userID
-        }
-    });
+//Atualizar a lista de tarefas no banco de dados
+router.put('/tasks', async(req, res) => {
+    const { tasksList } = req.body;
 
-    res.status(200).json(user.tasksList);
+    try {
+        await prisma.usuario.update({
+            where: {
+                id: req.userID
+            },
+            data: {
+                tasksList: tasksList
+            },
+        });
+
+        res.status(200).json({
+            title: "A lista de tarefas foi atualizada!",
+            info: "Dados salvos no banco de dados."
+        });
+
+    } catch(error) {
+        res.status(500).json({
+            title: "A lista de tarefas não foi atualizada!",
+            info: "Não foi possível atualizar os dados."
+        });
+        console.log(error);
+    };
 });
 
-//Pegar o nome de usuário atual no banco de dados
-router.get('/users', async(req, res) => {
-
-    const userID = req.userID;
+//Pegar a lista de tarefas e o nome do usuário do banco de dados
+router.get('/', async(req, res) => {
 
     const user = await prisma.usuario.findUnique({
         where: {
-            id: userID
+            id: req.userID
         }
     });
 
-    res.status(200).json(user.name);
+    res.status(200).json({
+        tasksList: user.tasksList,
+        username: user.name
+    });
 });
 
 //Atualizar nome do usuário
-router.put('/users/update-username', async(req, res) => {
-    const userID = req.userID;
-
+router.put('/update-username', async(req, res) => {
     const { name } = req.body;
 
     const user = await prisma.usuario.update({
         where: {
-            id: userID
+            id: req.userID
         },
         data: {
             name: name
@@ -50,35 +65,8 @@ router.put('/users/update-username', async(req, res) => {
     res.status(200).json(user.name);
 });
 
-//Atualizar a lista de tarefas no banco de dados
-router.put('/tasks', async(req, res) => {
-    const { tasksList } = req.body;
-    const userID = req.userID;
-    
-    try {
-        await prisma.usuario.update({
-            where: {
-                id: userID
-            },
-            data: {
-                tasksList: tasksList
-            },
-        });
-
-        res.status(200).json({
-            title: "A conta foi deletada!",
-            info: "Redirecionando para a página de login..."
-        });
-
-    } catch(error) {
-        console.log(error);
-    };
-});
-
 //Atualizar senha do usuário
-router.put('/users/update-password', async(req, res) => {
-    const userID = req.userID;
-
+router.put('/update-password', async(req, res) => {
     const { password } = req.body;
 
     const salt = await bcrypt.genSalt(10);
@@ -87,7 +75,7 @@ router.put('/users/update-password', async(req, res) => {
 
     const user = await prisma.usuario.update({
         where: {
-            id: userID
+            id: req.userID
         },
         data: {
             password: hashPassword
@@ -99,13 +87,11 @@ router.put('/users/update-password', async(req, res) => {
 
 
 //Deletar usuário
-router.delete('/users', async(req, res) => {
-    const userID = req.userID;
-
+router.delete('/', async(req, res) => {
     try {
         await prisma.usuario.delete({
             where: {
-                id: userID
+                id: req.userID
             }
         });
 
@@ -119,5 +105,3 @@ router.delete('/users', async(req, res) => {
 });
 
 export default router;
-
-

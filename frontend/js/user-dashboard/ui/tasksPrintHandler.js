@@ -1,6 +1,3 @@
-//Importar arquivo de esconder tela de loading
-import { hideLoadingScreen } from '../ui/hideLoadingAnimationHandler.js';
-
 //Importar área de Impressão da Lista de Tasks
 import { taskListArea } from '../domElements.js';
 
@@ -46,7 +43,7 @@ const createElementsToBePrinted = task => {
 
     task.description = task.description.replace('Descrição:', "")
 
-    if (task.description != undefined && task.description != "") {
+    if (task.description != undefined && task.description.trim() !== "") {
         taskDescription.innerHTML = `<strong>Descrição:</strong> ${task.description}`
     };
 

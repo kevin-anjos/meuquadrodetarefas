@@ -261,7 +261,7 @@ header i {
     gap: 1rem;
     justify-content: space-between;
     border-top: 1px solid var(--white-color);
-    transition: 1s;
+    transition: 2s;
 }
 
 .user-action p{
@@ -313,7 +313,7 @@ header i {
 }
 
 #user-actions.hidden {
-    top: -30%;
+    top: -100%;
 }
 
 #user-profile-area i {

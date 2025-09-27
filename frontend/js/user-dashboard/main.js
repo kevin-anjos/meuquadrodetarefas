@@ -17,6 +17,7 @@ import { hideAddTaskArea, showAddTaskArea, hideEditTaskArea, confirmTaskDeletion
 import { getUsername, deleteUser, updatePassword, updateUsername } from "./utils/appServices.js";
 
 import { hideLoadingScreen } from "./ui/hideLoadingAnimationHandler.js";
+import { printAlertMessage } from "./ui/alertMessageHandler.js";
 
 //Arrays de elementos 
 const themeToggleElements = [domElements.darkModeDot, domElements.lightModeDot, domElements.toggleThemeBtn];
@@ -28,7 +29,7 @@ let toBeDeletedTaskID;
 
 //Pegar nome do usuário
 (async () => {
-    const username = await getUsername();
+    const  { username } = await getUsername();
     domElements.usernameSpan.textContent = username + "!";
     hideLoadingScreen();
 })();
@@ -81,14 +82,7 @@ domElements.userProfileArea.addEventListener('click', () => {
 
 domElements.deleteAccountBtn.addEventListener('click', async() => {
     const { title, info } = await deleteUser();
-
-    domElements.alertMessagesAreaTitle.textContent = title;
-    domElements.alertMessagesAreaInfo.textContent = info;
-
-    setTimeout(() => {
-        domElements.alertMessagesArea.classList.remove('hidden');
-    }, 1000)
-
+    printAlertMessage(title, info);
 });
 
 domElements.addTaskBtnArea.addEventListener('click', () => {

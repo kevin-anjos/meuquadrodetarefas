@@ -11,16 +11,17 @@ import { Task } from './Task.js';
 import { showEditTaskArea, hideEditTaskArea, hideAddTaskArea, handleDeleteAllBtnVisibility } from '../ui/taskModalAreaHandler.js';
 
 //Importar arquivo do storage 
-import { updateTasksList, getTasksList } from './appServices.js';
+import { updateTasksList, getUser } from './appServices.js';
 
 //Importar arquivo de filtros
 import { filterTasks } from './filterAndSearch.js';
 
 //Importar arquivo de datas 
 import { getCurrentDate } from './date.js';
+import { printAlertMessage } from '../ui/alertMessageHandler.js';
 
 //Array das Tarefas
-export let tasksList = await getTasksList();
+export let { tasksList } = await getUser();
 
 //Variável da posição da tarefa a ser mudada ao editar
 let toBeEditedTaskID;
@@ -116,9 +117,12 @@ export const editTask = () => {
 };
 
 //Executar funções de renderização de tarefas e de botão de apagar todas as tarefas
-const updateApp = () => {
+const updateApp = async() => {
+    const { title, info } = await updateTasksList(tasksList);
+
+    printAlertMessage(title, info);
+
     handleTasksListPrint(tasksList);
-    updateTasksList(tasksList);
     handleDeleteAllBtnVisibility();
 }
 

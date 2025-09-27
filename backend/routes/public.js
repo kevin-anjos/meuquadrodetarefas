@@ -6,7 +6,6 @@ import jwt from 'jsonwebtoken';
 
 const prisma = new PrismaClient();
 
-
 //Criar transporter
 const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
@@ -24,8 +23,6 @@ const router = express.Router();
 router.post('/users/sign-up', async (req, res) => {
     const { name, email, password } = req.body;
 
-    let userCreated = false;
-
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(password, salt);
 
@@ -39,43 +36,34 @@ router.post('/users/sign-up', async (req, res) => {
             }
         });
 
-        userCreated = true;
-
-        res.status(201).json({id: newUser.id});
-
-    } catch(error) {
-        console.error(error);
-    }
-
-    if (!userCreated) {
-        return res.status(400).json({
-            title: "Não foi possível criar a conta!",
-            info: "Já existe um usuário com esse e-mail."
+        const token = jwt.sign({
+            id: newUser.id
+        }, process.env.JWT_SECRET, {
+            expiresIn: '7d'
         });
-    };
-    
-    try {   
-        await transporter.sendMail({
+
+        res.status(201).json({token: token});
+
+        transporter.sendMail({
             from: `Quadro de tarefas <${process.env.EMAIL_USER}>`,
             to: email,
             subject: 'Usuário criado!',
             html: `<p>Olá, ${name}! Sua conta foi criada com sucesso! Você já pode usar o Quadro de Tarefas.</p>`
+        })
+        .catch(error => console.error("Erro ao enviar e-mail:", error));
+    } catch(error) {
+        console.error(error);
+        return res.status(400).json({
+            title: "Não foi possível criar a conta!",
+            info: "Já existe um usuário com esse e-mail."
         });
-    } catch (error) {
-        res.status(500).json({
-            title: "Erro desconhecido!",
-            info: "Erro no servidor."
-        });
-        console.error("ERROR: " + error);
-    };
+    }
 });
 
 //Entrar na conta do usuário
 router.post('/users/log-in', async (req, res) => {
     const { email, password } = req.body;
     
-    let userExists = false;
-
     try {
         const user = await prisma.usuario.findUnique({
             where: {
@@ -105,30 +93,23 @@ router.post('/users/log-in', async (req, res) => {
             expiresIn: '7d'
         } );
 
-        userExists = true;
-
         res.status(200).json({
             token: token
         });
+
+        transporter.sendMail({
+            from: `Quadro de tarefas <${process.env.EMAIL_USER}>`,
+            to: email,
+            subject: 'Novo login',
+            html: `<p>Um novo dispositivo entrou na sua conta.</p>`
+        })
+        .catch(error => console.error("Erro ao enviar e-mail:", error));
 
     } catch (error) {
         res.status(500).json({
             title: "Erro desconhecido!",
             info: "Erro no servidor."
         });
-        console.error("ERROR: " + error);
-    };
-
-    if (!userExists) return;
-
-    try {   
-        await transporter.sendMail({
-            from: `Quadro de tarefas <${process.env.EMAIL_USER}>`,
-            to: email,
-            subject: 'Novo login',
-            html: `<p> Um novo dispositivo entrou na sua conta.</p>`
-        });
-    } catch (error) {
         console.error("ERROR: " + error);
     };
 }); 

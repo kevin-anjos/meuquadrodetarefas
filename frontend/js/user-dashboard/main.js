@@ -14,7 +14,7 @@ import * as domElements from './domElements.js';
 import { hideAddTaskArea, showAddTaskArea, hideEditTaskArea, confirmTaskDeletion, hideModals, showUpdatePasswordModal, showUpdateUsernameModal } from "./ui/taskModalAreaHandler.js";
 
 //Importar arquivo de requisições
-import { getUsername, deleteUser, updatePassword, updateUsername } from "./utils/appServices.js";
+import { getUser, deleteUser, updatePassword, updateUsername } from "./utils/appServices.js";
 
 import { hideLoadingScreen } from "./ui/hideLoadingAnimationHandler.js";
 import { printAlertMessage } from "./ui/alertMessageHandler.js";
@@ -29,7 +29,7 @@ let toBeDeletedTaskID;
 
 //Pegar nome do usuário
 (async () => {
-    const  { username } = await getUsername();
+    const { username } = await getUser();
     domElements.usernameSpan.textContent = username + "!";
     hideLoadingScreen();
 })();

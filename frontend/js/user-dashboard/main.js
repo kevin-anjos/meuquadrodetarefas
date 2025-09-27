@@ -21,6 +21,7 @@ import { hideLoadingScreen } from "./ui/hideLoadingAnimationHandler.js";
 //Arrays de elementos 
 const themeToggleElements = [domElements.darkModeDot, domElements.lightModeDot];
 const tasksInputs = [domElements.addTaskInput, domElements.descriptionTaskInput];
+const updateUserInputs = [domElements.newPasswordInput, domElements.newUsernameInput];
 
 //Variável do ID da task a ser deletada
 let toBeDeletedTaskID;
@@ -147,7 +148,7 @@ domElements.logOutBtn.addEventListener('click', () => {
     window.location.replace('/');
 })
 
-[domElements.newPasswordInput, domElements.newUsernameInput].forEach(input => {
+updateUserInputs.forEach(input => {
     input.addEventListener('click', () => {
         domElements.errorMessages[0].classList.add('hidden');
         domElements.errorMessages[1].classList.add('hidden');

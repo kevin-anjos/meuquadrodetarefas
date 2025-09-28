@@ -174,7 +174,6 @@ domElements.taskListArea.addEventListener('click', event => {
     if (event.target.classList.contains('delete-task-button')) {
         toBeDeletedTaskID = event.target.id;
         confirmTaskDeletion();
-        //deleteTask(event.target.id);
     };
 
     if (event.target.classList.contains('edit-task-button')) {

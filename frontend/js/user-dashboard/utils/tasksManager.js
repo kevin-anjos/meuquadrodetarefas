@@ -118,12 +118,11 @@ export const editTask = () => {
 
 //Executar funções de renderização de tarefas e de botão de apagar todas as tarefas
 const updateApp = async() => {
-    const { title, info } = await updateTasksList(tasksList);
-
-    printAlertMessage(title, info);
-
     handleTasksListPrint(tasksList);
     handleDeleteAllBtnVisibility();
+
+    const { title, info } = await updateTasksList(tasksList);
+    printAlertMessage(title, info);
 }
 
 //Inicializar o programa

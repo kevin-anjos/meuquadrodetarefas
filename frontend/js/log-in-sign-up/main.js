@@ -1,6 +1,6 @@
 import * as domElements from './domElements.js';
 
-import { toggleSignInSignUpAreas, handleUnfilledInput } from './uiHandler.js';
+import { toggleSignInSignUpAreas, handleUnfilledInput, printErrorMessage } from './uiHandler.js';
 
 import { signUp, logIn } from './appServices.js';
 
@@ -51,13 +51,24 @@ const areInputsValid = () => {
     return true;
 };
 
-const createUserHandler = () => {
+const createUserHandler = async () => {
     if (!areInputsValid()) return;
-    signUp();
-}
 
-const enterAccountHandler = () => {
+    const { title, info } = await signUp(domElements.usernameInput.value, domElements.emailInput.value, domElements.passwordInput.value);
+
+    printErrorMessage(title, info);
+
+    resetInputsValues();
+};
+
+const enterAccountHandler = async () => {
     domElements.usernameInput.value = "anyvalue";
+
     if (!areInputsValid()) return;
-    logIn();
-}
+
+    const errorMessage = await logIn(domElements.emailInput.value, domElements.passwordInput.value);
+
+    printErrorMessage(errorMessage.title, errorMessage.info);
+
+    resetInputsValues();
+};

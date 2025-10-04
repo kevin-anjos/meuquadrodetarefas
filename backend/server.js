@@ -13,6 +13,9 @@ const app = express();
 
 const __dirname = path.resolve();
 
+app.use(express.static(path.join(__dirname, 'frontend')));
+
+//Caminhos do site
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'frontend', 'index.html'));
 });
@@ -21,11 +24,10 @@ app.get("/dashboard", (req, res) => {
   res.sendFile(path.join(__dirname, "frontend", 'dashboard.html'));
 });
 
+//Usar o CORS
 app.use(cors({
     origin: "https://meuquadrodetarefas.onrender.com"
 }));
-
-app.use(express.static(path.join(__dirname, 'frontend')));
 
 app.use(express.json());
 

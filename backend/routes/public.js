@@ -19,9 +19,18 @@ const transporter = nodemailer.createTransport({
 
 const router = express.Router();
 
+const gmailRegex = /^(?!.*\.\.)[A-Za-z0-9](?:[A-Za-z0-9._%+-]{0,62}[A-Za-z0-9])?@(gmail\.com|googlemail\.com)$/i;
+
 //Criar usuário
 router.post('/users/sign-up', async (req, res) => {
     const { name, email, password } = req.body;
+
+    if (name.trim() === "" || !gmailRegex.test(email.trim()) || password.length < 8) {
+        return res.status(400).json({
+            title: "Dados inválidos!",
+            info: "Preencha os dados corretamente."
+        });
+    };
 
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(password, salt);
@@ -36,11 +45,11 @@ router.post('/users/sign-up', async (req, res) => {
             }
         });
 
-        const token = jwt.sign({
-            id: newUser.id
-        }, process.env.JWT_SECRET, {
-            expiresIn: '7d'
-        });
+        const token = jwt.sign(
+            { id: newUser.id }, 
+            process.env.JWT_SECRET, 
+            { expiresIn: '7d' }
+        );
 
         res.status(201).json({token: token});
 
@@ -63,6 +72,13 @@ router.post('/users/sign-up', async (req, res) => {
 //Entrar na conta do usuário
 router.post('/users/log-in', async (req, res) => {
     const { email, password } = req.body;
+
+    if (!gmailRegex.test(email.trim()) || password.length < 8) {
+        return res.status(400).json({
+            title: "Dados inválidos!",
+            info: "Preencha os dados corretamente."
+        });
+    };
     
     try {
         const user = await prisma.usuario.findUnique({

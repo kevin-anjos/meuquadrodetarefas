@@ -78,6 +78,8 @@ router.put('/update/username', async(req, res) => {
 //Atualizar foto de perfil do usuário
 router.put('/update/profile-photo', async(req, res) => {
     const { imagePath } = req.body;
+
+    console.log('API Key: ', process.env.IMGBB_API_KEY);
  
     try {
         const form = new FormData();

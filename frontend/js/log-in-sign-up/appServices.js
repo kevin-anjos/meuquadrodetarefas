@@ -51,7 +51,6 @@ export const logIn = async(userEmail, userPassword) => {
         const data = await response.json();
 
         if (response.ok) {
-            //Colocar o token no localStorage
             localStorage.setItem("authToken", data.token);
             window.location.replace(`./dashboard`);
         } else {

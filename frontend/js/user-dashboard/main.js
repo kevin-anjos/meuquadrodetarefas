@@ -13,8 +13,12 @@ import * as domElements from './domElements.js';
 //Importar arquivo de handler da área do modal de tasks
 import { hideAddTaskArea, showAddTaskArea, hideEditTaskArea, confirmTaskDeletion, hideModals, showUpdatePasswordModal, showUpdateUsernameModal } from "./ui/taskModalAreaHandler.js";
 
+//Importar arquivo de handler de imagem de perfil
+
+import { printUserProfileImage } from "./ui/userProfileImageHandler.js";
+
 //Importar arquivo de requisições
-import { getUser, deleteUser, updatePassword, updateUsername } from "./utils/appServices.js";
+import { getUser, deleteUser, updatePassword, updateUsername , updateUserProfileImage} from "./utils/appServices.js";
 
 import { hideLoadingScreen } from "./ui/hideLoadingAnimationHandler.js";
 import { printAlertMessage } from "./ui/alertMessageHandler.js";
@@ -53,6 +57,25 @@ domElements.editUsernameBtn.addEventListener('click', () => {
 
 domElements.editPasswordBtn.addEventListener('click', () => {
     showUpdatePasswordModal();
+});
+
+domElements.profilePhotoInput.addEventListener('change', async () => {
+    const file = domElements.profilePhotoInput.files[0];
+
+    if (!file || !file.type.includes("image")) return;
+
+    const reader = new FileReader();
+
+    reader.addEventListener('loadend', async () => {
+        const imagePath = reader.result;
+
+        //arquivo de base 64
+        const imageURL = await updateUserProfileImage(imagePath);
+
+        printUserProfileImage(imageURL);
+    });
+
+    reader.readAsDataURL(file);
 });
 
 tasksInputs.forEach(input => {
@@ -156,7 +179,7 @@ domElements.newUsernameInput.addEventListener('input', () => {
 domElements.updateUsernameBtn.addEventListener('click', async() => {
     if (domElements.newUsernameInput.value.trim() === "") {
         return domElements.errorMessages[0].classList.remove('hidden');
-    }
+    };
     const newUsername = await updateUsername(domElements.newUsernameInput.value);
     domElements.usernameSpan.textContent = newUsername + "!";
     hideModals();

@@ -1,6 +1,6 @@
 import * as domElements from './domElements.js';
 
-import { toggleSignInSignUpAreas, handleUnfilledInput, printErrorMessage } from './uiHandler.js';
+import { toggleSignInSignUpAreas, handleUnfilledInput, printErrorMessage, resetInputsValues } from './uiHandler.js';
 
 import { signUp, logIn } from './appServices.js';
 

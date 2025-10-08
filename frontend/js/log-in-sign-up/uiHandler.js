@@ -1,6 +1,10 @@
 import * as domElements from './domElements.js';
 
 //Eventos
+domElements.usernameInput.addEventListener('input', () => {
+    domElements.usernameInput.value = domElements.usernameInput.value.slice(0, 20);
+})
+
 domElements.userInputs.forEach((input, index) => {
     input.addEventListener('click', () => {
         domElements.errorMessagesParagraphs[index].classList.add('hidden');

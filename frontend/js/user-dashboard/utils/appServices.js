@@ -1,7 +1,7 @@
 const token = localStorage.getItem('authToken');
 
 if (!token) {
-    window.location.replace('https://meuquadrodetarefas.onrender.com');
+    window.location.replace('/');
 };
 
 const SERVER_URL = "https://meuquadrodetarefas.onrender.com";
@@ -47,25 +47,25 @@ export const getUser = async () => {
 
         if (!response.ok) {
             localStorage.removeItem("authToken");
-            window.location.replace('https://meuquadrodetarefas.onrender.com');
+            window.location.replace('/');
         }
 
-        const { tasksList, username } = await response.json();
-
+        const { tasksList, username, profilePicture } = await response.json();
         return {
             tasksList: JSON.parse(tasksList),
-            username: username
+            username: username,
+            profilePicture: profilePicture
         };
     } catch (error) {
         console.error(error);
-        window.location.replace('https://meuquadrodetarefas.onrender.com');
+        window.location.replace('/');
     }
 };
 
 //Editar senha do usuário
 export const updatePassword = async newPassword => {
     try {
-        const response = await fetch(`${SERVER_URL}/users/update-password`, {
+        const response = await fetch(`${SERVER_URL}/users/update/password`, {
             method: "PUT",
             headers: {
                 'Content-Type': 'application/json',
@@ -88,7 +88,7 @@ export const updatePassword = async newPassword => {
 //Editar nome do usuário
 export const updateUsername = async newUsername => {
     try {
-        const response = await fetch(`${SERVER_URL}/users/update-username`, {
+        const response = await fetch(`${SERVER_URL}/users/update/username`, {
             method: "PUT",
             headers: {
                 'Content-Type': 'application/json',
@@ -109,6 +109,30 @@ export const updateUsername = async newUsername => {
 };
 
 
+//Editar foto de perfil do usuário
+export const updateUserProfileImage = async imagePath => {
+    try {
+        const response = await fetch(`${SERVER_URL}/users/update/profile-photo`, {
+            method: "PUT",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                imagePath: imagePath
+            }) 
+        });
+
+        if (response.ok) {
+            const imageURL = await response.json();
+            return imageURL;
+        };
+    } catch (error) {
+        console.error(error);
+    };
+};
+
+
 //Deletar usuário
 export const deleteUser = async () => {
     try {
@@ -121,7 +145,7 @@ export const deleteUser = async () => {
 
         if (response.ok) {
             localStorage.removeItem('authToken');
-            window.location.replace('https://meuquadrodetarefas.onrender.com');   
+            window.location.replace('/');   
         } else {
             return {
                 title: "Não foi possível deletar a conta.",

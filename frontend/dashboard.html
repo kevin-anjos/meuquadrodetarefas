@@ -19,6 +19,13 @@
             <i class="bi bi-person"></i>
             <p>Editar nome</p>
         </div>
+        <div id="edit-profile-photo" class="user-action">
+            <label for="profile-photo-input">
+                <i class="bi bi-camera"></i>
+                <p>Editar foto</p>
+            </label>
+            <input type="file" id="profile-photo-input" accept="image/*">
+        </div>
         <div id="edit-password" class="user-action">
             <i class="bi bi-lock"></i>
             <p>Editar senha</p>
@@ -38,7 +45,8 @@
     </div>
     <header>
         <div id="user-profile-area">
-            <i class="bi bi-person-circle"></i>            
+            <i class="bi bi-person-circle" id="standard-user-profile-img"></i>
+            <img src="" alt="Perfil do usuário" id="user-profile-img" class="hidden">            
             <p>Olá, <span id="username-span"></span></p>
         </div>
 
@@ -159,8 +167,8 @@
     </main>
     <div id="fade" class="hidden"></div>
     <div id="alert-messages-area" class="hidden">
-        <h3>Senha atualizada!</h3>
-        <p>A sua senha já foi atualizada no banco de dados.</p>
+        <h3></h3>
+        <p></p>
     </div>
 </body>
 </html>

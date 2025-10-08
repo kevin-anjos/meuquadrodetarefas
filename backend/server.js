@@ -29,7 +29,8 @@ app.use(cors({
     origin: "https://meuquadrodetarefas.onrender.com"
 }));
 
-app.use(express.json());
+app.use(express.json({ limit: '32mb' }));
+app.use(express.urlencoded({ extended: true, limit: '32mb' }));
 
 //Usar arquivo de rotas públicas
 app.use('/', publicRoutes);

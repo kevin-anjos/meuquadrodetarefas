@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 
 const auth = (req, res, next) => {
 
-    const token = req.headers.authorization;
+    const token = req.headers.authorization.replace('Bearer ', '');
 
     if (!token) {
         return res.status(401).json({
@@ -12,7 +12,7 @@ const auth = (req, res, next) => {
     };
 
     try {
-        const decodedData = jwt.verify(token.replace('Bearer ', ''), process.env.JWT_SECRET); 
+        const decodedData = jwt.verify(token, process.env.JWT_SECRET); 
 
         //Usar o ID na requisição
         req.userID = decodedData.id;

@@ -38,10 +38,11 @@ router.post('/users/sign-up', async (req, res) => {
     try {
         const newUser = await prisma.usuario.create({
             data: {
-                name: name,
+                name: name.slice(0, 20),
                 email: email,
                 password: hashPassword,
-                tasksList: '[]'
+                tasksList: '[]',
+                profilePicture: ''
             }
         });
 

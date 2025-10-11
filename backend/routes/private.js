@@ -79,8 +79,28 @@ router.put('/update/username', async(req, res) => {
 router.put('/update/profile-photo', async(req, res) => {
     const { imagePath } = req.body;
 
-    console.log('API Key: ', process.env.IMGBB_API_KEY);
- 
+    if (imagePath.trim() === "") {
+        try {
+            const user = await prisma.usuario.update({
+                where: {
+                    id: req.userID
+                },
+                data: {
+                    profilePicture: ""
+                }
+            });
+
+            return res.status(200).json(user.profilePicture);
+        }
+        catch(error) {
+            console.log(error);
+            return res.status(500).json({
+                title: "Erro ao remover a foto de perfil",
+                info: "O servidor falhou em remover a foto de perfil do usuário"
+            });
+        }
+    }
+
     try {
         const form = new FormData();
 

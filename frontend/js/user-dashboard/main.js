@@ -62,7 +62,13 @@ domElements.editPasswordBtn.addEventListener('click', () => {
 domElements.profilePhotoInput.addEventListener('change', async () => {
     const file = domElements.profilePhotoInput.files[0];
 
-    if (!file || !file.type.includes("image")) return;
+    if (!file) {
+        printUserProfileImage("");
+        await updateUserProfileImage("");
+        return;
+    };
+
+    if (!file.type.includes("image")) return;
 
     const reader = new FileReader();
 

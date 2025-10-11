@@ -23,6 +23,8 @@ import { getUser, deleteUser, updatePassword, updateUsername , updateUserProfile
 import { hideLoadingScreen } from "./ui/hideLoadingAnimationHandler.js";
 import { printAlertMessage } from "./ui/alertMessageHandler.js";
 
+import { handleRemovePhotoButtonVisibility } from "./ui/handleRemovePhotoButtonVisibility.js";
+
 //Arrays de elementos 
 const themeToggleElements = [domElements.darkModeDot, domElements.lightModeDot, domElements.toggleThemeBtn];
 const tasksInputs = [domElements.addTaskInput, domElements.descriptionTaskInput];
@@ -33,8 +35,9 @@ let toBeDeletedTaskID;
 
 //Pegar nome do usuário
 (async () => {
-    const { username } = await getUser();
+    const { username, profilePicture } = await getUser();
     domElements.usernameSpan.textContent = username + "!";
+    handleRemovePhotoButtonVisibility(profilePicture);
     hideLoadingScreen();
 })();
 
@@ -79,10 +82,18 @@ domElements.profilePhotoInput.addEventListener('change', async () => {
         const imageURL = await updateUserProfileImage(imagePath);
 
         printUserProfileImage(imageURL);
+
+        handleRemovePhotoButtonVisibility(imageURL);
     });
 
     reader.readAsDataURL(file);
 });
+
+domElements.removeProfilePhotoBtn.addEventListener('click', async() => {
+    handleRemovePhotoButtonVisibility("");
+    printUserProfileImage("");
+    await updateUserProfileImage("");
+})
 
 tasksInputs.forEach(input => {
     input.addEventListener('input', () => {

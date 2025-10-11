@@ -106,7 +106,7 @@ router.put('/update/profile-photo', async(req, res) => {
 
         form.append('image', imagePath.split(',')[1]);
 
-        const response = await fetch(`https://api.imgbb.com/1/upload?key=${process.env.IMGBB_API_KEY}`, {
+        const response = await fetch(`https://imgbb.kevinhocerqueiradosanjos.workers.dev`, {
             method: "POST",
             body: form
         });

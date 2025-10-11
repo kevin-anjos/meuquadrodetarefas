@@ -53,8 +53,8 @@ export const getUser = async () => {
         const { tasksList, username, profilePicture } = await response.json();
         return {
             tasksList: JSON.parse(tasksList),
-            username: username,
-            profilePicture: profilePicture
+            username,
+            profilePicture
         };
     } catch (error) {
         console.error(error);

@@ -329,13 +329,17 @@ header i {
     background-color: var(--secondary-grey-color);
 }
 
+#remove-profile-photo {
+    background-color: var(--red-color);
+}
+
 #delete-account {
     border-bottom-left-radius: 1rem;
     border-bottom-right-radius: 1rem;
     background-color: var(--red-color);
 }
 
-#delete-account:hover {
+#delete-account:hover, #remove-profile-photo:hover {
     background-color: var(--secondary-red-color);
 }
 

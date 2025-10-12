@@ -90,6 +90,10 @@ header i {
     font-size: 1.5em;
 }
 
+#welcome-text-wrapper {
+    display: flex;
+}
+
 #show-add-task-area-btn {
     font-size: 3em;
     color: var(--white-color);
@@ -279,9 +283,6 @@ header i {
     background-color: var(--purple-color);
 }
 
-#edit-username:hover {
-    background-color: var(--secondary-purple-color);
-}
 
 #edit-profile-photo {
     padding: 0;
@@ -300,16 +301,10 @@ header i {
     display: none;
 }
 
-#edit-profile-photo:hover {
-    background-color: var(--secondary-green-color);
-}
+
 
 #edit-password {
     background-color: var(--blue-color);
-}
-
-#edit-password:hover {
-    background-color: var(--secondary-blue-color);
 }
 
 #toggle-theme {
@@ -317,16 +312,8 @@ header i {
     display: none;
 }
 
-#toggle-theme:hover {
-    background-color: var(--secondary-orange-color);
-}
-
-#log-out {
+#log-out, #admin-panel {
     background-color: var(--grey-color);
-}
-
-#log-out:hover {
-    background-color: var(--secondary-grey-color);
 }
 
 #remove-profile-photo {
@@ -339,9 +326,6 @@ header i {
     background-color: var(--red-color);
 }
 
-#delete-account:hover, #remove-profile-photo:hover {
-    background-color: var(--secondary-red-color);
-}
 
 #user-actions.hidden {
     top: -100%;
@@ -356,9 +340,6 @@ header i {
     cursor: pointer;
 }
 
-#add-task-button-area:hover, #user-profile-area:hover {
-    background-color: var(--grey-color);
-}
 
 #add-rask-button-area p{
     font-size: 1.2rem;
@@ -395,10 +376,6 @@ header i {
     cursor: pointer;
     font-size: 2rem;
     transition: .5s;
-}
-
-#label-button-cancel-add-wrapper i:hover {
-    opacity: 0.8;
 }
 
 #label-button-cancel-add-wrapper label{
@@ -551,10 +528,6 @@ button {
     font-size: 1em;
 }
 
-button:hover {
-    background-color: var(--secondary-red-color);
-}
-
 select {
     cursor: pointer;
 }
@@ -640,25 +613,15 @@ h2 {
     background-color: var(--red-color);
 }
 
-.delete-task-button:hover {
-    background-color: var(--secondary-red-color);
-}
 
 .edit-task-button, #cancel-edit-task-btn {
     background-color: var(--grey-color);
-}
-
-.edit-task-button:hover, #cancel-edit-task-btn:hover {
-    background-color: var(--secondary-grey-color);
 }
 
 .toggle-done-task-button {
     background-color: var(--green-color);
 }
 
-.toggle-done-task-button:hover {
-    background-color: var(--secondary-green-color);
-}
 
 #empty-list-text {
     margin-top: 1rem;
@@ -687,9 +650,6 @@ h2 {
     color: var(--white-color);
 }
 
-#delete-all-list-btn:hover {
-    background-color: var(--secondary-red-color);
-}
 
 #delete-all-list-btn.hide {
     display: none;
@@ -776,10 +736,6 @@ body.light-mode-active #toggle-theme {
     background-color: var(--purple-color);
 }
 
-body.light-mode-active #toggle-theme:hover {
-    background-color: var(--secondary-purple-color);
-}
-
 
 body.light-mode-active header{
     background-color: var(--secondary-white-color);
@@ -852,9 +808,6 @@ body#log-in-sign-up span {
     border-bottom: 1px solid var(--white-color);
 }
 
-body#log-in-sign-up span:hover {
-    border: none;
-}
 
 
 body#log-in-sign-up #toggle-password-visibility-btn {
@@ -903,6 +856,16 @@ body#log-in-sign-up #modal-wrapper i{
     }
 }
 
+@media screen and (max-width: 850px) {
+    #toggle-theme {
+        display: flex;
+    }
+
+    #toggle-mode-area-wrapper {
+        display: none;
+    }
+}
+
 @media screen and (max-width: 800px) {
     #add-task-area  {
         flex-direction: column;
@@ -938,14 +901,6 @@ body#log-in-sign-up #modal-wrapper i{
     .modal {
         width: 70%;
     }
-
-    #toggle-theme {
-        display: flex;
-    }
-
-    #toggle-mode-area-wrapper {
-        display: none;
-    }
 }
 
 @media screen and (max-width: 550px) {
@@ -961,6 +916,18 @@ body#log-in-sign-up #modal-wrapper i{
         font-size: 1em;
     }
 
+    #welcome-text-wrapper {
+        flex-direction: column;
+    }
+
+    #welcome-text-wrapper span {
+        overflow-wrap: break-word;
+        hyphens: auto;
+    }
+
+    #exclamation-point {
+        display: none;
+    }
 
     body#log-in-sign-up .log-in-sign-up-area {
         width: 100%;
@@ -969,10 +936,6 @@ body#log-in-sign-up #modal-wrapper i{
 
 @media screen and (max-width: 450px) {
     #add-task-button-area p {
-        display: flex;
-    }
-
-    header p {
         display: none;
     }
 
@@ -990,8 +953,16 @@ body#log-in-sign-up #modal-wrapper i{
 }
 
 @media screen and (max-width: 375px) {
+    #welcome-text-wrapper p{
+        display: none;
+    }
+
     h1 {
         font-size: 3.1em;
+    }
+
+    #username-span {
+       word-break: break-all;
     }
 }
 
@@ -1008,5 +979,66 @@ body#log-in-sign-up #modal-wrapper i{
 
     #add-task-button-area p {
         display: none;
+    }
+}
+
+@media (hover: hover) {
+    #edit-username:hover {
+        background-color: var(--secondary-purple-color);
+    }
+
+    body#log-in-sign-up span:hover {
+        border: none;
+    }
+    body.light-mode-active #toggle-theme:hover {
+        background-color: var(--secondary-purple-color);
+    }
+
+    .toggle-done-task-button:hover {
+        background-color: var(--secondary-green-color);
+    }
+
+    .edit-task-button:hover, #cancel-edit-task-btn:hover {
+        background-color: var(--secondary-grey-color);
+    }
+
+    button:hover {
+        background-color: var(--secondary-red-color);
+    }
+
+    #delete-all-list-btn:hover {
+        background-color: var(--secondary-red-color);
+    }
+
+    .delete-task-button:hover {
+        background-color: var(--secondary-red-color);
+    }
+
+    #label-button-cancel-add-wrapper i:hover {
+        opacity: 0.8;
+    }
+
+    #edit-profile-photo:hover {
+        background-color: var(--secondary-green-color);
+    }
+    
+    #add-task-button-area:hover, #user-profile-area:hover {
+        background-color: var(--grey-color);
+    }
+
+    #delete-account:hover, #remove-profile-photo:hover {
+        background-color: var(--secondary-red-color);
+    }
+
+    #log-out:hover, #admin-panel:hover {
+        background-color: var(--secondary-grey-color);
+    }
+
+    #toggle-theme:hover {
+        background-color: var(--secondary-orange-color);
+    }
+
+    #edit-password:hover {
+        background-color: var(--secondary-blue-color);
     }
 }

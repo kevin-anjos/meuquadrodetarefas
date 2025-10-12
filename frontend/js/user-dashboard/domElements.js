@@ -45,6 +45,8 @@ const newPasswordInput = document.querySelector('#new-password-input');
 const updateUsernameBtn = document.querySelector('#update-username-btn');
 const updatePasswordBtn = document.querySelector('#update-password-btn');
 
+const togglePasswordVisibilityBtn = document.querySelector('#toggle-password-visibility-btn');
+
 const updateUsernameModalArea = document.querySelector('#update-username-modal-area');
 const updatePasswordModalArea = document.querySelector('#update-password-modal-area');
 
@@ -57,6 +59,7 @@ const toggleThemeBtn = document.querySelector('#toggle-theme');
 const toggleThemeIco = document.querySelector('#toggle-theme i');
 const toggleThemeParagraph = document.querySelector('#toggle-theme p');
 
+const adminPanelBtn = document.querySelector('#admin-panel');
 const logOutBtn = document.querySelector('#log-out');
 const deleteAccountBtn = document.querySelector('#delete-account');
 
@@ -74,5 +77,5 @@ const removeProfilePhotoBtn = document.querySelector('#remove-profile-photo');
 const errorMessages = document.querySelectorAll('.error-message');
 
 export {
-    taskListArea, modals, fade, addTaskBtn, addTaskBtnArea, editTaskBtn, searchTaskInput, closeModalBtn, addTaskInput, descriptionTaskInput, filterTaskSelect, addEditWordToggle, darkModeDot, lightModeDot, darkModeBtn, lightModeBtn, darkModeIco, lightModeIco, deleteAllListBtn, confirmDeleteTaskModalArea, addTaskModalArea, deleteTaskBtn, usernameSpan, loadingScreen, deleteAccountBtn, userProfileArea, userActionsArea, editPasswordBtn, editUsernameBtn, newUsernameInput, newPasswordInput, updatePasswordBtn, updateUsernameBtn, updateUsernameModalArea, updatePasswordModalArea, alertMessagesArea, alertMessagesAreaInfo, alertMessagesAreaTitle, errorMessages, logOutBtn, toggleThemeBtn, toggleThemeIco, toggleThemeParagraph, profilePhotoInput, userProfileImg, standardUserProfileImg, removeProfilePhotoBtn
+    taskListArea, modals, fade, addTaskBtn, addTaskBtnArea, editTaskBtn, searchTaskInput, closeModalBtn, addTaskInput, descriptionTaskInput, filterTaskSelect, addEditWordToggle, darkModeDot, lightModeDot, darkModeBtn, lightModeBtn, darkModeIco, lightModeIco, deleteAllListBtn, confirmDeleteTaskModalArea, addTaskModalArea, deleteTaskBtn, usernameSpan, loadingScreen, deleteAccountBtn, userProfileArea, userActionsArea, editPasswordBtn, editUsernameBtn, newUsernameInput, newPasswordInput, updatePasswordBtn, updateUsernameBtn, updateUsernameModalArea, updatePasswordModalArea, alertMessagesArea, alertMessagesAreaInfo, alertMessagesAreaTitle, errorMessages, logOutBtn, toggleThemeBtn, toggleThemeIco, toggleThemeParagraph, profilePhotoInput, userProfileImg, standardUserProfileImg, removeProfilePhotoBtn, togglePasswordVisibilityBtn, adminPanelBtn
 };

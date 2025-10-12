@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-const auth = (req, res, next) => {
+const userAuth = (req, res, next) => {
 
     const token = req.headers.authorization.replace('Bearer ', '');
 
@@ -25,4 +25,4 @@ const auth = (req, res, next) => {
     }
 }
 
-export default auth
+export default userAuth

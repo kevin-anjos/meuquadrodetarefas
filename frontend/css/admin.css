@@ -1,0 +1,236 @@
+@import url('https://fonts.googleapis.com/css2?family=Intel+One+Mono:ital,wght@0,300..700;1,300..700&display=swap');
+
+:root {
+    --black-color: #161515;
+    --secondary-black-color: #1d1818;
+    --purple-color: #48229b;
+    --secondary-purple-color: #2e1467;
+    --blue-color: #376dc4;
+    --secondary-blue-color: #044dc3;
+    --orange-color: #d69200;
+    --secondary-orange-color: #b57f09;
+    --white-color: #f3f3f3;
+    --secondary-white-color: #c8c7c7;
+    --grey-color: #cdcdcd;    
+    --secondary-grey-color: #5d5959;
+    --third-grey-color: #b1b1b1;
+    --red-color: #fd2b0f;
+    --secondary-red-color: #a10c0c;
+    --green-color: #13ba10;
+    --secondary-green-color: #198617;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Intel One Mono", monospace;
+}
+
+*.hidden {
+    display: none;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    padding: 4rem;
+}
+
+#loading-screen {
+    width: 100%;
+    height: 100%;
+    background-color: var(--white-color);
+    position: fixed;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#loading-screen.hidden {
+    display: none;
+}
+
+#loading-screen-animation {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 15px solid var(--black-color);
+    border-top: 15px solid transparent;
+    animation: loading 500ms linear infinite;
+}
+
+@keyframes loading {
+    from {
+        transform: rotate(0deg);
+    } to {
+        transform: rotate(360deg);
+    }
+}
+
+h1 {
+    font-size: 3rem;
+    text-align: center;
+}
+
+#users-table {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 2rem;
+}
+
+.user {
+    width: 100%;
+}
+
+.user h2 {
+    margin: .3rem;
+    font-size: 1.6rem;
+}
+
+.user-fields {
+    border-radius: 10px;
+    padding: 2rem 0rem;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 2rem;
+    background-color: var(--grey-color);
+    transition: 500ms;
+}
+
+.user-fields:hover {
+    background-color: var(--secondary-white-color);
+}
+
+.user .user-fields .field:nth-child(8) {
+    display: flex;
+    padding: 0;
+    gap: 1rem;
+    flex-direction: column;
+    justify-content: flex-end;
+    background-color: transparent;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    height: 200px;
+    flex: 1 1 400px;
+    min-width: 300px;
+    max-width: 400px;
+    padding: 1rem;
+    margin-right: 0;
+    border-radius: 10px;
+    background-color: var(--third-grey-color);
+}
+
+.field-info::-webkit-scrollbar {
+    width: 2px; 
+}
+
+.field-info::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+.field-info::-webkit-scrollbar-thumb {
+    background-color: var(--black-color); 
+}
+
+.field-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.field-title, .field-info {
+    margin-left: .3rem;
+}
+
+.field-info {
+    overflow-wrap: break-word;
+    hyphens: auto;
+    overflow-y: auto;
+    height: 90%;
+}
+
+.field-input {
+    display: flex;
+    background-color: var(--white-color);
+    border-radius: 10px;
+    padding: 1rem;
+    margin-top: .5rem;
+}
+
+.field-input.hidden {
+    display: none;
+}
+
+.field-input input {
+    width: 100%;    
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+
+button {
+    color: var(--white-color);
+    transition: .5s;
+    padding: 2rem;
+    outline: none;
+    border: none;
+    border-radius: 10px;
+}
+
+button:hover {
+    opacity: 0.7;
+}
+
+.field-button-edit {
+    background-color: var(--red-color);
+}
+
+.field-button-delete {
+    background-color: var(--secondary-red-color);
+}
+
+.field-button-edit.disabled {
+    cursor: default;
+    background-color: var(--secondary-grey-color);
+}
+
+.field-button-cancel-edit {
+    background-color: var(--secondary-grey-color);
+}
+
+.field-button-update {
+    background-color: var(--green-color);
+}
+
+#unavailable-screen-size {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    background-color: var(--white-color);
+    z-index: 10;
+}
+
+@media screen and (max-width: 1850px) {
+    body {
+        overflow: hidden;
+    }
+
+    #unavailable-screen-size {
+        display: flex;
+    }
+}

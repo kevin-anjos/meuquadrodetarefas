@@ -42,12 +42,16 @@ router.post('/users/sign-up', async (req, res) => {
                 email: email,
                 password: hashPassword,
                 tasksList: '[]',
-                profilePicture: ''
+                profilePicture: '',
+                role: 'user'
             }
         });
 
         const token = jwt.sign(
-            { id: newUser.id }, 
+            { 
+                id: newUser.id,
+                role: newUser.role 
+            }, 
             process.env.JWT_SECRET, 
             { expiresIn: '7d' }
         );
@@ -94,7 +98,7 @@ router.post('/users/log-in', async (req, res) => {
                 info: "Não existe um usuário com esse e-mail."
             });
         };
-
+        
         const passwordMatch = await bcrypt.compare(password, user.password); 
         
         if (!passwordMatch) {
@@ -104,12 +108,15 @@ router.post('/users/log-in', async (req, res) => {
             });
         };
 
-        const token = jwt.sign({
-            id: user.id
-        }, process.env.JWT_SECRET, {
-            expiresIn: '7d'
-        } );
-
+        const token = jwt.sign(
+            { 
+                id: user.id,
+                role: user.role 
+            }, 
+            process.env.JWT_SECRET, 
+            { expiresIn: '7d' }
+        );
+        
         res.status(200).json({
             token: token
         });

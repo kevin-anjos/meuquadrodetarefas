@@ -1,4 +1,4 @@
-const SERVER_URL = "https://meuquadrodetarefas.onrender.com";
+const SERVER_URL = 'https://meuquadrodetarefas.onrender.com';
 
 export const signUp = async(userName, userEmail, userPassword) => {
     try {

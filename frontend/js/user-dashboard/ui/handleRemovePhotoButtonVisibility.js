@@ -1,7 +1,7 @@
 import { removeProfilePhotoBtn } from "../domElements.js";
 
 export const handleRemovePhotoButtonVisibility = imageURL => {
-    if (imageURL.trim() === "" || !imageURL) {
+    if (!imageURL || imageURL.trim() === "") {
         return removeProfilePhotoBtn.classList.add('hidden');
     }
 

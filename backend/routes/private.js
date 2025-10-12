@@ -1,11 +1,11 @@
 import express from 'express';
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
+import e from 'express';
 
 const router = express.Router();
 
 const prisma = new PrismaClient();
-
 
 //Atualizar a lista de tarefas no banco de dados
 router.put('/tasks', async(req, res) => {
@@ -27,28 +27,36 @@ router.put('/tasks', async(req, res) => {
         });
 
     } catch(error) {
+        console.error(error);
         res.status(500).json({
             title: "A lista de tarefas não foi atualizada!",
             info: "Não foi possível atualizar os dados."
         });
-        console.log(error);
     };
 });
 
 //Pegar dados do usuário do banco de dados
 router.get('/', async(req, res) => {
+    try {
+        const user = await prisma.usuario.findUnique({
+            where: {
+                id: req.userID
+            }
+        });
 
-    const user = await prisma.usuario.findUnique({
-        where: {
-            id: req.userID
-        }
-    });
-
-    res.status(200).json({
-        tasksList: user.tasksList,
-        username: user.name,
-        profilePicture: user.profilePicture
-    });
+        res.status(200).json({
+            tasksList: user.tasksList,
+            username: user.name,
+            profilePicture: user.profilePicture,
+            role: user.role
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            title: "Não foi possível pegar os dados do usuário!",
+            info: "Erro no servidor."
+        });
+    }
 });
 
 //Atualizar nome do usuário
@@ -62,16 +70,26 @@ router.put('/update/username', async(req, res) => {
         });
     }
 
-    const user = await prisma.usuario.update({
-        where: {
-            id: req.userID
-        },
-        data: {
-            name: name.slice(0, 20)
-        }
-    });
+    try {
+        await prisma.usuario.update({
+            where: {
+                id: req.userID
+            },
+            data: {
+                name: name.slice(0, 20)
+            }
+        });
 
-    res.status(200).json(user.name);
+        res.status(204);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            title: "Não foi possível atualizar o nome!",
+            info: "O nome não foi atualizado no servidor."
+        })
+    }
+
 });
 
 
@@ -92,11 +110,11 @@ router.put('/update/profile-photo', async(req, res) => {
 
             return res.status(200).json(user.profilePicture);
         }
-        catch(error) {
-            console.log(error);
+        catch (error) {
+            console.error(error);
             return res.status(500).json({
-                title: "Erro ao remover a foto de perfil",
-                info: "O servidor falhou em remover a foto de perfil do usuário"
+                title: "Erro ao remover a foto de perfil!",
+                info: "O servidor falhou em remover a foto de perfil do usuário."
             });
         }
     }
@@ -111,19 +129,14 @@ router.put('/update/profile-photo', async(req, res) => {
             body: form
         });
 
-
-        console.log(response);
-
         const data = await response.json();
-
-        console.log(data);
 
         if (!response.ok) {
             return res.status(400).json({
-                title: "Não foi possível salvar a imagem",
-                info: "Tente novamente mais tarde"
+                title: "Não foi possível salvar a imagem!",
+                info: "Tente novamente mais tarde."
             });
-        }
+        };
 
         const imageURL = data['data']['image']['url'];
 
@@ -139,10 +152,10 @@ router.put('/update/profile-photo', async(req, res) => {
         res.status(200).json(user.profilePicture);
        
     } catch(error) {
-        console.log(error);
+        console.error(error);
         res.status(500).json({
-            title: "Erro ao tentar salvar a imagem",
-            info: "Tente novamente mais tarde."
+            title: "Erro ao tentar salvar a imagem!",
+            info: "Falha no servidor."
         });
     }
 });
@@ -156,22 +169,30 @@ router.put('/update/password', async(req, res) => {
             title: "Senha inválida!",
             info: "A senha tem menos de 8 caracteres."
         });
+    };
+
+    try {
+        const salt = await bcrypt.genSalt(10);
+
+        const hashPassword = await bcrypt.hash(password, salt);
+
+        await prisma.usuario.update({
+            where: {
+                id: req.userID
+            },
+            data: {
+                password: hashPassword
+            }
+        });
+
+        res.status(204);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            title: "Não foi possível atualizar a senha!",
+            info: "A senha não foi atualizada no servidor."
+        });
     }
-
-    const salt = await bcrypt.genSalt(10);
-
-    const hashPassword = await bcrypt.hash(password, salt);
-
-    const user = await prisma.usuario.update({
-        where: {
-            id: req.userID
-        },
-        data: {
-            password: hashPassword
-        }
-    });
-
-    res.status(200).json(user.name);
 });
 
 
@@ -184,12 +205,17 @@ router.delete('/', async(req, res) => {
             }
         });
 
-        res.status(200).json({
-            message: "Usuário deletado"
+        res.status(204).json({
+            title: "Usuário deletado!",
+            info: "O usuário foi deletado com sucesso do banco de dados."
         });
 
-    } catch(error) {
-        console.log(error);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            title: "Não foi possível deletar o usuário!",
+            info: "Erro no servidor."
+        });
     };
 });
 

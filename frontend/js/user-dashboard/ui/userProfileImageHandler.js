@@ -3,8 +3,6 @@ import { getUser } from "../utils/appServices.js";
 
 const { profilePicture } = await getUser();
 
-console.log(profilePicture);
-
 export const printUserProfileImage = imageURL => {
     if (!imageURL || imageURL.trim() === "") {
         userProfileImg.classList.add('hidden')

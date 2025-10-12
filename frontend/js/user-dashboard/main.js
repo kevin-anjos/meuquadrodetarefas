@@ -35,9 +35,14 @@ let toBeDeletedTaskID;
 
 //Pegar nome do usuário
 (async () => {
-    const { username, profilePicture } = await getUser();
-    domElements.usernameSpan.textContent = username + "!";
+    const { username, profilePicture, role } = await getUser();
+    domElements.usernameSpan.textContent = username;
     handleRemovePhotoButtonVisibility(profilePicture);
+
+    if (role === "admin") {
+        domElements.adminPanelBtn.classList.remove('hidden');
+    }
+
     hideLoadingScreen();
 })();
 
@@ -64,14 +69,8 @@ domElements.editPasswordBtn.addEventListener('click', () => {
 
 domElements.profilePhotoInput.addEventListener('change', async () => {
     const file = domElements.profilePhotoInput.files[0];
-
-    if (!file) {
-        printUserProfileImage("");
-        await updateUserProfileImage("");
-        return;
-    };
-
-    if (!file.type.includes("image")) return;
+    
+    if (!file || !file.type.includes("image")) return;
 
     const reader = new FileReader();
 
@@ -177,6 +176,10 @@ domElements.updatePasswordBtn.addEventListener('click', async() => {
     }, 1000)
 });
 
+domElements.adminPanelBtn.addEventListener('click', () => {
+    window.location.href = './administrator';
+})
+
 domElements.logOutBtn.addEventListener('click', () => {
     localStorage.removeItem('authToken');
     window.location.replace('/');
@@ -198,9 +201,25 @@ domElements.updateUsernameBtn.addEventListener('click', async() => {
         return domElements.errorMessages[0].classList.remove('hidden');
     };
     const newUsername = await updateUsername(domElements.newUsernameInput.value);
-    domElements.usernameSpan.textContent = newUsername + "!";
+    domElements.usernameSpan.textContent = newUsername;
     hideModals();
     domElements.newUsernameInput.value = "";
+})
+
+domElements.togglePasswordVisibilityBtn.addEventListener('click', () => {
+    const i = document.createElement('i');
+    i.classList.add('bi');
+    domElements.togglePasswordVisibilityBtn.replaceChildren();
+
+    if (domElements.newPasswordInput.type === 'text') {
+        i.classList.add("bi-eye-fill");
+        domElements.newPasswordInput.type = 'password';
+    } else {
+        i.classList.add("bi-eye-slash-fill");
+        domElements.newPasswordInput.type = 'text';
+    }
+
+    domElements.togglePasswordVisibilityBtn.appendChild(i);
 })
 
 themeToggleElements.forEach(themeToggleElement => {

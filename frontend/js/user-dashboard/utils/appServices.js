@@ -4,7 +4,7 @@ if (!token) {
     window.location.replace('/');
 };
 
-const SERVER_URL = "https://meuquadrodetarefas.onrender.com";
+const SERVER_URL = 'https://meuquadrodetarefas.onrender.com';
 
 //Atualizar a lista de tarefas
 export const updateTasksList = async list => {
@@ -50,11 +50,12 @@ export const getUser = async () => {
             window.location.replace('/');
         }
 
-        const { tasksList, username, profilePicture } = await response.json();
+        const { tasksList, username, profilePicture, role } = await response.json();
         return {
             tasksList: JSON.parse(tasksList),
             username,
-            profilePicture
+            profilePicture, 
+            role
         };
     } catch (error) {
         console.error(error);

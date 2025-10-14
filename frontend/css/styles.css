@@ -240,7 +240,7 @@ header i {
 
 #user-actions {
     cursor: pointer;
-    position: absolute;
+    position: fixed;
     left: 5%;
     top: 12%;
     display: flex;

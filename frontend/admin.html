@@ -2,51 +2,20 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <link rel="stylesheet" href="css/admin.css">
     <script type="module" src="js/admin/main.js" defer></script>
     <title>ADMIN</title>
 </head>
 <body>
-    <div id="unavailable-screen-size">
-        <p>Utilize um computador</p>
-    </div>
     <div id="loading-screen">
         <div id="loading-screen-animation"></div>
     </div>
     <h1>Admin:</h1>
-    <div id="users-table">
-        <div class="user">
-            <div class="user-fields">
-                <div class="field">
-                    <p class="field-title">ID</p>
-                    <p class="field-info">cadass</p>
-                    <div class="field-input">
-                        <input type="text" class="field-input">                
-                    </div>                
-                </div>
-                <div class="field">
-                    <p class="field-title">Cargo</p>
-                    <p class="field-info">admin</p>
-                    <div class="field-input">
-                        <input type="text" class="field-input">                
-                    </div>
-                </div>
-                <div class="field">
-                    <p class="field-title">Nome</p>
-                    <p class="field-info">Kevin</p>
-                    <div class="field-input">
-                        <input type="text" class="field-input">                
-                    </div>
-                </div>
-                <div class="field">
-                    <p class="field-title">E-mail</p>
-                    <p class="field-info">Kevin</p>
-                    <div class="field-input">
-                        <input type="text">                
-                    </div>
-                </div>
-            </div>
+    <div id="users-table"></div>
+    <div id="confirm-delete-user-modal" class="hidden">
+        <div id="confirm-delete-user-modal-wrapper">
+            <button id="confirm-delete-user-btn">Deletar usuário</button>
         </div>
     </div>
 </body>

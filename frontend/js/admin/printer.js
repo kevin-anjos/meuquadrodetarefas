@@ -10,19 +10,61 @@ export const printUsers = users => {
     });
 };
 
-const createField = (id, title, info) => {
+
+const createButtons = (id, buttonsType, buttonsArray = []) => {
+    if (buttonsType.length === 0) return buttonsArray;
+
+    const fieldButton = document.createElement('button');
+
+    fieldButton.classList.add(`field-button-${buttonsType[0]}`);
+
+    if (buttonsType[0] === "update" || buttonsType[0] === "cancel-edit") {
+        fieldButton.classList.add('hidden');
+    }
+
+    fieldButton.id = `${buttonsType[0]}-user-${id}`
+
+    const fieldTitles = {
+        "edit": "Editar",
+        "cancel-edit": "Cancelar",
+        "delete": "Deletar",
+        "update": "Salvar"
+    };
+
+    fieldButton.textContent = fieldTitles[buttonsType[0]];
+
+    buttonsArray.push(fieldButton);
+
+    buttonsType.shift();
+
+    return createButtons(id, buttonsType, buttonsArray);
+};
+
+const createFields = (id, fieldsType, fieldsValue, fieldsArray = []) => {
+    if (fieldsType.length === 0) return fieldsArray;
+
+    const fieldPossibilities = {
+        "id": "ID",
+        "role": "Cargo",
+        "name": "Nome",
+        "email": "E-mail",
+        "password": "Senha",
+        "tasksList": "Lista",
+        "profilePicture": "Perfil"
+    };
+
     const field = document.createElement('div');
     field.classList.add('field');
 
     const fieldTitle = document.createElement('p');
     fieldTitle.classList.add('field-title');
-    fieldTitle.textContent = title;
-    fieldTitle.id = "field-title-" + id;
+    fieldTitle.textContent = fieldPossibilities[fieldsType[0]];
+    fieldTitle.classList.add(`field-title-${id}`);
 
     const fieldInfo = document.createElement('p');
     fieldInfo.classList.add('field-info');
-    fieldInfo.textContent = info;
-    fieldTitle.id = "field-info-" + id;
+    fieldInfo.textContent = fieldsValue[0];
+    fieldInfo.classList.add(`field-info-${id}`);
 
     const fieldInputDiv = document.createElement('div');
     fieldInputDiv.classList.add(`field-input`);
@@ -30,44 +72,18 @@ const createField = (id, title, info) => {
     fieldInputDiv.classList.add('hidden');
 
     const fieldInput = document.createElement('input');
-    fieldInput.id = `field-input-${title}-${id}`;
-    fieldInput.value = info;
+    fieldInput.id = `field-input-${fieldsType[0]}-${id}`;
+    fieldInput.value = fieldsValue[0];
 
     fieldInputDiv.appendChild(fieldInput);
 
     [fieldTitle, fieldInfo, fieldInputDiv].forEach(message => field.appendChild(message));
 
-    return field;
-}
+    fieldsArray.push(field);
+    fieldsType.shift();
+    fieldsValue.shift();
 
-const createButton = (id, title) => {
-    const fieldButton = document.createElement('button');
-
-    if (title === "Editar") {
-        fieldButton.classList.add('field-button-edit');
-        fieldButton.id = "edit-user-" + id;
-    };
-
-    if (title === "Deletar") {
-        fieldButton.classList.add('field-button-delete');
-        fieldButton.id = "delete-user-" + id;
-    };
-
-    if (title === "Cancelar") {
-        fieldButton.classList.add('field-button-cancel-edit');
-        fieldButton.classList.add('hidden');
-        fieldButton.id = "cancel-edit-user-" + id;
-    };
-
-    if (title === "Salvar") {
-        fieldButton.classList.add('field-button-update');
-        fieldButton.classList.add('hidden');
-        fieldButton.id = "update-user-" + id;
-    };
-
-    fieldButton.textContent = title;
-
-    return fieldButton;
+    return createFields(id, fieldsType, fieldsValue, fieldsArray);
 };
 
 const createElementsToBePrinted = user => {
@@ -82,24 +98,14 @@ const createElementsToBePrinted = user => {
     const userFields = document.createElement('div');
     userFields.classList.add('user-fields');
 
-    const userIDField = createField(user.id, "ID", user.id);
-    const userRoleField = createField(user.id, "Cargo", user.role);
-    const userNameField = createField(user.id, "Nome", user.name);
-    const userEmailField = createField(user.id, "Email", user.email);
-    const userPasswordField = createField(user.id, "Senha", user.password);
-    const userTasksListField = createField(user.id, "Tarefas", user.tasksList);
-    const userProfilePictureField = createField(user.id, "Perfil", user.profilePicture);
+    const [ userIDField, userRoleField, userNameField, userEmailField, userPasswordField, userTasksListField, userProfilePictureField ] = createFields(user.id, ["id", "role", "name", "email", "password", "tasksList", "profilePicture"], [user.id, user.role, user.name, user.email, user.password, user.tasksList, user.profilePicture]);
 
     const buttonsField = document.createElement('div');
     buttonsField.classList.add('field');
 
-    const editUserBtn = createButton(user.id, "Editar");
-    const deleteUserBtn = createButton(user.id, "Deletar");
-    const cancelEditUserBtn = createButton(user.id, "Cancelar");
-    const updateUserBtn = createButton(user.id, "Salvar");
+    const [ editUserBtn, deleteUserBtn, cancelEditUserBtn, updateUserBtn ] = createButtons(user.id, ["edit", "delete", "cancel-edit", "update"]);
 
     [editUserBtn, deleteUserBtn, updateUserBtn, cancelEditUserBtn].forEach(button => buttonsField.appendChild(button));
-
 
     [userIDField, userRoleField, userNameField, userEmailField, userPasswordField, userTasksListField, userProfilePictureField, buttonsField].forEach(field => {
         userFields.appendChild(field);
@@ -108,4 +114,4 @@ const createElementsToBePrinted = user => {
     userDiv.appendChild(userFields);
 
     return userDiv;
-}
+};

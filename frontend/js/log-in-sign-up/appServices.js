@@ -2,7 +2,7 @@ const SERVER_URL = 'https://meuquadrodetarefas.onrender.com';
 
 export const signUp = async(userName, userEmail, userPassword) => {
     try {
-        const response = await fetch(`${SERVER_URL}/users/sign-up`, {
+        const response = await fetch(`${SERVER_URL}/sign-up`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -37,7 +37,7 @@ export const signUp = async(userName, userEmail, userPassword) => {
 
 export const logIn = async(userEmail, userPassword) => {
     try {
-        const response = await fetch(`${SERVER_URL}/users/log-in`, {
+        const response = await fetch(`${SERVER_URL}/log-in`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'

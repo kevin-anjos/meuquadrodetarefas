@@ -12,8 +12,9 @@ const usersTable = document.querySelector('#users-table');
 })();
 
 let isEditing = false;
+let toBeDeletedUserID;
 
-usersTable.addEventListener('dblclick', async (event) => {
+usersTable.addEventListener('click', async (event) => {
     if (event.target.classList.contains("field-button-edit")) {
         const userID = event.target.id.replace("edit-user-", "");
         editUserHandler(userID);
@@ -35,38 +36,35 @@ usersTable.addEventListener('dblclick', async (event) => {
     }
 });
 
+
 const editUserHandler = userID => {
     if (isEditing) return;
 
     isEditing = true;
 
-    const { editButton, cancelEditButton, updateButton, deleteButton, allEditButtons, dataInputs } = getActionElements(userID);
-
-    editButton.classList.add('hidden');
-    deleteButton.classList.add('hidden');
-
-    allEditButtons.forEach(button => button.classList.add('disabled'));
-
-    updateButton.classList.remove('hidden');
-    cancelEditButton.classList.remove('hidden');
-
-    dataInputs.forEach(input => input.classList.remove('hidden'));
+    toggleActionElementsClassList(userID);
 }
 
 const cancelEditUserHandler = userID => {
     isEditing = false;
 
-    const { editButton, cancelEditButton, updateButton, deleteButton, allEditButtons, dataInputs } = getActionElements(userID);
+    toggleActionElementsClassList(userID);
+}
 
-    cancelEditButton.classList.add('hidden');
-    updateButton.classList.add('hidden');
+const toggleActionElementsClassList = userID => {
+    const { editButton, cancelEditButton, updateButton, deleteButton, allEditButtons, allFieldsInfo, dataInputs } = getActionElements(userID);
 
-    allEditButtons.forEach(button => button.classList.remove('disabled'));
+    editButton.classList.toggle('hidden');
+    deleteButton.classList.toggle('hidden');
 
-    editButton.classList.remove('hidden');
-    deleteButton.classList.remove('hidden');
+    allEditButtons.forEach(button => button.classList.toggle('disabled'));
+    
+    allFieldsInfo.forEach(info => info.classList.toggle('hidden'));
 
-    dataInputs.forEach(input => input.classList.add('hidden'));
+    updateButton.classList.toggle('hidden');
+    cancelEditButton.classList.toggle('hidden');
+
+    dataInputs.forEach(input => input.classList.toggle('hidden'));
 }
 
 const updateUserHandler = async userID => {
@@ -81,9 +79,9 @@ const updateUserHandler = async userID => {
 }
 
 const deleteUserHandler = async userID => {
-    await deleteUser(userID);
+    toBeDeletedUserID = userID;
 
-    window.location.reload();
+    toggleDeleteUserModal();
 }
 
 const getActionElements = userID => {
@@ -93,9 +91,25 @@ const getActionElements = userID => {
     const deleteButton = document.querySelector(`#delete-user-${userID}`);
     const allEditButtons = document.querySelectorAll('.field-button-edit');
 
+    const allFieldsInfo = document.querySelectorAll(`.field-info-${userID}`);
+
     const dataInputs = document.querySelectorAll(`.field-input-${userID}`);
 
-    console.log({ editButton, cancelEditButton, updateButton, allEditButtons, dataInputs })
-
-    return { editButton, cancelEditButton, updateButton, deleteButton, allEditButtons, dataInputs };
+    return { editButton, cancelEditButton, updateButton, deleteButton, allEditButtons, allFieldsInfo, dataInputs };
 };
+
+const deleteUserModal = document.querySelector('#confirm-delete-user-modal');
+
+deleteUserModal.addEventListener('click', () => toggleDeleteUserModal());
+
+const toggleDeleteUserModal = () => {
+    deleteUserModal.classList.toggle('hidden');
+};
+
+const confirmDeleteUserBtn = document.querySelector('#confirm-delete-user-btn');
+
+confirmDeleteUserBtn.addEventListener('click', async() => {
+    await deleteUser(toBeDeletedUserID);
+
+    window.location.reload();
+})

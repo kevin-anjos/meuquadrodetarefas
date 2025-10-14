@@ -1,5 +1,6 @@
 import express from 'express';
 import { PrismaClient } from '@prisma/client';
+import bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
 
@@ -14,6 +15,10 @@ router.put('/user', async(req, res) => {
 
     const { id, role, name, email, password, tasksList, profilePicture } = req.body;
 
+    const salt = await bcrypt.genSalt(10);
+
+    const hashPassword = await bcrypt.hash(password, salt);
+
     
     await prisma.usuario.update({
         where: {
@@ -23,7 +28,7 @@ router.put('/user', async(req, res) => {
             role,
             name,
             email,
-            password,
+            password: hashPassword,
             tasksList,
             profilePicture 
         }

@@ -22,13 +22,13 @@ import { getCurrentDate } from './date.js';
 //Array das Tarefas
 export let { tasksList } = await getUser();
 
-//Criar conexão WebSocket
-const websocket = new WebSocket(WEBSOCKET_URL);
-
 const WEBSOCKET_URL =
   window.location.hostname === 'localhost'
     ? 'ws://localhost:8080'
     : 'wss://meuquadrodetarefas.onrender.com';
+
+//Criar conexão WebSocket
+const websocket = new WebSocket(WEBSOCKET_URL);
 
 
 websocket.addEventListener("message", () => {

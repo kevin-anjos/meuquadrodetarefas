@@ -1,6 +1,6 @@
 import { WebSocketServer } from 'ws';
 
-const SERVER_URL = 'http://meuquadrodetarefas.onrender.com';
+const SERVER_URL = 'https://meuquadrodetarefas.onrender.com';
 
 export default server => {
   const wss = new WebSocketServer({

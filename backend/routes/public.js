@@ -129,7 +129,6 @@ router.post('/log-in', async (req, res) => {
             html: `<p>Um novo dispositivo entrou na sua conta.</p>`
         })
         .catch(error => console.error("Erro ao enviar e-mail:", error));
-
     } catch (error) {
         res.status(500).json({
             title: "Erro desconhecido!",

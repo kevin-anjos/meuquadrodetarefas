@@ -1,5 +1,8 @@
-const SERVER_URL = 'https://meuquadrodetarefas.onrender.com';
-
+const SERVER_URL =
+  window.location.hostname === 'localhost'
+    ? 'http://localhost:8080'
+    : 'https://meuquadrodetarefas.onrender.com';
+    
 export const signUp = async(userName, userEmail, userPassword) => {
     try {
         const response = await fetch(`${SERVER_URL}/sign-up`, {
@@ -65,6 +68,6 @@ export const logIn = async(userEmail, userPassword) => {
         return {
             title: "Erro desconhecido!",
             info: "Tente novamente."
-        }
-    }
+        };
+    };
 };

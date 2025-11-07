@@ -11,17 +11,31 @@ import { Task } from './Task.js';
 import { showEditTaskArea, hideEditTaskArea, hideAddTaskArea, handleDeleteAllBtnVisibility } from '../ui/taskModalAreaHandler.js';
 
 //Importar arquivo do storage 
-import { updateTasksList, getUser } from './appServices.js';
+import { getUser } from './appServices.js';
 
 //Importar arquivo de filtros
 import { filterTasks } from './filterAndSearch.js';
 
 //Importar arquivo de datas 
 import { getCurrentDate } from './date.js';
-import { printAlertMessage } from '../ui/alertMessageHandler.js';
 
 //Array das Tarefas
 export let { tasksList } = await getUser();
+
+//Criar conexão WebSocket
+const websocket = new WebSocket(WEBSOCKET_URL);
+
+const WEBSOCKET_URL =
+  window.location.hostname === 'localhost'
+    ? 'ws://localhost:8080'
+    : 'wss://meuquadrodetarefas.onrender.com';
+
+
+websocket.addEventListener("message", () => {
+
+    updateApp({ sendTasksList: false });
+
+});
 
 //Variável da posição da tarefa a ser mudada ao editar
 let toBeEditedTaskID;
@@ -52,7 +66,7 @@ export const addTask = () => {
         tasksList.push(task);
         addTaskInput.value = "";
 
-        updateApp();
+        updateApp({ sendTasksList: true });
     } ;
 };
 
@@ -67,13 +81,13 @@ export const deleteTask = task => {
         newTaskId++;
     });
 
-    updateApp();
+    updateApp({ sendTasksList: true });
 };
 
 //Deletar toda a lista 
 export const deleteAllList = () => {
     tasksList = [];
-    updateApp();
+    updateApp({ sendTasksList: true });
 }
 
 // Adicionar ou remover a propriedade de feita da tarefa
@@ -89,7 +103,7 @@ export const toggleDoneTask = task => {
         taskToBeToggled.finishedDate = getCurrentDate();
     }
 
-    updateApp();
+    updateApp({ sendTasksList: true });
     filterTasks();
 };
 
@@ -104,26 +118,44 @@ export const setTaskToBeEdited = task => {
 export const editTask = () => {
     const editedTask = tasksList.find(task => task.id === toBeEditedTaskID);
 
-    if (addTaskInput.value !== "") {
+    if (addTaskInput.value.trim() !== "") {
         editedTask.name = addTaskInput.value;
         editedTask.description = descriptionTaskInput.value;
         editedTask.isDone = false;
         editedTask.finishedDate = undefined;
     }
 
-    updateApp();
+    updateApp({ sendTasksList: true });
     hideEditTaskArea();
     hideAddTaskArea();
 };
 
 //Executar funções de renderização de tarefas e de botão de apagar todas as tarefas
-const updateApp = async() => {
-    handleTasksListPrint(tasksList);
-    handleDeleteAllBtnVisibility();
+const updateApp = async ({ sendTasksList }) => {
 
-    const { title, info } = await updateTasksList(tasksList);
-    printAlertMessage(title, info);
+    const token = localStorage.getItem('authToken');
+
+    if (sendTasksList) {
+
+        websocket.send(JSON.stringify({
+            tasksList,
+            token
+        }));
+
+        handleTasksListPrint(tasksList);
+        handleDeleteAllBtnVisibility();
+
+    } else {
+
+        const data  = await getUser();
+
+        tasksList = data.tasksList;
+
+        handleTasksListPrint(tasksList);
+        handleDeleteAllBtnVisibility();
+        
+    }
 }
 
 //Inicializar o programa
-updateApp();
+updateApp({ sendTasksList: false });

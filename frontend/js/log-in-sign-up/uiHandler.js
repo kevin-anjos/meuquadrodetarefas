@@ -79,4 +79,4 @@ export const printErrorMessage = (title, info) => {
     domElements.modalMessage.appendChild(p);
 
     domElements.modal.classList.add('show-modal');
-}
+};

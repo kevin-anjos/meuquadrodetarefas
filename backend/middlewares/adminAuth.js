@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 
 const adminAuth = (req, res, next) => {
-    const token = req.headers.authorization.replace('Bearer ', '');
+    const token = req.headers.authorization;
 
     if (!token) {
         return res.status(401).json({
@@ -11,7 +11,7 @@ const adminAuth = (req, res, next) => {
     }
 
     try {
-        const decodedData = jwt.verify(token, process.env.JWT_SECRET);
+        const decodedData = jwt.verify(token.replace('Bearer ', ''), process.env.JWT_SECRET);
 
         if (decodedData.role !== "admin") {
             return res.status(401).json({
@@ -21,7 +21,6 @@ const adminAuth = (req, res, next) => {
         };
 
         next();
-
     } catch (error) {
         console.error(error);
         res.status(401).json({

@@ -1,7 +1,10 @@
 const token = localStorage.getItem('authToken');
 
-const SERVER_URL = 'https://meuquadrodetarefas.onrender.com';
-
+const SERVER_URL =
+  window.location.hostname === 'localhost'
+    ? 'http://localhost:8080'
+    : 'https://meuquadrodetarefas.onrender.com';
+    
 if (!token) {
     window.location.replace('/');
 };

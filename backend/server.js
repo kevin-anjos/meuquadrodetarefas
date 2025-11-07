@@ -2,32 +2,31 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import path from 'path';
+import http from 'http';
 
 import userAuth from './middlewares/userAuth.js';
 import adminAuth from './middlewares/adminAuth.js'
 import publicRoutes from './routes/public.js';
 import privateRoutes from './routes/private.js';
 import adminRoutes from './routes/admin.js'
+import setupWss from './wss.js';
 
 dotenv.config();
 
 const app = express();
+const server = http.createServer(app);
 
 const __dirname = path.resolve();
 
 app.use(express.static(path.join(__dirname, 'frontend')));
 
 //Caminhos do site
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'frontend', 'index.html'));
-});
-
 app.get("/dashboard", (req, res) => {
   res.sendFile(path.join(__dirname, "frontend", 'dashboard.html'));
 });
 
 app.get('/administrator', (req, res) => {
-    res.sendFile(path.join(__dirname, 'frontend', 'admin.html'));
+  res.sendFile(path.join(__dirname, 'frontend', 'admin.html'));
 });
 
 app.use(cors());
@@ -43,6 +42,8 @@ app.use('/users', userAuth, privateRoutes);
 
 app.use('/admin', adminAuth, adminRoutes);
 
-const PORT =  process.env.PORT || 8080;
+const PORT =  process.env.PORT;
 
-app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));
+setupWss(server);
+
+server.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));

@@ -41,7 +41,7 @@ let toBeDeletedTaskID;
 
     if (role === "admin") {
         domElements.adminPanelBtn.classList.remove('hidden');
-    }
+    };
 
     hideLoadingScreen();
 })();
@@ -176,7 +176,7 @@ domElements.updatePasswordBtn.addEventListener('click', async() => {
     }, 1000)
 });
 
-domElements.adminPanelBtn.addEventListener('click', () => {
+domElements.adminPanelBtn.addEventListener('click', async() => {
     window.location.href = './administrator';
 })
 

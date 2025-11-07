@@ -94,6 +94,11 @@
                         <i class="bi bi-list-task"></i>
                         <input type="text" placeholder="Descrição da tarefa" id="task-description-input" autocomplete="off">
                     </div>
+                    <div class="input" id="task-category-input-area">
+                        <i class="bi bi-bookmark"></i>
+                        <input type="text" placeholder="Categoria da tarefa" id="task-category-input" autocomplete="off">
+                        <input type="color" id="task-category-color-input">
+                    </div>
                     <button id="add-task-btn">Adicionar</button>
                     <button id="edit-task-btn">Editar</button>
                 </div>
@@ -171,6 +176,17 @@
                 <h2>Tarefas:</h2>
                 <div id="tasks-list">
                     <div id="loading-list-animation"></div>
+                    <div class="task">
+                        <div class="task-info">
+                            <div class="task-name">Task</div>
+                            <div class="task-description"></div>
+                            <div class="task-creation-date"></div>
+                            <div class="task-finished-date"></div>
+                        </div>
+                        <div class="task-buttons">
+                            <i class="bi bi-check-circle toggle-done-task-button"></i>
+                        </div>
+                    </div>
                 </div>
             </section>
         </section>

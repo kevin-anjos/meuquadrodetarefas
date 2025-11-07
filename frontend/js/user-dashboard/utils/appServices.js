@@ -4,36 +4,11 @@ if (!token) {
     window.location.replace('/');
 };
 
-const SERVER_URL = 'https://meuquadrodetarefas.onrender.com';
+const SERVER_URL =
+  window.location.hostname === 'localhost'
+    ? 'http://localhost:8080'
+    : 'https://meuquadrodetarefas.onrender.com';
 
-//Atualizar a lista de tarefas
-export const updateTasksList = async list => {
-    try {
-        const response = await fetch(`${SERVER_URL}/users/tasks`, {
-            method: "PUT",
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify({
-                tasksList: JSON.stringify(list)
-            })  
-        })
-
-        if (!response.ok) {
-            const data = await response.json();
-            return data;
-        };
-
-        return {
-            title: "Lista atualizada!",
-            info: "Suas tarefas foram salvas com sucesso."
-        };
-
-    } catch(error) {
-        console.error(error);
-    } 
-};
 
 //Pegar dados do usuário
 export const getUser = async () => {
@@ -51,6 +26,7 @@ export const getUser = async () => {
         }
 
         const { tasksList, username, profilePicture, role } = await response.json();
+
         return {
             tasksList: JSON.parse(tasksList),
             username,

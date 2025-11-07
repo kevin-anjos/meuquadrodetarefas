@@ -6,4 +6,4 @@ export const handleRemovePhotoButtonVisibility = imageURL => {
     }
 
     removeProfilePhotoBtn.classList.remove('hidden');
-}
+};

@@ -301,8 +301,6 @@ header i {
     display: none;
 }
 
-
-
 #edit-password {
     background-color: var(--blue-color);
 }
@@ -420,6 +418,21 @@ main {
     flex-direction: column;
 }
 
+#task-category-color-input {
+    flex: 0 0 auto;
+    border: none;
+    padding: 0;
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+input[type="color"]::-webkit-color-swatch {
+    border-radius: 50%;
+    border: none;
+}
+
 h1 {
     text-align: center;
     font-size: 4em;
@@ -498,6 +511,20 @@ option {
 #add-task-area .input:nth-child(2) {
     flex-basis: 100%;
     order: 2;
+}
+
+#add-task-area .input:nth-child(3) {
+    flex-basis: 100%;
+    order: 3;
+}
+
+#task-category-input {
+    flex: 3;
+}
+
+#task-category-color-input {
+    width: 25px;
+    height: 25px;
 }
 
 i {
@@ -872,6 +899,10 @@ body#log-in-sign-up #modal-wrapper i{
     }
 
     #add-task-area .input:nth-child(2) {
+        order: 0;
+    }
+
+    #add-task-area .input:nth-child(3) {
         order: 0;
     }
 

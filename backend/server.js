@@ -9,7 +9,7 @@ import adminAuth from './middlewares/adminAuth.js'
 import publicRoutes from './routes/public.js';
 import privateRoutes from './routes/private.js';
 import adminRoutes from './routes/admin.js'
-import setupWss from './wss.js';
+import { createWebSocketServer } from './socket.js';
 
 dotenv.config();
 
@@ -21,12 +21,20 @@ const __dirname = path.resolve();
 app.use(express.static(path.join(__dirname, 'frontend')));
 
 //Caminhos do site
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "frontend", 'auth', "index.html"));
+});
+
+app.get("/authe", (req, res) => {
+  res.sendFile(path.join(__dirname, "frontend", 'auth', "auth.html"));
+});
+
 app.get("/dashboard", (req, res) => {
-  res.sendFile(path.join(__dirname, "frontend", 'dashboard.html'));
+  res.sendFile(path.join(__dirname, "frontend", 'dashboard', 'dashboard.html'));
 });
 
 app.get('/administrator', (req, res) => {
-  res.sendFile(path.join(__dirname, 'frontend', 'admin.html'));
+  res.sendFile(path.join(__dirname, 'frontend', 'admin', 'admin.html'));
 });
 
 app.use(cors());
@@ -39,11 +47,10 @@ app.use('/', publicRoutes);
 
 //Usar arquivo de rotas privadas
 app.use('/users', userAuth, privateRoutes);
-
 app.use('/admin', adminAuth, adminRoutes);
 
 const PORT =  process.env.PORT;
 
-setupWss(server);
+createWebSocketServer(server);
 
 server.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));

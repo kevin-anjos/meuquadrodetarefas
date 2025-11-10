@@ -2,37 +2,175 @@ import express from 'express';
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
 
+import { Task } from '../Task.js';
+
 const router = express.Router();
 
 const prisma = new PrismaClient();
 
-//Atualizar a lista de tarefas no banco de dados
-router.put('/tasks', async(req, res) => {
-    const { tasksList } = req.body;
 
+const getTasksList = async ({ id }) => {
     try {
-        await prisma.usuario.update({
+        const user = await prisma.usuario.findUnique({
             where: {
-                id: req.userID
+                id
+            }
+        });
+
+        return JSON.parse(user.tasksList);
+    } catch (error) {
+        console.error(error);
+    }
+};   
+
+const updateTasksList = async ({ id, tasksList }) => {
+    try {
+        const user = await prisma.usuario.update({
+            where: {
+                id
             },
             data: {
-                tasksList: tasksList
-            },
+                tasksList: JSON.stringify(tasksList)
+            }
         });
 
-        res.status(200).json({
-            title: "A lista de tarefas foi atualizada!",
-            info: "Dados salvos no banco de dados."
-        });
-
-    } catch(error) {
+        return JSON.parse(user.tasksList);
+    } catch (error) {
         console.error(error);
-        res.status(500).json({
-            title: "A lista de tarefas não foi atualizada!",
-            info: "Não foi possível atualizar os dados."
-        });
     };
+}
+
+router.post('/tasks/create', async (req, res) => {
+
+    const { name, description } = req.body;
+
+    if (!name) return res.status(400).json({
+        title: "O nome não foi passado"
+    });
+
+    const tasksList = await getTasksList({ id: req.userID });
+
+    const taskExists = tasksList.some(
+        task => task.name.toLowerCase() === name.toLowerCase()
+    );
+
+    if (taskExists) {
+        return res.status(400).json({ title: "A tarefa já existe" });
+    };
+
+    const task = new Task({ name, description, id: tasksList.length });
+
+    tasksList.push(task);
+
+    await updateTasksList({ id: req.userID, tasksList });
+
+    res.status(201).json(tasksList);
+
 });
+
+router.put('/tasks/edit/:id', async (req, res) => {
+
+    const { name, description } = req.body;
+
+    const { id: taskID } = req.params;
+
+    if (!name && !description) return res.status(400).json({
+        title: "Os dados não foram passados"
+    });
+
+    if (!taskID) return res.status(400).json({
+        title: "O ID não foi passado"
+    });
+
+    const tasksList = await getTasksList({ id: req.userID });
+
+    const task = tasksList.find(task => task.id === Number(taskID));
+
+    task.isDone = false;
+    task.finishedDate = undefined;
+
+    if (description) task.description = description;
+
+    if (name) task.name = name;
+
+    await updateTasksList({ id: req.userID, tasksList });
+
+    res.status(200).json(tasksList);
+
+});
+
+router.get('/tasks/toggle-done/:id', async (req, res) => {
+
+    const { id: taskID } = req.params;
+
+    if (!taskID) return res.status(400).json({
+        title: "O ID não foi passado"
+    });
+
+    const tasksList = await getTasksList({ id: req.userID });
+
+    if (tasksList.length <= Number(taskID)) return res.status(404).json({
+        title: "Não existe uma tarefa com esse ID" 
+    })
+
+    const task = tasksList.find(task => task.id === Number(taskID));
+
+    if (task.isDone) {
+        task.isDone = false;
+        task.finishedDate = undefined;
+    } else {
+        task.isDone = true;
+        task.finishedDate = Task.getCurrentDate();
+    };
+
+    await updateTasksList({ id: req.userID, tasksList });
+
+    res.status(200).json({
+        tasksList
+    });
+
+});
+
+router.delete('/tasks/delete/:id', async (req, res) => {
+
+    const { id: taskID } = req.params;
+
+    if (!taskID) return res.status(400).json({
+        title: "Os ID não foi passado"
+    });
+
+    const tasksList = await getTasksList({ id: req.userID });
+
+    
+    const newTasksList = tasksList.filter(task => task.id !== Number(taskID));
+
+    if (tasksList.length === newTasksList.length) return res.status(404).json({
+        title: "Não existe uma tarefa com esse ID" 
+    })
+
+    let newID = -1;
+
+    newTasksList.forEach(task => {
+        newID++;
+        task.id = newID;
+    });
+
+    await updateTasksList({ id: req.userID, tasksList: newTasksList })
+
+    res.status(204).send();
+
+});
+
+router.delete('/tasks', async (req, res) => {
+
+    const tasksList = new Array();
+
+    await updateTasksList({ id: req.userID, tasksList });
+
+    res.status(204).send();
+
+});
+
 
 //Pegar dados do usuário do banco de dados
 router.get('/', async(req, res) => {
@@ -70,7 +208,7 @@ router.put('/update/username', async(req, res) => {
     }
 
     try {
-        await prisma.usuario.update({
+        const user = await prisma.usuario.update({
             where: {
                 id: req.userID
             },
@@ -79,16 +217,15 @@ router.put('/update/username', async(req, res) => {
             }
         });
 
-        res.status(204);
+        res.status(200).json(user.name);
 
     } catch (error) {
         console.error(error);
         res.status(500).json({
             title: "Não foi possível atualizar o nome!",
             info: "O nome não foi atualizado no servidor."
-        })
-    }
-
+        });
+    };
 });
 
 
@@ -184,7 +321,7 @@ router.put('/update/password', async(req, res) => {
             }
         });
 
-        res.status(204);
+        res.status(204).send();
     } catch (error) {
         console.error(error);
         res.status(500).json({

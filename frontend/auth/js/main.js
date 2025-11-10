@@ -7,7 +7,7 @@ import { signUp, logIn } from './appServices.js';
 const token = localStorage.getItem('authToken');
 
 if (token) {
-    window.location.href = './dashboard';
+    window.location.href = '/authe?next=dashboard';
 };
 
 [domElements.enterAccountSpan, domElements.createAccountSpan].forEach(span => {

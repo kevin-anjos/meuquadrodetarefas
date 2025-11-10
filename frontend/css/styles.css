@@ -981,6 +981,10 @@ body#log-in-sign-up #modal-wrapper i{
     #tasks-dashboard {
         width: 100%;
     }
+
+    #user-actions {
+        top: 15%;
+    }
 }
 
 @media screen and (max-width: 375px) {

@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <meta name="google-site-verification" content="88_w86adyEZkMsh0IvuKuNS_Ydq9Eol-Ru7TZnqnXrw"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="css/styles.css">
-    <script type="module" src="js/user-dashboard/main.js" defer></script>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../css/styles.css">
+    <script type="module" src="./js/events.js" defer></script>
     <title>Quadro de tarefas</title>
 </head>
 <body>
@@ -19,6 +19,10 @@
             <i class="bi bi-person"></i>
             <p>Editar nome</p>
         </div>
+        <div id="edit-password" class="user-action">
+            <i class="bi bi-lock"></i>
+            <p>Editar senha</p>
+        </div>
         <div id="edit-profile-photo" class="user-action">
             <label for="profile-photo-input">
                 <i class="bi bi-camera"></i>
@@ -29,10 +33,6 @@
         <div id="remove-profile-photo" class="user-action">
             <i class="bi bi-dash-circle"></i>
             <p>Remover foto</p>
-        </div>
-        <div id="edit-password" class="user-action">
-            <i class="bi bi-lock"></i>
-            <p>Editar senha</p>
         </div>
         <div id="toggle-theme" class="user-action">
             <i class="bi bi-sun-fill"></i>
@@ -191,7 +191,7 @@
             </section>
         </section>
         <div id="delete-all-list-btn-area">
-            <div id="delete-all-list-btn"><i class="bi bi-trash"></i> Deletar a lista</div>
+            <div id="delete-all-list-btn" class="hidden"><i class="bi bi-trash"></i> Deletar a lista</div>
         </div>
     </main>
     <div id="fade" class="hidden"></div>

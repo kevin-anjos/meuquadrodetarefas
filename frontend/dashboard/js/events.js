@@ -7,7 +7,7 @@ import * as uiController from './uiController.js';
 
 //Arrays de elementos 
 const themeToggleElements = [domElements.darkModeDot, domElements.lightModeDot, domElements.toggleThemeBtn];
-const tasksInputs = [domElements.addTaskInput, domElements.descriptionTaskInput];
+const tasksInputs = [domElements.addTaskInput, domElements.descriptionTaskInput, domElements.categoryTaskInput];
 const updateUserInputs = [domElements.newPasswordInput, domElements.newUsernameInput];
 
 //Variável do ID da task a ser deletada
@@ -19,11 +19,7 @@ const WEBSOCKET_URL =
     ? 'ws://localhost:8080'
     : 'wss://meuquadrodetarefas.onrender.com';
 
-const token = localStorage.getItem('authToken');
-
-setInterval(() => {
-    if (!token) storage.removeToken();
-},10000);
+const token = storage.getToken();
 
 //Criar conexão WebSocket
 let websocket;
@@ -31,13 +27,13 @@ let websocket;
 //Inicializar o app
 (async () => {
     websocket = new WebSocket(WEBSOCKET_URL);
-    const { username, profilePicture, role } = await appServices.getUser();
-    domElements.usernameSpan.textContent = username;
+    const user = await appServices.getUser();
+    domElements.usernameSpan.textContent = user.username;
 
-    uiController.handleRemovePhotoButtonVisibility(profilePicture);
-    uiController.printUserProfileImage(profilePicture);
+    uiController.handleRemovePhotoButtonVisibility(user.profilePicture);
+    uiController.printUserProfileImage(user.profilePicture);
 
-    if (role === "admin") {
+    if (user.role === "admin") {
         domElements.adminPanelBtn.classList.remove('hidden');
     };
 
@@ -45,6 +41,8 @@ let websocket;
 })();
 
 storage.handleTheme();
+
+storage.checkToken();
 
 //Socket
 websocket.addEventListener("message", () => {
@@ -71,7 +69,7 @@ websocket.addEventListener("error", () => {
 export const requireUpdate = () => {
     websocket.send(JSON.stringify({
         token,
-        firstCall: true  
+        firstCall: false  
     }));
 };
 
@@ -95,17 +93,29 @@ domElements.removeProfilePhotoBtn.addEventListener('click', () => userFunctions.
 tasksInputs.forEach(input => {
     input.addEventListener('input', () => {
         input.value = input.value.slice(0, 100);
+
+        if (input.id === "task-category-input") {
+            tasksFunctions.checkExistingCategory(input.value);
+        };
     });
+
 
     input.addEventListener('keydown', event => {
         if (event.key === "Enter") {
-            getComputedStyle(domElements.editTaskBtn).display === "none" ? tasksFunctions.addTask() : tasksFunctions.editTask();
+            getComputedStyle(domElements.editTaskBtn).display === "none" ? tasksFunctions.createTask() : tasksFunctions.editTask();
         };
     });
 });
 
-//Eventos de mudança no elemento
-domElements.filterTaskSelect.addEventListener("change", () => tasksFunctions.filterTasks());
+domElements.filterTasksInput.addEventListener('click', () => uiController.toggleFiltersAreaVisibility());
+
+domElements.filters.forEach(filter => {
+    filter.addEventListener('click', () => {
+        tasksFunctions.filterTasks(filter.id);
+        uiController.markFilter(filter.id);
+        uiController.printCurrentFilter(filter.id);
+    });
+});
 
 //Eventos de botão
 domElements.userProfileArea.addEventListener('click', () => {
@@ -121,11 +131,11 @@ domElements.deleteAccountBtn.addEventListener('click', async() => {
 
 domElements.fade.addEventListener('click', () => uiController.hideModals());
 
-domElements.addTaskBtnArea.addEventListener('click', () => uiController.showAddTaskArea());
+domElements.addTaskBtnArea.addEventListener('click', () => {uiController.showAddTaskArea()});
 
 //Tasks
 
-domElements.addTaskBtn.addEventListener('click', () => tasksFunctions.addTask());
+domElements.addTaskBtn.addEventListener('click', () => tasksFunctions.createTask());
 
 domElements.editTaskBtn.addEventListener('click', () => tasksFunctions.editTask());
 
@@ -184,4 +194,11 @@ domElements.taskListArea.addEventListener('click', event => {
     if (event.target.classList.contains('toggle-done-task-button')) {
         tasksFunctions.toggleDoneTask(event.target.id);
     };
+});
+
+domElements.categoriesArea.addEventListener('click', event => {
+    if (event.target.type !== "radio") return;
+
+    tasksFunctions.filterByCategory(event.target.id);
+    uiController.hideModals();
 });

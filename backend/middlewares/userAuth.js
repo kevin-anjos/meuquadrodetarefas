@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-const userAuth = (req, res, next) => {
+const userAuth = async (req, res, next) => {
 
     const token = req.headers.authorization;
 
@@ -14,6 +14,17 @@ const userAuth = (req, res, next) => {
     try {
         const decodedData = jwt.verify(token.replace('Bearer ', ''), process.env.JWT_SECRET); 
 
+        const response = await fetch(`http://localhost:8080/last-password-change/${decodedData.id}`);
+
+        const lastPasswordChange = await response.json();
+
+        if (Number(lastPasswordChange) > decodedData.iat * 1000) {
+            return res.status(401).json({
+                title: "Token inválido",
+                info: "Insira um token válido"
+            });
+        };
+
         //Usar o ID na requisição
         req.userID = decodedData.id;
         next();
@@ -21,8 +32,8 @@ const userAuth = (req, res, next) => {
         res.status(401).json({
             title: "Token inválido",
             info: "Insira um token válido"
-        })
-    }
-}
+        });
+    };
+};
 
-export default userAuth
+export default userAuth;

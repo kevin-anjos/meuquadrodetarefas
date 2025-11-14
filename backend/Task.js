@@ -1,7 +1,8 @@
 export class Task {
-    constructor ({ name, description, id }) {
+    constructor ({ name, description, category, id }) {
         this.name = name;
         this.description = description;
+        this.category = category
         this.id = id;
         this.isDone = false;
         this.creationDate = Task.getCurrentDate();

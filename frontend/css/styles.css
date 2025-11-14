@@ -395,6 +395,36 @@ header i {
     gap: 2rem;
 }
 
+#categories-modal {
+    display: flex;
+    flex-direction: column;
+}
+
+#categories-modal-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+#categories-modal h2 {
+    font-size: 2rem;
+    border: none;
+}
+
+#categories-area label {
+    font-size: 1rem;
+    text-transform: capitalize;
+}
+
+#categories-area {
+    display: flex;
+    flex-direction: column;
+}
+
+.category {
+    display: flex;
+    gap: 1rem;
+}
+
 main {
     display: flex;
     flex-direction: column;
@@ -555,8 +585,61 @@ button {
     font-size: 1em;
 }
 
-select {
+#filter-tasks-input {
+    position: relative;
+}
+
+#filter-tasks-input .input {
     cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+}
+
+#filter-tasks-input p {
+    color: var(--black-color);
+    font-size: 1rem;
+    width: 80%;
+}
+
+#select-filters-area {
+    width: 100%;
+    top: -1000%;
+    z-index: -1;
+    position: absolute;
+    background-color: var(--white-color);
+    color: var(--black-color);
+    border-radius: 10px;
+    transition: 1s;
+}
+
+
+#select-filters-area.show {
+    top: 110%;    
+    z-index: 1;
+}
+
+#select-arrow {
+    font-size: 1.5rem;
+    transition: 1s;
+}
+
+#select-arrow.rotate {
+    transform: rotate(180deg);
+}
+
+#select-filters-area .filter {
+    padding: .5rem;
+    margin: .5rem;
+    cursor: pointer;
+    transition: .5s;
+}
+
+#select-filters-area .filter:hover {
+    background-color: var(--grey-color);
+}
+
+#select-filters-area .filter.marked {
+    background-color: var(--secondary-grey-color);
 }
 
 label {
@@ -568,7 +651,7 @@ label {
     margin-top: 2rem;
 }
 
-#edit-task-btn, #cancel-edit-task-btn {
+#cancel-edit-task-btn {
     display: none;
 }
 
@@ -604,7 +687,20 @@ h2 {
 }
 
 .task-info {
+    position: relative;
     width: 50%;
+}
+
+.task-category-line {
+    width: 3px;
+    height: 100%;
+    left: -15px;
+    position: absolute;
+    background-color: var(--white-color);
+}
+
+.task-category {
+    text-transform: uppercase;
 }
 
 .task-name, .task-creation-date, .task-finished-date .task-description {
@@ -648,7 +744,6 @@ h2 {
 .toggle-done-task-button {
     background-color: var(--green-color);
 }
-
 
 #empty-list-text {
     margin-top: 1rem;
@@ -743,15 +838,14 @@ h2 {
     left: -500%;
 }
 
-/*Mostrar botões de edição de task*/
+#edit-task-btn, #add-task-btn {
+    display: block;
+}
 
-body.show-edit-task-area #add-task-btn {
+#edit-task-btn.hidden, #add-task-btn.hidden {
     display: none;
 }
 
-body.show-edit-task-area #edit-task-btn, body.show-edit-task-area #cancel-edit-task-btn {
-    display: block;
-}
 
 /*Light Mode*/
 
@@ -891,9 +985,7 @@ body#log-in-sign-up #modal-wrapper i{
     #toggle-mode-area-wrapper {
         display: none;
     }
-}
 
-@media screen and (max-width: 800px) {
     #add-task-area  {
         flex-direction: column;
     }

@@ -1,6 +1,6 @@
 import * as domElements from './domElements.js';
 
-import { toggleSignInSignUpAreas, handleUnfilledInput, printErrorMessage, resetInputsValues } from './uiHandler.js';
+import { toggleSignInSignUpAreas, handleUnfilledInput, printErrorMessage, resetInputsValues } from './uiController.js';
 
 import { signUp, logIn } from './appServices.js';
 
@@ -25,7 +25,7 @@ domElements.passwordInput.addEventListener('keydown', event => {
         enterAccountHandler();
     } else {
         createUserHandler();
-    }
+    };
 })
 
 domElements.createAccountBtn.addEventListener('click', async() => createUserHandler());
@@ -62,7 +62,7 @@ const createUserHandler = async () => {
 };
 
 const enterAccountHandler = async () => {
-    domElements.usernameInput.value = "anyvalue";
+    domElements.usernameInput.value = "_";
 
     if (!areInputsValid()) return;
 

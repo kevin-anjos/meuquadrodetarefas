@@ -2,11 +2,11 @@ import * as domElements from './domElements.js';
 
 import { tasksList } from "./tasksFunctions.js";
 
-const printAlertMessage = ({ title, info }) => {
-    if (!title || !info) return;
+const printAlertMessage = ({ title }) => {
+    if (!title) return;
 
     domElements.alertMessagesAreaTitle.textContent = title;
-    domElements.alertMessagesAreaInfo.textContent = info;
+    domElements.alertMessagesAreaInfo.textContent = "Tente novamente mais tarde.";
 
     setTimeout(() => {
         domElements.alertMessagesArea.classList.remove('hidden');
@@ -55,7 +55,7 @@ const toggleTheme = () => {
         domElements.toggleThemeParagraph.textContent = "Modo claro";
         domElements.toggleThemeIco.classList.remove('bi-moon-fill');
         domElements.toggleThemeIco.classList.add('bi-sun-fill');
-    }
+    };
 };
 
  const hideAddTaskArea = () => {
@@ -66,6 +66,21 @@ const toggleTheme = () => {
 const showAddTaskArea = () => {
     domElements.addTaskModalArea.classList.remove('hide');
     domElements.confirmDeleteTaskModalArea.classList.add('hide');
+
+    domElements.addTaskInput.value = "";
+
+    domElements.descriptionTaskInput.value = "";
+
+    domElements.categoryTaskInput.value = "";
+    domElements.categoryTaskColor.value = "#000000";
+    
+    document.body.classList.remove('show-edit-task-area');
+
+    domElements.addEditWordToggle.innerHTML = "Adicione";
+
+    domElements.editTaskBtn.classList.add('hidden');
+    domElements.addTaskBtn.classList.remove('hidden');
+
     showModal(0);
 };
 
@@ -76,11 +91,22 @@ const showModal = (modal) => {
 
 // Mostrar botão e span de editar tarefas e imprimir o nome da tarefa atual no input
 const showEditTaskArea = task => {
+
     domElements.addTaskInput.value = task.name;
+
     if (task.description) domElements.descriptionTaskInput.value = task.description;
-    document.body.classList.add('show-edit-task-area');
+
+    if (task.category) {
+        domElements.categoryTaskInput.value = task.category["name"];
+        domElements.categoryTaskColor.value = task.category["color"];
+    };
+
+    domElements.editTaskBtn.classList.remove('hidden');
+    domElements.addTaskBtn.classList.add('hidden');
+
     domElements.addEditWordToggle.innerHTML = "Edite";
-    showAddTaskArea();
+
+    showModal(0);
 };
 
 // Esconder botão e span de editar tarefas
@@ -107,6 +133,10 @@ const confirmTaskDeletion = () => {
     showModal(1);
 }
 
+const showCategoriesModal = () => {
+    hideModals();
+    showModal(4);
+};
 
 //Mostrar modal de renomear usuário
 const showUpdateUsernameModal = () => {
@@ -144,6 +174,83 @@ const togglePasswordVisibility = () => {
     domElements.togglePasswordVisibilityBtn.appendChild(i);
 };
 
+const printCategoryColor = categoryColor => {
+    domElements.categoryTaskColor.value = categoryColor;
+};
+
+const printCategoriesModal = tasksList => {
+    domElements.categoriesArea.replaceChildren();
+
+    const categories = [];
+
+    tasksList.forEach(task => {
+
+        if (categories.length === 0) {
+            categories.push(task.category["name"].toLowerCase());
+        };
+
+        categories.forEach(category => {
+            if (task.category && task.category["name"] && task.category["name"].toLowerCase() !== category) {
+                categories.push(task.category["name"].toLowerCase());
+            };
+        });
+    });
+
+    let html = "";
+
+    categories.forEach(category => {
+        html += 
+        `
+            <div class="category">
+                <input type="radio" name="categories" id="category-${category}">
+                <label for="category-${category}">${category}</label>
+            </div>
+        `
+    });
+
+    if (html === "") return;
+
+    domElements.categoriesArea.innerHTML = html;
+
+    showCategoriesModal();
+};
+
+const toggleFiltersAreaVisibility = () => {
+    domElements.selectFiltersArea.classList.toggle('show');
+    domElements.selectArrow.classList.toggle('rotate');
+};
+
+const markFilter = (filterID) => {
+
+    domElements.filters.forEach(filter => filter.classList.remove('marked'));
+
+    const filterPositionPerID = {
+        "filter-all": 0,
+        "filter-done": 1,
+        "filter-not-done": 2,
+        "filter-category": 3
+    };
+
+    const filterPosition = filterPositionPerID[filterID];
+
+    domElements.filters[filterPosition].classList.add('marked');
+};
+
+const printCurrentFilter = (filterID) => {
+
+    const filterNamePerID = {
+        "filter-all": "Todas",
+        "filter-done": "Concluídas",
+        "filter-not-done": "Não concluídas",
+        "filter-category": "Categoria"
+    };
+
+    const filterName = filterNamePerID[filterID];
+
+    domElements.currentFilterName.textContent = filterName;
+
+};
+
 export {
-    printAlertMessage, handleRemovePhotoButtonVisibility, hideLoadingScreen, printUserProfileImage, toggleTheme, hideAddTaskArea, showAddTaskArea, showEditTaskArea, hideEditTaskArea, handleDeleteAllBtnVisibility, confirmTaskDeletion, showUpdateUsernameModal, showUpdatePasswordModal, hideModals, togglePasswordVisibility
+    printAlertMessage, handleRemovePhotoButtonVisibility, hideLoadingScreen, printUserProfileImage, toggleTheme, hideAddTaskArea, showAddTaskArea, showEditTaskArea, showCategoriesModal, hideEditTaskArea, handleDeleteAllBtnVisibility, confirmTaskDeletion, showUpdateUsernameModal, showUpdatePasswordModal, hideModals, togglePasswordVisibility, printCategoryColor, printCategoriesModal, toggleFiltersAreaVisibility, markFilter, printCurrentFilter
 };

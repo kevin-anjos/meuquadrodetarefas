@@ -16,40 +16,48 @@ const showEmptyListMessage = () => {
 
 //Criar os elementos a serem imprimidos
 const createElementsToBePrinted = task => {
-    const taskArea = document.createElement('div');
+
+    const [taskArea, taskInfo, taskCategory, taskCategoryLine, taskName, taskCreationDate, taskFinishedDate, taskDescription, taskButtons] = Array(9).fill().map(() => document.createElement('div'));
+
+    const [toggleDoneTaskBtn, editTaskBtn, deleteTaskBtn ] = Array(3).fill().map(() => document.createElement('i'));
+
     taskArea.classList.add("task");
 
-    const taskInfo = document.createElement('div');
     taskInfo.classList.add("task-info");
 
-    const taskName = document.createElement('div');
+    taskCategory.classList.add("task-category");
+
+    taskCategoryLine.classList.add("task-category-line");
+
+    if (!task.category || !task.category["name"] || task.category["name"].trim() === "") {
+        taskCategory.style.display = 'none';
+        taskCategoryLine.style.display = 'none';
+    } else {
+        taskCategory.innerHTML = task.category["name"];
+        taskCategory.style.color = task.category["color"];
+        taskCategoryLine.style.backgroundColor = task.category["color"];
+    }
+
     taskName.classList.add("task-name");
 
-    const taskCreationDate = document.createElement('div');
     taskCreationDate.classList.add("task-creation-date");
 
     taskCreationDate.innerHTML = `<strong>Criada em:</strong> ${task.creationDate}`;
 
-    const taskFinishedDate = document.createElement('div');
     taskFinishedDate.classList.add("task-finished-date");
 
     if (task.finishedDate !== undefined) {
         taskFinishedDate.innerHTML = `<strong>Concluída em:</strong> ${task.finishedDate}`
     }
 
-    const taskDescription = document.createElement('div');
     taskDescription.classList.add("task-description");
-
 
     if (task.description != undefined && task.description.trim() !== "") {
         task.description = task.description.replace('Descrição:', "")
         taskDescription.innerHTML = `<strong>Descrição:</strong> ${task.description}`
     };
 
-    const taskButtonsArea = document.createElement('div');
-    taskButtonsArea.classList.add("task-buttons");
-
-    const toggleDoneTaskBtn = document.createElement('i');
+    taskButtons.classList.add("task-buttons");
 
     if (task.isDone) {
         taskName.innerHTML = `<s>${task.id + 1}. ${task.name}</s>`;
@@ -63,17 +71,15 @@ const createElementsToBePrinted = task => {
 
     toggleDoneTaskBtn.setAttribute('id', `done-btn-${task.id}`);
 
-    const editTaskBtn = document.createElement('i');
     editTaskBtn.classList.add("bi", "bi-pen", "edit-task-button");
     editTaskBtn.setAttribute('id', `edit-btn-${task.id}`);
     editTaskBtn.setAttribute('title', `Editar`);
 
-    const deleteTaskBtn = document.createElement('i');
     deleteTaskBtn.classList.add("bi", "bi-x-circle", "delete-task-button");
     deleteTaskBtn.setAttribute('id', `delete-btn-${task.id}`);
     deleteTaskBtn.setAttribute('title', `Deletar`);
 
-    return { toggleDoneTaskBtn, editTaskBtn, deleteTaskBtn, taskInfo, taskName, taskCreationDate, taskFinishedDate, taskDescription, taskButtonsArea, taskArea };
+    return { toggleDoneTaskBtn, editTaskBtn, deleteTaskBtn, taskInfo, taskCategory, taskCategoryLine, taskName, taskCreationDate, taskFinishedDate, taskDescription, taskButtons, taskArea };
 };
 
 //Imprimir Lista de tarefas
@@ -83,18 +89,18 @@ const printTasksList = tasksList => {
     };
 
     tasksList.forEach(task => {
-        const { toggleDoneTaskBtn, editTaskBtn, deleteTaskBtn, taskInfo, taskName, taskCreationDate, taskFinishedDate, taskDescription, taskButtonsArea, taskArea } = createElementsToBePrinted(task);
+        const { toggleDoneTaskBtn, editTaskBtn, deleteTaskBtn, taskInfo, taskCategory, taskCategoryLine, taskName, taskCreationDate, taskFinishedDate, taskDescription, taskButtons, taskArea } = createElementsToBePrinted(task);
         
         [toggleDoneTaskBtn, editTaskBtn, deleteTaskBtn].forEach(button => {
-            taskButtonsArea.appendChild(button);
+            taskButtons.appendChild(button);
         });
 
-        [taskName, taskDescription, taskCreationDate, taskFinishedDate].forEach(info => {
+        [taskCategoryLine,taskCategory, taskName, taskDescription, taskCreationDate, taskFinishedDate].forEach(info => {
             taskInfo.appendChild(info);
         })
 
         taskArea.appendChild(taskInfo);
-        taskArea.appendChild(taskButtonsArea);
+        taskArea.appendChild(taskButtons);
 
         domElements.taskListArea.appendChild(taskArea);
     });

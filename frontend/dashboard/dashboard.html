@@ -147,6 +147,24 @@
             </div>
         </div>
     </div>
+    <div class="modal">
+        <div id="categories-modal">
+            <div id="categories-modal-header">
+                <h2>Categorias:</h2>
+                <i class="bi bi-x-circle-fill close-modal-btn"></i>
+            </div>
+            <div id="categories-area">
+                <div class="category">
+                    <input type="radio" name="categories" id="category-jogos">
+                    <label for="category-jogos">Jogos</label>
+                </div>
+                <div class="category">
+                    <input type="radio" name="categories" id="category-afazeres" >
+                    <label for="category-afazeres">Afazeres</label>
+                </div>
+            </div>
+        </div>
+    </div>
     <main>
         <h1>Quadro de tarefas:</h1>
         <section id="tasks-dashboard">
@@ -159,15 +177,18 @@
                             <input type="text" placeholder="Pesquise pela sua tarefa" id="search-task-input" autocomplete="off">
                         </div>
                     </div>
-                    <div class="task-input">
+                    <div class="task-input" id="filter-tasks-input">
                         <label for="filter-task-select">Filtrar:</label>
                         <div class="input">
                             <i class="bi bi-clipboard-check-fill"></i>
-                            <select id="filter-task-select">
-                                <option value="filter-all">Todas</option>
-                                <option value="filter-done">Concluídas</option>
-                                <option value="filter-not-done">Não concluídas</option>
-                            </select>
+                            <p id="current-filter-name">Todas</p>
+                            <i class="bi bi-arrow-up-short" id="select-arrow"></i>
+                        </div>
+                        <div id="select-filters-area">
+                            <div class="filter marked" id="filter-all">Todas</div>
+                            <div class="filter" id="filter-done">Concluídas</div>
+                            <div class="filter" id="filter-not-done">Não concluídas</div>
+                            <div class="filter" id="filter-category">Categoria</div>
                         </div>
                     </div>
                 </div>
@@ -178,13 +199,24 @@
                     <div id="loading-list-animation"></div>
                     <div class="task">
                         <div class="task-info">
-                            <div class="task-name">Task</div>
-                            <div class="task-description"></div>
-                            <div class="task-creation-date"></div>
-                            <div class="task-finished-date"></div>
+                            <div class="task-category-line"></div>
+                            <div class="task-category">nova categoria</div>
+                            <div class="task-name">1. Nome da tarefa</div>
+                            <div class="task-description">
+                                <strong>Descrição:</strong> texto da descrição
+                            </div>
+                            <div class="task-creation-date">
+                                <strong>Criada em:</strong> 01/11/2025 14:33
+                            </div>
+                            <div class="task-finished-date">
+                                <strong>Concluída em:</strong> 03/11/2025 18:10
+                            </div>
                         </div>
+
                         <div class="task-buttons">
-                            <i class="bi bi-check-circle toggle-done-task-button"></i>
+                            <i id="done-btn-0" class="bi bi-check-circle toggle-done-task-button" title="Concluir"></i>
+                            <i id="edit-btn-0" class="bi bi-pen edit-task-button" title="Editar"></i>
+                            <i id="delete-btn-0" class="bi bi-x-circle delete-task-button" title="Deletar"></i>
                         </div>
                     </div>
                 </div>

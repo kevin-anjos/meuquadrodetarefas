@@ -42,7 +42,7 @@ const updateTasksList = async ({ id, tasksList }) => {
 
 router.post('/tasks/create', async (req, res) => {
 
-    const { name, description } = req.body;
+    const { name, description, category } = req.body;
 
     if (!name) return res.status(400).json({
         title: "O nome não foi passado"
@@ -58,9 +58,17 @@ router.post('/tasks/create', async (req, res) => {
         return res.status(400).json({ title: "A tarefa já existe" });
     };
 
-    const task = new Task({ name, description, id: tasksList.length });
+    const task = new Task({ name, description, category, id: tasksList.length });
 
     tasksList.push(task);
+
+    if (category) {
+        tasksList.forEach(task => {
+            if (task.category["name"].toLowerCase() === category["name"].toLowerCase()) {
+                task.category["color"] = category["color"];
+            };
+        });
+    };
 
     await updateTasksList({ id: req.userID, tasksList });
 
@@ -70,7 +78,7 @@ router.post('/tasks/create', async (req, res) => {
 
 router.put('/tasks/edit/:id', async (req, res) => {
 
-    const { name, description } = req.body;
+    const { name, description, category } = req.body;
 
     const { id: taskID } = req.params;
 
@@ -89,10 +97,19 @@ router.put('/tasks/edit/:id', async (req, res) => {
     task.isDone = false;
     task.finishedDate = undefined;
 
+    if (category && category["name"].trim() !== "") {
+        task.category = category;
+        tasksList.forEach(task => {
+            if (task.category["name"].toLowerCase() === category["name"].toLowerCase()) {
+                task.category["color"] = category["color"];
+            };
+        });
+    };
+
     if (description) task.description = description;
 
     if (name) task.name = name;
-
+    
     await updateTasksList({ id: req.userID, tasksList });
 
     res.status(200).json(tasksList);
@@ -307,6 +324,8 @@ router.put('/update/password', async(req, res) => {
         });
     };
 
+    const lastPasswordChange = `${Date.now()}`
+
     try {
         const salt = await bcrypt.genSalt(10);
 
@@ -317,7 +336,8 @@ router.put('/update/password', async(req, res) => {
                 id: req.userID
             },
             data: {
-                password: hashPassword
+                password: hashPassword,
+                lastPasswordChange
             }
         });
 

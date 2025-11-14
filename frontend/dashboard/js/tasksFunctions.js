@@ -2,11 +2,10 @@ import * as appServices from './appServices.js';
 import * as uiController from './uiController.js';
 import * as tasksRender from './tasksRender.js';
 import * as domElements from './domElements.js';
-import * as functions from './userFunctions.js';
 import * as events from './events.js';
 
-const userData = await appServices.getUser();
-export let tasksList = userData.tasksList;
+const user = await appServices.getUser();
+export let tasksList = JSON.parse(user.tasksList);
 
 let toBeEditedTaskID;
 
@@ -24,16 +23,25 @@ const canTaskBeAdded = () => {
 
     const taskNameExists = tasksList.some(task => task.name.toLowerCase() === taskNameWithoutTAGS.toLowerCase());
 
-    return domElements.addTaskInput.value !== "" && !taskNameExists;
+    if (domElements.addTaskInput.value.trim() === "" || taskNameExists) {
+        return false;
+    };
+
+    return true;
 }
 
 //Adicionar Task
-const addTask = async () => {
+const createTask = async () => {
     if (!canTaskBeAdded()) return;
 
     const { taskNameWithoutTAGS, taskDecriptionWithoutTAGS } = removeHTMLTagsInTaskInfo();
 
-    await appServices.createTask({ name: taskNameWithoutTAGS, description: taskDecriptionWithoutTAGS });
+    const category = {
+        name: domElements.categoryTaskInput.value,
+        color: domElements.categoryTaskColor.value
+    }
+
+    await appServices.createTask({ name: taskNameWithoutTAGS, description: taskDecriptionWithoutTAGS, category });
 
     domElements.addTaskInput.value = "";
 
@@ -41,9 +49,9 @@ const addTask = async () => {
 };
 
 //Deletar tarefa
-const deleteTask = task => {
+const deleteTask = async task => {
     const taskId = Number(task.replace('delete-btn-', ""));
-    appServices.deleteTask({ taskID: taskId });
+    await appServices.deleteTask({ taskID: taskId });
 
     events.requireUpdate();
 };
@@ -62,7 +70,7 @@ const toggleDoneTask = async task => {
     await appServices.toggleDoneTask({ taskID: taskId});
 
     events.requireUpdate();
-    functions.filterTasks();
+    filterTasks();
 };
 
 //Setar a tarefa a ser editada
@@ -74,11 +82,18 @@ const setTaskToBeEdited = task => {
 
 //Editar tarefa
 const editTask = async () => {
+
+    const category = {
+        name: domElements.categoryTaskInput.value,
+        color: domElements.categoryTaskColor.value
+    }
+
     
     await appServices.editTask({ 
         taskID: toBeEditedTaskID, 
         name: domElements.addTaskInput.value, 
-        description: domElements.descriptionTaskInput.value 
+        description: domElements.descriptionTaskInput.value,
+        category 
     });
 
     events.requireUpdate();
@@ -88,9 +103,9 @@ const editTask = async () => {
 
 const updateApp = async () => {
 
-    const userData = await appServices.getUser();
+    const user = await appServices.getUser();
 
-    tasksList = userData.tasksList;
+    tasksList = JSON.parse(user.tasksList);
 
     initializeApp();
     
@@ -99,8 +114,10 @@ const updateApp = async () => {
 //Funções
 
 //Filtrar tarefas por categoria
-const filterTasks = () => {
-    const setfilter = filters[domElements.filterTaskSelect.value];
+const filterTasks = filter => {
+
+    const setfilter = filters[filter];
+    
     setfilter(tasksList);
 };
 
@@ -116,11 +133,20 @@ const filterDoneTasks = () => {
     tasksRender.renderTasksList(filteredDoneTasks);
 };
 
+const filterByCategory = categoryID => {
+    const category = categoryID.replace('category-', '');
+
+    const filteredCategoryTasks = tasksList.filter(task => task.category && task.category["name"].toLowerCase() === category);
+
+    tasksRender.renderTasksList(filteredCategoryTasks)
+};
+
 //Filtros
 const filters = {
     'filter-not-done': filterNotDoneTasks,
     'filter-done': filterDoneTasks,
-    'filter-all': tasksRender.renderTasksList
+    'filter-all': tasksRender.renderTasksList,
+    'filter-category': uiController.printCategoriesModal
 };
 
 //Procurar por tarefas
@@ -131,15 +157,27 @@ const searchTasks = () => {
     tasksRender.renderTasksList(searchedTaskList);
 };
 
+const checkExistingCategory = category => {
+    let categoryColor = "#000";
+
+    tasksList.forEach(task => {
+        if (task.category && task.category["name"].toLowerCase() === category.toLowerCase()) {
+            categoryColor = task.category["color"];
+        }
+    });
+
+    uiController.printCategoryColor(categoryColor);
+};
+
 //Inicializar o programa
 const initializeApp = () => {   
     tasksRender.renderTasksList(tasksList);
-    filterTasks();
+    //filterTasks(tasksList);
     uiController.handleDeleteAllBtnVisibility();
 };
 
 initializeApp();
 
 export {
-    addTask, deleteTask, deleteTasksList, toggleDoneTask, setTaskToBeEdited, editTask, filterTasks, searchTasks, updateApp
+    createTask, deleteTask, deleteTasksList, toggleDoneTask, setTaskToBeEdited, editTask, filterTasks, filterByCategory, searchTasks, checkExistingCategory, updateApp
 };

@@ -21,7 +21,7 @@ export const signUp = async(userName, userEmail, userPassword) => {
 
         if (response.ok) {
             localStorage.setItem("authToken", data.token);
-            window.location.replace(`./dashboard`);
+            window.location.replace(`./authe?next=dashboard`);
         } else {
             return {
                 title: data.title,
@@ -55,7 +55,7 @@ export const logIn = async(userEmail, userPassword) => {
 
         if (response.ok) {
             localStorage.setItem("authToken", data.token);
-            window.location.replace(`./dashboard`);
+            window.location.replace(`./authe?next=dashboard`);
         } else {
             return {
                 title: data.title,

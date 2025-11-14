@@ -37,6 +37,7 @@ const createWebSocketServer = server => {
         if (message.firstCall) {
             ws.id = userID;
             clients.push(ws);
+            return;
         };
 
         requestUpdate(userID);

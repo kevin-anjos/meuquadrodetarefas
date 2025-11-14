@@ -19,12 +19,21 @@ const setThemeInLocalStorage = () => {
     };
 };
 
+const checkToken = () => {
+    setInterval(() => {
+        const token = getToken();
+        if (!token || token.length === 0) removeToken();
+    },10000);
+};
+
 const removeToken = () => {
     localStorage.removeItem('authToken');
     window.location.replace('/');
 }; 
 
+const getToken = () => localStorage.getItem('authToken');
+
 
 export {
-    handleTheme, setThemeInLocalStorage, removeToken
+    handleTheme, setThemeInLocalStorage, checkToken, removeToken, getToken
 }

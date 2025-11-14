@@ -16,6 +16,7 @@
                 : 'https://meuquadrodetarefas.onrender.com';
 
         const authenticate = async () => {
+            console.log('Primeiro teste!');
             const response = await fetch(`${SERVER_URL}/users`, {
             method: "GET",
             headers: {
@@ -23,11 +24,16 @@
             }
             });
 
+            console.log(' Servidor respondeu!');
+
+
             if (!response.ok) {
                 localStorage.removeItem("authToken");
                 window.location.replace('/');
                 return;
             }
+
+            console.log('Resposta OK!');
 
             const queryString = window.location.search;
 

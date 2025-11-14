@@ -13,283 +13,175 @@ const SERVER_URL =
     : 'https://meuquadrodetarefas.onrender.com';
 
 const getUser = async () => {
-    try {
-        const response = await fetch(`${SERVER_URL}/users`, {
-            method: "GET",
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        });
 
-        if (!response.ok) {
-            localStorage.removeItem("authToken");
-            window.location.replace('/');
+    const response = await doRequest({ 
+        endpoint: ``,
+        method: "GET"
+    });
+
+    if (!response.ok) storage.removeToken();
+
+    const user = await response.json();
+
+    return user;
+
+};
+
+const updatePassword = async password => {
+
+    const response = await doRequest({ 
+        endpoint: `update/password`,
+        method: "PUT",
+        body: {
+            password
         }
+    });
 
-        const { tasksList, username, profilePicture, role } = await response.json();
+    if (!response.ok) return uiController.printAlertMessage({ title: "Não foi possível atualizar a senha!" });
 
-        return {
-            tasksList: JSON.parse(tasksList),
-            username,
-            profilePicture, 
-            role
-        };
-    } catch (error) {
-        console.error(error);
-        window.location.replace('/');
-    }
+    storage.removeToken();
+
 };
 
-//Editar senha do usuário
-const updatePassword = async newPassword => {
-    try {
-        const response = await fetch(`${SERVER_URL}/users/update/password`, {
-            method: "PUT",
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify({
-                password: newPassword
-            }) 
-        });
+const updateUsername = async name => {
 
-    
-        if (!response.ok) return uiController.printAlertMessage({
-            title: "Não foi possível atualizar a senha!",
-            info: "Tente novamente mais tarde."
-        });
+    const response = await doRequest({ 
+        endpoint: `update/username`,
+        method: "PUT",
+        body: {
+            name
+        }
+    });
 
-        storage.removeToken();
+    if (!response.ok) return uiController.printAlertMessage({ title: "Não foi possível atualizar o nome!" });
 
-    } catch (error) {
-        console.error(error);
-        return uiController.printAlertMessage({
-            title: "Não foi possível atualizar a senha!",
-            info: "Tente novamente mais tarde."
-        });
-    };
-};
-
-//Editar nome do usuário
-const updateUsername = async newUsername => {
-
-    try {
-        const response = await fetch(`${SERVER_URL}/users/update/username`, {
-            method: "PUT",
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify({
-                name: newUsername
-            }) 
-        });
-
-
-        if (!response.ok) {
-            return uiController.printAlertMessage({
-            title: "Não foi possível atualizar o nome!",
-            info: "Tente novamente mais tarde."
-        });}
-
-
-        return await response.json();
-    
-    } catch (error) {
-        console.error(error);
-        return uiController.printAlertMessage({
-            title: "Não foi possível atualizar o nome!",
-            info: "Tente novamente mais tarde."
-        });
-    };
 };
 
 
 const updateUserProfileImage = async imagePath => {
-    try {
-        const response = await fetch(`${SERVER_URL}/users/update/profile-photo`, {
-            method: "PUT",
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify({
-                imagePath: imagePath
-            }) 
-        });
 
-        if (!response.ok) return uiController.printAlertMessage({
-            title: "Não foi possível atualizar a foto de perfil!",
-            info: "Tente novamente mais tarde."
-        });
+    const response = await doRequest({ 
+        endpoint: `update/profile-photo`,
+        method: "PUT",
+        body: {
+            imagePath
+        }
+    });
 
-        const imageURL = await response.json();
-        
-        return imageURL;
-    
-    } catch (error) {
-        console.error(error);
-        return uiController.printAlertMessage({
-            title: "Não foi possível atualizar a foto de perfil!",
-            info: "Tente novamente mais tarde."
-        });
-    };
+    if (!response.ok) return uiController.printAlertMessage({ title: "Não foi possível atualizar a foto de perfil!" });
+
 };
 
 const deleteUser = async () => {
-    try {
-        const response = await fetch(`${SERVER_URL}/users`, {
-            method: "DELETE",
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        });
 
-        if (!response.ok) return uiController.printAlertMessage({
-            title: "Não foi possível deletar a conta!",
-            info: "Tente novamente mais tarde."
-        });
+    const response = await doRequest({ 
+        endpoint: ``,
+        method: "DELETE"
+    });
 
-        localStorage.removeItem('authToken');
-        window.location.replace('/');   
+    if (!response.ok) return uiController.printAlertMessage({ title: "Não foi possível deletar a conta!" });
 
-    } catch(error) {
-        console.error(error);
-        return uiController.printAlertMessage({
-            title: "Não foi possível deletar a conta!",
-            info: "Tente novamente mais tarde."
-        });
-    };
 };
 
 //Tarefas
 
-const createTask = async ({ name, description }) => {
-    try {
-        const response = await fetch(`${SERVER_URL}/users/tasks/create`, {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify({
-                name,
-                description
-            })
-        });
+const createTask = async ({ name, description, category }) => {
 
-        
-        if (!response.ok) return uiController.printAlertMessage({
-            title: "Não foi possível deletar a tarefa!",
-            info: "Tente novamente mais tarde."
-        });
+    const body = {};
 
-    } catch(error) {
-        console.error(error);
-        return uiController.printAlertMessage({
-            title: "Não foi possível deletar a tarefa!",
-            info: "Tente novamente mais tarde."
-        });
-    };
+    if (name.trim() !== "") body.name = name;
+
+    if (description.trim() !== "") body.description = description;
+
+    if (category["name"].trim() !== "") body.category = category;
+
+
+    const response = await doRequest({ 
+        endpoint: `tasks/create`,
+        method: "POST",
+        body
+    });
+
+    if (!response.ok) return uiController.printAlertMessage({ title: "Não foi possível criar a tarefa!" });
+
 };
 
-const editTask = async ({ taskID, name, description }) => {
+const editTask = async ({ taskID, name, description, category }) => {
 
-    try {
-        const response = await fetch(`${SERVER_URL}/users/tasks/edit/${taskID}`, {
-            method: "PUT",
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify({
-                name,
-                description: description
-            })
-        });
+    const body = {};
 
-        if (!response.ok) return uiController.printAlertMessage({
-            title: "Não foi possível editar a tarefa!",
-            info: "Tente novamente mais tarde."
-        });
+    if (name) body.name = name;
 
-    } catch(error) {
-        console.error(error);
-        return uiController.printAlertMessage({
-            title: "Não foi possível editar a tarefa!",
-            info: "Tente novamente mais tarde."
-        });
-    };
+    if (description) body.description = description;
+
+    if (category["name"].trim() !== "") body.category = category;
+
+    const response = await doRequest({ 
+        endpoint: `tasks/edit/${taskID}`,
+        method: "PUT",
+        body
+    });
+
+    if (!response.ok) return uiController.printAlertMessage({ title: "Não foi possível editar a tarefa!" });
+
 };
 
 const toggleDoneTask = async ({ taskID }) => {
-    try {
 
-        const response = await fetch(`${SERVER_URL}/users/tasks/toggle-done/${taskID}`, {
-            method: "GET",
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        })
+    const response = await doRequest({ 
+        endpoint: `tasks/toggle-done/${taskID}`,
+        method: "GET"
+    });
 
-        if (!response.ok) return uiController.printAlertMessage({
-            title: "Não foi possível editar a tarefa!",
-            info: "Tente novamente mais tarde."
-        });
+    if (!response.ok) return uiController.printAlertMessage({ title: "Não foi possível editar a tarefa!" });
 
-    } catch(error) {
-        console.error(error);
-        if (!response.ok) return uiController.printAlertMessage({
-            title: "Não foi possível editar a tarefa!",
-            info: "Tente novamente mais tarde."
-        });
-    };
 };
 
 const deleteTask = async ({ taskID }) => {
-    try {
-        const response = await fetch(`${SERVER_URL}/users/tasks/delete/${taskID}`, {
-            method: "DELETE",
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        });
 
-        if (!response.ok) return uiController.printAlertMessage({
-            title: "Não foi possível deletar a tarefa!",
-            info: "Tente novamente mais tarde."
-        });
+    const response = await doRequest({ 
+        endpoint: `tasks/delete/${taskID}`,
+        method: "DELETE"    
+    });
 
-    } catch(error) {
-        console.error(error);
-        return uiController.printAlertMessage({
-            title: "Não foi possível editar a tarefa!",
-            info: "Tente novamente mais tarde."
-        });
-    };
+    if (!response.ok) return uiController.printAlertMessage({ title: "Não foi possível deletar a  tarefa!" });
+
 };
 
 const deleteTasksList = async () => {
-    try {
-        const response = await fetch(`${SERVER_URL}/users/tasks`, {
-            method: "DELETE",
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        });
+    
+    const response = await doRequest({ 
+        endpoint: `tasks`,
+        method: "DELETE"
+    });
 
-        if (!response.ok) return uiController.printAlertMessage({
-            title: "Não foi possível deletar a lista de tarefas!",
-            info: "Tente novamente mais tarde."
-        });
+    if (!response.ok) return uiController.printAlertMessage({ title: "Não foi possível deletar a lista de tarefas!" });
+
+};
+
+const doRequest = async ({ endpoint, method, body }) => {
+
+    const options = {
+        method,
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
+    };
+
+    if (body) {
+        options.body = JSON.stringify(body);
+    };
+
+    try {
+        const response = await fetch(`${SERVER_URL}/users/${endpoint}`, options);
+
+        return response;
 
     } catch(error) {
         console.error(error);
-        return uiController.printAlertMessage({
-            title: "Não foi possível deletar a lista de tarefas!",
-            info: "Tente novamente mais tarde."
-        });
+
+        return uiController.printAlertMessage({ title: "Não foi possível executar a ação!" });
     };
 };
 

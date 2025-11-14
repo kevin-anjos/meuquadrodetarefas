@@ -35,6 +35,8 @@ router.post('/sign-up', async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(password, salt);
 
+    const lastPasswordChange = `${Date.now()}`
+
     try {
         const newUser = await prisma.usuario.create({
             data: {
@@ -43,7 +45,8 @@ router.post('/sign-up', async (req, res) => {
                 password: hashPassword,
                 tasksList: '[]',
                 profilePicture: '',
-                role: 'user'
+                role: 'user',
+                lastPasswordChange
             }
         });
 
@@ -137,5 +140,21 @@ router.post('/log-in', async (req, res) => {
         console.error("ERROR: " + error);
     };
 }); 
+
+router.get('/last-password-change/:id', async(req, res) => {
+    const { id } = req.params;
+
+    if (!id) return res.status(400).json({
+        message: "O ID não foi passado"
+    });
+
+    const user = await prisma.usuario.findUnique({
+        where: {
+            id
+        }
+    });
+
+    res.status(200).json(user.lastPasswordChange);
+});
 
 export default router;

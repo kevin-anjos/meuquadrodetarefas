@@ -14,7 +14,7 @@ const userAuth = async (req, res, next) => {
     try {
         const decodedData = jwt.verify(token.replace('Bearer ', ''), process.env.JWT_SECRET); 
 
-        const response = await fetch(`http://localhost:8080/last-password-change/${decodedData.id}`);
+        const response = await fetch(`https://meuquadrodetarefas.onrender.com/last-password-change/${decodedData.id}`);
 
         const lastPasswordChange = await response.json();
 
